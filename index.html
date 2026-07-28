@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>NqznZee Chess Arena — V8.0 Account Login</title>
+<title>NqznZee Chess Arena — V8.0 Titles & Elo</title>
 
 <!--
 NqznZee Chess Arena
@@ -910,6 +910,68 @@ body::before {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.player-name.nqz-player-identity {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: clip;
+}
+
+.nqz-title-badge {
+    min-width: 27px;
+    padding: 2px 5px;
+    display: inline-grid;
+    place-items: center;
+    flex: 0 0 auto;
+    border: 1px solid rgba(255,255,255,.17);
+    border-radius: 4px;
+    color: #ffffff;
+    background:
+        linear-gradient(
+            180deg,
+            color-mix(
+                in srgb,
+                var(--nqz-title-color, #a63d4d) 90%,
+                white 10%
+            ),
+            var(--nqz-title-color, #a63d4d)
+        );
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.14),
+        0 2px 7px rgba(0,0,0,.28);
+    font-size: 10px;
+    font-weight: 950;
+    line-height: 1.12;
+    letter-spacing: .025em;
+}
+
+.nqz-title-badge[data-title="GM"] {
+    --nqz-title-color: #a63d4d;
+}
+
+.nqz-title-badge[data-title="IM"] {
+    --nqz-title-color: #c55b3f;
+}
+
+.nqz-title-badge[data-title="FM"] {
+    --nqz-title-color: #9a6a45;
+}
+
+.nqz-player-display-name {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.nqz-player-rating {
+    flex: 0 0 auto;
+    color: #b7bac5;
+    font-weight: 800;
+}
 .material-bar {
     width: min(100%, 330px);
     min-height: 24px;
@@ -1679,6 +1741,21 @@ body[data-nqz-theme="crystal"] .nqz-themed-piece {
         line-height: 1.15;
         text-overflow: ellipsis;
         white-space: nowrap;
+    }
+
+    .player-name.nqz-player-identity {
+        max-width: calc(100vw - 98px);
+        gap: 4px;
+    }
+
+    .nqz-title-badge {
+        min-width: 24px;
+        padding: 1px 4px;
+        font-size: 9px;
+    }
+
+    .nqz-player-rating {
+        font-size: 11px;
     }
 
     .player-meta,
@@ -2619,7 +2696,7 @@ body[data-nqz-theme="crystal"] .nqz-themed-piece {
 <div class="arena-topbar">
     <div class="arena-brand">
         <div class="arena-mark">NQZ</div>
-        <div><strong>NqznZee Chess Arena</strong><small>V8.0 · ACCOUNT CLOUD</small></div>
+        <div><strong>NqznZee Chess Arena</strong><small>V8.0 · TITLES & ELO</small></div>
     </div>
     <div class="arena-actions">
         <span id="nqzBuildHealth" class="nqz-build-health">
@@ -2636,7 +2713,7 @@ body[data-nqz-theme="crystal"] .nqz-themed-piece {
             <div>
                 <h1>NqznZee Chess Arena</h1>
                 <div class="subtitle">
-                    V8.0 · Account Cloud · Game Review · Puzzle · Bot Ladder · 5 bộ quân & bàn
+                    V8.0 · GM / IM / FM · Elo trên tên · Account Cloud · Game Review
                 </div>
             </div>
         </div>
@@ -6958,6 +7035,10 @@ body[data-nqz-theme="crystal"] .nqz-themed-piece {
         $("topAvatar").textContent = topIsWhite ? "♙" : "♟";
         $("bottomAvatar").textContent = topIsWhite ? "♟" : "♙";
 
+        window.NQZ_PLAYER_V7
+            ?.applyPlayerName
+            ?.();
+
         const materialState =
             getCapturedMaterialState(a.game);
 
@@ -9771,7 +9852,7 @@ body[data-nqz-theme="crystal"] .nqz-themed-piece {
 
 <script id="nqz-web-share-build">
 window.addEventListener("DOMContentLoaded", () => {
-    document.documentElement.dataset.nqzBuild = "web-share-v8-0";
+    document.documentElement.dataset.nqzBuild = "web-share-v8-0-title-elo";
     const badge = document.getElementById("nqzBuildHealth");
     if (badge && !badge.textContent.includes("WEB")) {
         badge.title = (badge.title ? badge.title + "\n" : "") +
@@ -10142,7 +10223,7 @@ window.addEventListener("DOMContentLoaded", () => {
 (() => {
     "use strict";
 
-    const BUILD = "WEB V8.0";
+    const BUILD = "WEB V8.0 TITLES";
     const NAME_KEY = "nqz-player-name-v7";
 
     const $ = id =>
@@ -10179,6 +10260,15 @@ window.addEventListener("DOMContentLoaded", () => {
         $("nqzResultMarkV7");
 
     let playerName = "";
+
+    let playerIdentity = {
+        displayName: "",
+        rating: null,
+        title: null,
+        label: "",
+        source: "local",
+    };
+
     let nameConfirmed = false;
     let assistanceUsed = false;
     let assistanceSources = new Set();
@@ -10196,6 +10286,363 @@ window.addEventListener("DOMContentLoaded", () => {
         return String(value || "")
             .trim()
             .replace(/\s+/g, " ");
+    }
+
+    const TITLE_ORDER =
+        Object.freeze([
+            Object.freeze({
+                code: "GM",
+                aliases: Object.freeze([
+                    "GM",
+                    "NQZ_GM",
+                    "GRANDMASTER",
+                ]),
+                color: "#a63d4d",
+            }),
+
+            Object.freeze({
+                code: "IM",
+                aliases: Object.freeze([
+                    "IM",
+                    "NQZ_IM",
+                    "INTERNATIONAL_MASTER",
+                ]),
+                color: "#c55b3f",
+            }),
+
+            Object.freeze({
+                code: "FM",
+                aliases: Object.freeze([
+                    "FM",
+                    "NQZ_FM",
+                    "FIDE_MASTER",
+                ]),
+                color: "#9a6a45",
+            }),
+        ]);
+
+    function normalizedTitleCode(
+        value
+    ) {
+        return String(value || "")
+            .trim()
+            .toUpperCase()
+            .replace(/[\s-]+/g, "_");
+    }
+
+    function titleFromAccount(
+        account
+    ) {
+        if (
+            account
+                ?.chess_title
+                ?.code
+        ) {
+            return {
+                code:
+                    account
+                        .chess_title
+                        .code,
+
+                color:
+                    account
+                        .chess_title
+                        .color ||
+                    "#a63d4d",
+            };
+        }
+
+        const now =
+            Date.now();
+
+        const badges =
+            (
+                Array.isArray(
+                    account?.badges
+                )
+                    ? account.badges
+                    : []
+            ).filter(entry => {
+                if (!entry?.badges) {
+                    return false;
+                }
+
+                if (!entry.expires_at) {
+                    return true;
+                }
+
+                const expiresAt =
+                    new Date(
+                        entry.expires_at
+                    ).getTime();
+
+                return (
+                    Number.isFinite(
+                        expiresAt
+                    ) &&
+                    expiresAt > now
+                );
+            });
+
+        for (
+            const definition
+            of TITLE_ORDER
+        ) {
+            const match =
+                badges.find(entry => {
+                    const code =
+                        normalizedTitleCode(
+                            entry
+                                .badges
+                                .code
+                        );
+
+                    const name =
+                        normalizedTitleCode(
+                            entry
+                                .badges
+                                .display_name
+                        );
+
+                    return definition
+                        .aliases
+                        .some(alias => {
+                            const normalized =
+                                normalizedTitleCode(
+                                    alias
+                                );
+
+                            return (
+                                code ===
+                                    normalized ||
+                                name ===
+                                    normalized
+                            );
+                        });
+                });
+
+            if (match) {
+                return {
+                    code:
+                        definition.code,
+
+                    color:
+                        match
+                            .badges
+                            .color ||
+                        definition.color,
+                };
+            }
+        }
+
+        return null;
+    }
+
+    function identityFromAccount(
+        account
+    ) {
+        const displayName =
+            normalizedName(
+                account
+                    ?.display_name ||
+                account
+                    ?.username ||
+                ""
+            );
+
+        if (!displayName) {
+            return null;
+        }
+
+        const rawRating =
+            Number(
+                account
+                    ?.rating
+                    ?.bot_rating
+            );
+
+        const rating =
+            Number.isFinite(
+                rawRating
+            )
+                ? Math.round(rawRating)
+                : 1200;
+
+        const title =
+            titleFromAccount(
+                account
+            );
+
+        return {
+            displayName,
+            rating,
+            title,
+
+            label:
+                (
+                    title
+                        ? `[${title.code}] `
+                        : ""
+                ) +
+                displayName +
+                ` (${rating})`,
+
+            source:
+                "account-cloud",
+        };
+    }
+
+    function useAccountIdentity(
+        account
+    ) {
+        const identity =
+            identityFromAccount(
+                account
+            );
+
+        if (!identity) {
+            playerIdentity = {
+                displayName:
+                    playerName,
+                rating: null,
+                title: null,
+                label:
+                    playerName,
+                source:
+                    "local",
+            };
+
+            applyPlayerName();
+            return;
+        }
+
+        playerName =
+            identity.displayName;
+
+        playerIdentity =
+            identity;
+
+        nameConfirmed =
+            true;
+
+        localStorage.setItem(
+            NAME_KEY,
+            playerName
+        );
+
+        nameInput.value =
+            playerName;
+
+        applyPlayerName();
+
+        window.dispatchEvent(
+            new CustomEvent(
+                "nqz-player-name-ready",
+                {
+                    detail: {
+                        name:
+                            playerName,
+
+                        identity:
+                            identity.label,
+
+                        source:
+                            "account-cloud",
+                    },
+                }
+            )
+        );
+    }
+
+    function renderPlayerIdentityInto(
+        target
+    ) {
+        if (!target) {
+            return;
+        }
+
+        const identity =
+            playerIdentity;
+
+        target.replaceChildren();
+        target.classList.add(
+            "nqz-player-identity"
+        );
+
+        if (identity.title) {
+            const badge =
+                document.createElement(
+                    "span"
+                );
+
+            badge.className =
+                "nqz-title-badge";
+
+            badge.dataset.title =
+                identity.title.code;
+
+            badge.style.setProperty(
+                "--nqz-title-color",
+                identity.title.color ||
+                    "#a63d4d"
+            );
+
+            badge.textContent =
+                identity.title.code;
+
+            target.appendChild(
+                badge
+            );
+        }
+
+        const name =
+            document.createElement(
+                "span"
+            );
+
+        name.className =
+            "nqz-player-display-name";
+
+        name.textContent =
+            identity.displayName ||
+            playerName;
+
+        target.appendChild(
+            name
+        );
+
+        if (
+            Number.isFinite(
+                identity.rating
+            )
+        ) {
+            const rating =
+                document.createElement(
+                    "span"
+                );
+
+            rating.className =
+                "nqz-player-rating";
+
+            rating.textContent =
+                `(${identity.rating})`;
+
+            target.appendChild(
+                rating
+            );
+        }
+
+        const label =
+            identity.label ||
+            playerName;
+
+        target.title =
+            label;
+
+        target.setAttribute(
+            "aria-label",
+            label
+        );
     }
 
     function validateName(value) {
@@ -10290,16 +10737,17 @@ window.addEventListener("DOMContentLoaded", () => {
                     ) || "null"
                 );
 
-            const accountName =
-                normalizedName(
+            const identity =
+                identityFromAccount(
                     accountCache
-                        ?.display_name ||
-                    ""
                 );
 
-            if (accountName) {
+            if (identity) {
                 playerName =
-                    accountName;
+                    identity.displayName;
+
+                playerIdentity =
+                    identity;
 
                 nameConfirmed =
                     true;
@@ -10321,6 +10769,10 @@ window.addEventListener("DOMContentLoaded", () => {
                             detail: {
                                 name:
                                     playerName,
+
+                                identity:
+                                    identity.label,
+
                                 source:
                                     "account-cloud",
                             },
@@ -10402,13 +10854,9 @@ window.addEventListener("DOMContentLoaded", () => {
                     : $("bottomPlayerName");
 
             if (target) {
-                if (
-                    target.textContent !==
-                    playerName
-                ) {
-                    target.textContent =
-                        playerName;
-                }
+                renderPlayerIdentityInto(
+                    target
+                );
 
                 target.dataset.nqzPlayerName =
                     playerName;
@@ -10468,11 +10916,15 @@ window.addEventListener("DOMContentLoaded", () => {
 
         if (chip) {
             chip.textContent =
+                playerIdentity.label ||
                 playerName;
 
             chip.title =
                 "Người chơi: " +
-                playerName;
+                (
+                    playerIdentity.label ||
+                    playerName
+                );
         }
     }
 
@@ -10496,6 +10948,17 @@ window.addEventListener("DOMContentLoaded", () => {
 
         playerName =
             validation.value;
+
+        playerIdentity = {
+            displayName:
+                playerName,
+            rating: null,
+            title: null,
+            label:
+                playerName,
+            source:
+                "local",
+        };
 
         nameConfirmed = true;
 
@@ -10885,8 +11348,38 @@ window.addEventListener("DOMContentLoaded", () => {
         true
     );
 
+    window.addEventListener(
+        "nqz-account-updated",
+        event => {
+            useAccountIdentity(
+                event.detail?.account ||
+                null
+            );
+        }
+    );
+
     window.NQZ_PLAYER_V7 = {
-        getName: () => playerName,
+        getName:
+            () =>
+                playerName,
+
+        getIdentity:
+            () => ({
+                ...playerIdentity,
+            }),
+
+        getIdentityLabel:
+            () =>
+                playerIdentity.label ||
+                playerName,
+
+        renderIdentityInto:
+            renderPlayerIdentityInto,
+
+        applyPlayerName,
+
+        useAccountIdentity,
+
         setName: value => {
             nameInput.value =
                 String(value || "");

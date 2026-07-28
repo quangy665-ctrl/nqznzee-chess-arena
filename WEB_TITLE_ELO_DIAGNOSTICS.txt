@@ -1,0 +1,36 @@
+NQZNZEE WEB SHARE V8.0 — TITLES & ELO DIAGNOSTICS
+========================================================================================
+[OK] File: index.html
+[OK] File: 404.html
+[OK] File: login.html
+[OK] File: profile.html
+[OK] File: account.js
+[OK] File: account.css
+[OK] File: supabase-config.js
+[OK] File: nqznzee-pawn.png
+[OK] File: HUONG_DAN_TITLE_ELO.txt
+[OK] File: supabase/database/03_standard_chess_titles.sql
+[OK] File: supabase/database/04_grant_title_example.sql
+[OK] JavaScript syntax: account.js
+[OK] JavaScript syntax: supabase-config.js
+[OK] Inline JavaScript checked: index.html (9 blocks)
+[OK] Inline JavaScript checked: login.html (1 blocks)
+[OK] Inline JavaScript checked: profile.html (1 blocks)
+[OK] Runtime title priority and identity formatting
+[OK] Publishable key configured
+[OK] Publishable placeholder removed
+[OK] No client secret embedded
+[OK] GM IM FM definitions in account client
+[OK] Title priority GM then IM then FM
+[OK] Game displays title badge, name and Elo
+[OK] Account data refreshes game identity
+[OK] Profile displays title and Elo
+[OK] SQL creates GM IM FM
+[OK] No discarded V8.1 admin page included
+[OK] Desktop chess layout unchanged
+[OK] Build marker updated
+[OK] HTML IDs unique: index.html (170)
+[OK] HTML IDs unique: login.html (21)
+[OK] HTML IDs unique: profile.html (12)
+----------------------------------------------------------------------------------------
+RESULT: PASS — READY FOR TITLE SQL AND v8-account UPLOAD

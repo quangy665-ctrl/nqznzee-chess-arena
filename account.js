@@ -23,6 +23,253 @@
     let currentAccount = null;
     let widgetInstalled = false;
 
+    const CHESS_TITLE_DEFINITIONS =
+        Object.freeze([
+            Object.freeze({
+                code: "GM",
+                label: "GM",
+                rank: 300,
+                color: "#a63d4d",
+                aliases: Object.freeze([
+                    "GM",
+                    "NQZ_GM",
+                    "GRANDMASTER",
+                ]),
+            }),
+
+            Object.freeze({
+                code: "IM",
+                label: "IM",
+                rank: 200,
+                color: "#c55b3f",
+                aliases: Object.freeze([
+                    "IM",
+                    "NQZ_IM",
+                    "INTERNATIONAL_MASTER",
+                ]),
+            }),
+
+            Object.freeze({
+                code: "FM",
+                label: "FM",
+                rank: 100,
+                color: "#9a6a45",
+                aliases: Object.freeze([
+                    "FM",
+                    "NQZ_FM",
+                    "FIDE_MASTER",
+                ]),
+            }),
+        ]);
+
+    function normalizeBadgeCode(
+        value
+    ) {
+        return String(value || "")
+            .trim()
+            .toUpperCase()
+            .replace(/[\s-]+/g, "_");
+    }
+
+    function activeBadgeEntries(
+        account
+    ) {
+        const now =
+            Date.now();
+
+        return (
+            Array.isArray(
+                account?.badges
+            )
+                ? account.badges
+                : []
+        ).filter(entry => {
+            if (!entry?.badges) {
+                return false;
+            }
+
+            if (!entry.expires_at) {
+                return true;
+            }
+
+            const expiresAt =
+                new Date(
+                    entry.expires_at
+                ).getTime();
+
+            return (
+                Number.isFinite(
+                    expiresAt
+                ) &&
+                expiresAt > now
+            );
+        });
+    }
+
+    function getChessTitle(
+        account
+    ) {
+        const entries =
+            activeBadgeEntries(
+                account
+            );
+
+        for (
+            const definition
+            of CHESS_TITLE_DEFINITIONS
+        ) {
+            const match =
+                entries.find(entry => {
+                    const badge =
+                        entry.badges;
+
+                    const code =
+                        normalizeBadgeCode(
+                            badge.code
+                        );
+
+                    const displayName =
+                        normalizeBadgeCode(
+                            badge.display_name
+                        );
+
+                    return definition
+                        .aliases
+                        .some(alias => {
+                            const normalized =
+                                normalizeBadgeCode(
+                                    alias
+                                );
+
+                            return (
+                                code ===
+                                    normalized ||
+                                displayName ===
+                                    normalized
+                            );
+                        });
+                });
+
+            if (match) {
+                return {
+                    code:
+                        definition.code,
+
+                    label:
+                        definition.label,
+
+                    rank:
+                        definition.rank,
+
+                    color:
+                        match.badges
+                            .color ||
+                        definition.color,
+
+                    badge:
+                        match.badges,
+                };
+            }
+        }
+
+        return null;
+    }
+
+    function getAccountIdentity(
+        account
+    ) {
+        const displayName =
+            String(
+                account
+                    ?.display_name ||
+                account
+                    ?.username ||
+                "Người chơi"
+            ).trim() ||
+            "Người chơi";
+
+        const rawRating =
+            Number(
+                account
+                    ?.rating
+                    ?.bot_rating
+            );
+
+        const rating =
+            Number.isFinite(
+                rawRating
+            )
+                ? Math.round(rawRating)
+                : 1200;
+
+        const title =
+            getChessTitle(
+                account
+            );
+
+        const label =
+            (
+                title
+                    ? `[${title.label}] `
+                    : ""
+            ) +
+            displayName +
+            ` (${rating})`;
+
+        return {
+            displayName,
+            rating,
+            title,
+            label,
+        };
+    }
+
+    function enrichAccount(
+        account
+    ) {
+        if (!account) {
+            return null;
+        }
+
+        const identity =
+            getAccountIdentity(
+                account
+            );
+
+        return {
+            ...account,
+
+            badges:
+                activeBadgeEntries(
+                    account
+                ),
+
+            chess_title:
+                identity.title,
+
+            identity_label:
+                identity.label,
+        };
+    }
+
+    function dispatchAccountUpdate(
+        account
+    ) {
+        window.dispatchEvent(
+            new CustomEvent(
+                "nqz-account-updated",
+                {
+                    detail: {
+                        account:
+                            enrichAccount(
+                                account
+                            ),
+                    },
+                }
+            )
+        );
+    }
+
     function safeJsonParse(value) {
         try {
             return JSON.parse(value);
@@ -32,9 +279,11 @@
     }
 
     function getCachedAccount() {
-        return safeJsonParse(
-            localStorage.getItem(
-                cacheKey
+        return enrichAccount(
+            safeJsonParse(
+                localStorage.getItem(
+                    cacheKey
+                )
             )
         );
     }
@@ -47,10 +296,15 @@
             return;
         }
 
+        const enriched =
+            enrichAccount(
+                account
+            );
+
         localStorage.setItem(
             cacheKey,
             JSON.stringify({
-                ...account,
+                ...enriched,
                 cached_at:
                     new Date()
                         .toISOString(),
@@ -194,17 +448,24 @@
                     []
                 );
 
-        const account = {
-            ...profileResult.data,
-            rating:
-                ratingResult.data,
-            badges,
-        };
+        const account =
+            enrichAccount({
+                ...profileResult.data,
+
+                rating:
+                    ratingResult.data,
+
+                badges,
+            });
 
         currentAccount =
             account;
 
         setCachedAccount(
+            account
+        );
+
+        dispatchAccountUpdate(
             account
         );
 
@@ -237,6 +498,7 @@
             currentAccount = null;
             setCachedAccount(null);
             renderWidget(null);
+            dispatchAccountUpdate(null);
             return null;
         }
 
@@ -404,6 +666,7 @@
         currentAccount = null;
         setCachedAccount(null);
         renderWidget(null);
+        dispatchAccountUpdate(null);
     }
 
     function installWidget() {
@@ -619,41 +882,52 @@
             return;
         }
 
+        const identity =
+            getAccountIdentity(
+                account
+            );
+
         const displayName =
-            account.display_name ||
-            account.username;
+            identity.displayName;
 
         avatar.textContent =
             initials(displayName);
 
         label.textContent =
+            (
+                identity.title
+                    ? `${identity.title.label} `
+                    : ""
+            ) +
             displayName;
 
         rating.textContent =
-            account.rating
-                ? String(
-                    account.rating
-                        .bot_rating
-                )
-                : "";
-
-        const featuredBadge =
-            account.badges?.[0]
-                ?.badges ||
-            null;
+            String(
+                identity.rating
+            );
 
         menu.innerHTML = `
             <div class="nqz-account-menu-name">
                 ${
-                    featuredBadge
-                        ? `<span style="color:${
-                            featuredBadge.color ||
-                            "#22d3ee"
-                        }">[${
-                            featuredBadge.display_name
-                        }]</span> `
+                    identity.title
+                        ? `<span
+                            class="nqz-account-title-badge"
+                            data-title="${escapeHtml(
+                                identity.title.code
+                            )}"
+                            style="--nqz-title-color:${
+                                escapeHtml(
+                                    identity.title.color
+                                )
+                            }"
+                        >${escapeHtml(
+                            identity.title.label
+                        )}</span> `
                         : ""
                 }${escapeHtml(displayName)}
+                <span class="nqz-account-menu-inline-rating">
+                    (${identity.rating})
+                </span>
             </div>
 
             <div class="nqz-account-menu-user">
@@ -665,9 +939,7 @@
             <div class="nqz-account-menu-stat">
                 <span>NQZ Bot Rating</span>
                 <strong>${
-                    account.rating
-                        ?.bot_rating ??
-                    1200
+                    identity.rating
                 }</strong>
             </div>
 
@@ -746,6 +1018,10 @@
             renderWidget(
                 cached
             );
+
+            dispatchAccountUpdate(
+                cached
+            );
         } else {
             renderWidget(null);
         }
@@ -772,6 +1048,7 @@
                     );
 
                     renderWidget(null);
+                    dispatchAccountUpdate(null);
                 }
 
                 if (
@@ -817,6 +1094,15 @@
         signOut,
         fetchAccount,
         refreshAccount,
+        getChessTitle,
+        getAccountIdentity,
+        formatIdentity:
+            account =>
+                getAccountIdentity(
+                    account
+                ).label,
+        titleDefinitions:
+            CHESS_TITLE_DEFINITIONS,
     };
 
     if (
