@@ -1,0 +1,27 @@
+NQZNZEE WEB SHARE V7.10 — MOBILE OPTIONS DIAGNOSTICS
+========================================================================================
+[OK] File: index.html
+[OK] File: 404.html
+[OK] File: nqznzee-pawn.png
+[OK] File: manifest.webmanifest
+[OK] File: _redirects
+[OK] File: _headers
+[OK] File: HUONG_DAN_UPDATE_V7_10.txt
+[OK] JavaScript syntax: 8 inline blocks
+[OK] Mobile overlay exists
+[OK] Menu click listener exists
+[OK] Sheet open class is toggled
+[OK] Overlay open class is toggled
+[OK] Close button is installed
+[OK] Outside tap closes sheet
+[OK] Body scroll locks while open
+[OK] Undo mobile action restored
+[OK] Flip mobile action restored
+[OK] Coach mobile action restored
+[OK] Controller independent from board touch
+[OK] Desktop grid unchanged
+[OK] Build upgraded to V7.10
+[OK] Drawer open/close state model
+[OK] HTML IDs unique: 170
+----------------------------------------------------------------------------------------
+RESULT: PASS — READY TO UPLOAD TO GITHUB

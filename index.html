@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>NqznZee Chess Arena — V7.9 Instant Tap</title>
+<title>NqznZee Chess Arena — V7.10 Mobile Options Fix</title>
 
 <!--
 NqznZee Chess Arena
@@ -2502,6 +2502,61 @@ body[data-nqz-theme="crystal"] .nqz-themed-piece {
 
     .board.nqz-touch-performance .square {
         contain: layout paint style;
+    }
+
+
+    /* V7.10 — Mobile options sheet reliability fixes */
+    .controls.nqz-phone-sheet-visible {
+        display: block;
+        transform: translate3d(0, 0, 0);
+        visibility: visible;
+        opacity: 1;
+        pointer-events: auto;
+        touch-action: pan-y;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .controls:not(.nqz-phone-sheet-visible) {
+        opacity: 0;
+    }
+
+    .nqz-mobile-sheet-overlay.open {
+        display: block;
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        touch-action: none;
+    }
+
+    body.nqz-phone-sheet-open {
+        overflow: hidden;
+        overscroll-behavior: none;
+    }
+
+    .nqz-mobile-sheet-close {
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    #nqzPhoneMenu {
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    #nqzPhoneMenu.active {
+        color: #ffffff;
+        background: rgba(124, 92, 255, .18);
+    }
+
+    .controls.nqz-phone-sheet-visible
+    .nqz-tabs,
+    .controls.nqz-phone-sheet-visible
+    button,
+    .controls.nqz-phone-sheet-visible
+    select,
+    .controls.nqz-phone-sheet-visible
+    input {
+        pointer-events: auto;
     }
 
 }
@@ -9710,7 +9765,7 @@ body[data-nqz-theme="crystal"] .nqz-themed-piece {
 
 <script id="nqz-web-share-build">
 window.addEventListener("DOMContentLoaded", () => {
-    document.documentElement.dataset.nqzBuild = "web-share-v7-9";
+    document.documentElement.dataset.nqzBuild = "web-share-v7-10";
     const badge = document.getElementById("nqzBuildHealth");
     if (badge && !badge.textContent.includes("WEB")) {
         badge.title = (badge.title ? badge.title + "\n" : "") +
@@ -10081,7 +10136,7 @@ window.addEventListener("DOMContentLoaded", () => {
 (() => {
     "use strict";
 
-    const BUILD = "WEB V7.9";
+    const BUILD = "WEB V7.10";
     const NAME_KEY = "nqz-player-name-v7";
 
     const $ = id =>
@@ -11929,6 +11984,442 @@ window.addEventListener("DOMContentLoaded", () => {
 })();
 </script>
 <!-- NQZ INSTANT TAP V7.9 END -->
+
+
+<!-- NQZ MOBILE CONTROLS V7.10 START -->
+<button
+    id="nqzPhoneSheetOverlay"
+    class="nqz-mobile-sheet-overlay"
+    type="button"
+    aria-label="Đóng bảng tùy chọn"
+    tabindex="-1"
+></button>
+
+<script id="nqz-mobile-controls-v7-10">
+(() => {
+    "use strict";
+
+    const BUILD =
+        "WEB V7.10 MOBILE CONTROLS";
+
+    const PHONE_QUERY =
+        "(max-width: 767px), " +
+        "(max-width: 940px) and " +
+        "(max-height: 540px)";
+
+    const media =
+        window.matchMedia(
+            PHONE_QUERY
+        );
+
+    const $ = id =>
+        document.getElementById(id);
+
+    const controls =
+        document.querySelector(
+            ".controls"
+        );
+
+    const coach =
+        document.querySelector(
+            ".coach-card"
+        );
+
+    const overlay =
+        $("nqzPhoneSheetOverlay");
+
+    const menuButton =
+        $("nqzPhoneMenu");
+
+    const coachButton =
+        $("nqzPhoneCoach");
+
+    const undoButton =
+        $("nqzPhoneUndo");
+
+    const flipButton =
+        $("nqzPhoneFlip");
+
+    let closeButton = null;
+    let lastFocused = null;
+
+    function isPhone() {
+        return media.matches;
+    }
+
+    function installCloseButton() {
+        if (!controls) return;
+
+        controls.id =
+            controls.id ||
+            "nqzMobileControls";
+
+        closeButton =
+            controls.querySelector(
+                ".nqz-mobile-sheet-close"
+            );
+
+        if (!closeButton) {
+            closeButton =
+                document.createElement(
+                    "button"
+                );
+
+            closeButton.type =
+                "button";
+
+            closeButton.className =
+                "nqz-mobile-sheet-close";
+
+            closeButton.textContent =
+                "×";
+
+            closeButton.setAttribute(
+                "aria-label",
+                "Đóng bảng tùy chọn"
+            );
+
+            controls.prepend(
+                closeButton
+            );
+        }
+
+        menuButton?.setAttribute(
+            "aria-controls",
+            controls.id
+        );
+
+        closeButton.addEventListener(
+            "click",
+            closeOptions
+        );
+    }
+
+    function setOptionsOpen(open) {
+        if (
+            !controls ||
+            !overlay ||
+            !menuButton
+        ) {
+            return;
+        }
+
+        const visible =
+            Boolean(open) &&
+            isPhone();
+
+        if (visible) {
+            lastFocused =
+                document.activeElement;
+        }
+
+        controls.classList.toggle(
+            "nqz-phone-sheet-visible",
+            visible
+        );
+
+        overlay.classList.toggle(
+            "open",
+            visible
+        );
+
+        menuButton.classList.toggle(
+            "active",
+            visible
+        );
+
+        menuButton.setAttribute(
+            "aria-expanded",
+            String(visible)
+        );
+
+        controls.setAttribute(
+            "aria-hidden",
+            String(!visible)
+        );
+
+        document.body.classList.toggle(
+            "nqz-phone-sheet-open",
+            visible
+        );
+
+        if (visible) {
+            controls.scrollTop = 0;
+
+            window.requestAnimationFrame(
+                () => {
+                    closeButton?.focus({
+                        preventScroll: true,
+                    });
+                }
+            );
+        } else if (
+            lastFocused &&
+            typeof lastFocused.focus ===
+                "function"
+        ) {
+            lastFocused.focus({
+                preventScroll: true,
+            });
+        }
+
+        window.dispatchEvent(
+            new CustomEvent(
+                "nqz-mobile-options",
+                {
+                    detail: {
+                        open: visible,
+                    },
+                }
+            )
+        );
+    }
+
+    function openOptions() {
+        setOptionsOpen(true);
+    }
+
+    function closeOptions() {
+        setOptionsOpen(false);
+    }
+
+    function toggleOptions() {
+        const open =
+            controls?.classList.contains(
+                "nqz-phone-sheet-visible"
+            );
+
+        setOptionsOpen(!open);
+    }
+
+    function toggleCoach() {
+        if (
+            !coach ||
+            !coachButton ||
+            !isPhone()
+        ) {
+            return;
+        }
+
+        closeOptions();
+
+        const open =
+            !coach.classList.contains(
+                "nqz-phone-coach-open"
+            );
+
+        coach.classList.toggle(
+            "nqz-phone-coach-open",
+            open
+        );
+
+        coachButton.classList.toggle(
+            "active",
+            open
+        );
+
+        coachButton.setAttribute(
+            "aria-expanded",
+            String(open)
+        );
+
+        if (open) {
+            window.requestAnimationFrame(
+                () => {
+                    coach.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start",
+                    });
+                }
+            );
+        }
+    }
+
+    function clickExisting(
+        primaryId,
+        fallbackId
+    ) {
+        const target =
+            $(primaryId) ||
+            $(fallbackId);
+
+        if (!target) return;
+
+        target.click();
+
+        if (
+            typeof navigator.vibrate ===
+                "function"
+        ) {
+            navigator.vibrate(5);
+        }
+    }
+
+    function syncMode() {
+        installCloseButton();
+
+        if (!isPhone()) {
+            controls?.classList.remove(
+                "nqz-phone-sheet-visible"
+            );
+
+            overlay?.classList.remove(
+                "open"
+            );
+
+            menuButton?.classList.remove(
+                "active"
+            );
+
+            menuButton?.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
+            controls?.removeAttribute(
+                "aria-hidden"
+            );
+
+            document.body.classList.remove(
+                "nqz-phone-sheet-open"
+            );
+        } else {
+            controls?.setAttribute(
+                "aria-hidden",
+                String(
+                    !controls.classList
+                        .contains(
+                            "nqz-phone-sheet-visible"
+                        )
+                )
+            );
+        }
+    }
+
+    menuButton?.addEventListener(
+        "click",
+        event => {
+            event.preventDefault();
+            event.stopPropagation();
+            toggleOptions();
+        }
+    );
+
+    overlay?.addEventListener(
+        "click",
+        event => {
+            event.preventDefault();
+            closeOptions();
+        }
+    );
+
+    coachButton?.addEventListener(
+        "click",
+        event => {
+            event.preventDefault();
+            toggleCoach();
+        }
+    );
+
+    undoButton?.addEventListener(
+        "click",
+        event => {
+            event.preventDefault();
+
+            clickExisting(
+                "nqzUndo",
+                "undoBtn"
+            );
+        }
+    );
+
+    flipButton?.addEventListener(
+        "click",
+        event => {
+            event.preventDefault();
+
+            clickExisting(
+                "nqzFlip",
+                "flipBtn"
+            );
+        }
+    );
+
+    controls?.addEventListener(
+        "click",
+        event => {
+            const tab =
+                event.target.closest(
+                    ".nqz-tab"
+                );
+
+            if (
+                tab &&
+                isPhone()
+            ) {
+                window.requestAnimationFrame(
+                    () => {
+                        tab.scrollIntoView({
+                            block: "nearest",
+                            inline: "center",
+                        });
+                    }
+                );
+            }
+        }
+    );
+
+    document.addEventListener(
+        "keydown",
+        event => {
+            if (
+                event.key === "Escape" &&
+                controls?.classList.contains(
+                    "nqz-phone-sheet-visible"
+                )
+            ) {
+                closeOptions();
+            }
+        }
+    );
+
+    window.addEventListener(
+        "orientationchange",
+        () => {
+            window.setTimeout(
+                syncMode,
+                80
+            );
+        }
+    );
+
+    if (
+        typeof media.addEventListener ===
+            "function"
+    ) {
+        media.addEventListener(
+            "change",
+            syncMode
+        );
+    } else {
+        media.addListener(
+            syncMode
+        );
+    }
+
+    window.NQZ_MOBILE_CONTROLS_V710 = {
+        build: BUILD,
+        isPhone,
+        openOptions,
+        closeOptions,
+        toggleOptions,
+        toggleCoach,
+    };
+
+    syncMode();
+})();
+</script>
+<!-- NQZ MOBILE CONTROLS V7.10 END -->
 
 </body>
 </html>

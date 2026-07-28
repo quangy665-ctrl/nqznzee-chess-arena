@@ -1,0 +1,23 @@
+NQZNZEE WEB SHARE V7.10 — MOBILE OPTIONS FIX
+
+ĐÃ SỬA
+- Nút Tùy chọn trên mobile mở lại bảng điều khiển.
+- Bảng bot, phong cách, engine, review, puzzle và hồ sơ có thể thao tác.
+- Có lớp nền tối; chạm ra ngoài để đóng.
+- Có nút × để đóng bảng.
+- Nhấn Escape cũng đóng được.
+- Khóa cuộn trang khi bảng đang mở.
+- Bảng có cuộn riêng và hỗ trợ cuộn mượt trên iPhone.
+- Nút Lùi, Đảo bàn và Coach trên thanh mobile được nối lại.
+- Controller menu được tách riêng khỏi controller bàn cờ.
+  Các lần tối ưu cảm ứng sau sẽ không vô tình xóa menu nữa.
+
+CẬP NHẬT GITHUB
+1. Giải nén NqznZee_Web_Share_V7_10_Mobile_Options_Fix.zip.
+2. Vào repository nqznzee-chess-arena.
+3. Add file > Upload files.
+4. Kéo toàn bộ file lên và ghi đè file cũ.
+5. Chọn Commit directly to the main branch.
+6. Commit changes.
+7. Mở:
+   https://quangy665-ctrl.github.io/nqznzee-chess-arena/?v=7.10

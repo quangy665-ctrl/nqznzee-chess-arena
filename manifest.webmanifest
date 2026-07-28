@@ -1,7 +1,7 @@
 {
   "name": "NqznZee Chess Arena",
   "short_name": "NqznZee Chess",
-  "description": "NqznZee Chess Arena V7.9 — Standard mặc định ổn định, sửa hình quân khi đổi theme và Instant Tap không render ở cú chạm đầu.",
+  "description": "NqznZee Chess Arena V7.10 — sửa bảng Tùy chọn trên mobile, khôi phục thay bot, phong cách, engine, review và các tab điều khiển.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
