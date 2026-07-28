@@ -1,0 +1,30 @@
+NQZNZEE WEB SHARE V7 — UPDATE TRÊN GITHUB PAGES
+
+CÁCH UPDATE
+1. Giải nén NqznZee_Web_Share_V7.zip.
+2. Vào repository nqznzee-chess-arena trên GitHub.
+3. Chọn Add file > Upload files.
+4. Kéo TOÀN BỘ file trong thư mục đã giải nén lên GitHub.
+5. Ghi đè các file cũ và Commit trực tiếp vào nhánh main.
+6. Chờ GitHub Pages triển khai lại.
+7. Mở:
+   https://quangy665-ctrl.github.io/nqznzee-chess-arena/?v=7
+
+TÍNH NĂNG V7
+- Mỗi lần vào game sẽ hiện bảng nhập tên.
+- Tên hoặc biệt danh hợp lệ từ 1 đến 100 ký tự.
+- Tên được lưu riêng trên trình duyệt của mỗi người.
+- Tên xuất hiện trên thanh người chơi.
+- Thắng không trợ giúp:
+  “Bạn thật sự giỏi đấy, X! Cảm ơn bạn đã tham gia. Bạn tiếp tục chứ?”
+- Thắng có trợ giúp:
+  “Trợ giúp có thể khiến bạn thắng nhưng không thể giúp trình độ bạn nâng cao lên đâu, X à.”
+- Thua:
+  “Bạn có trình không, X? Thử lại một ván nữa nhé.”
+- Hòa có thông báo riêng.
+- Các thao tác được tính là trợ giúp:
+  Quét thế cờ, Gợi ý engine, Coach hiện nước tốt, Tác nhân tự đi.
+
+LƯU Ý
+- Đây là bản web thử nghiệm chơi với bot.
+- Game cần Internet để tải chess.js và Stockfish.

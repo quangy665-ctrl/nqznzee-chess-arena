@@ -1,0 +1,19 @@
+NQZNZEE WEB SHARE V7.3 — ART PIECE COLLECTION
+
+NÂNG CẤP
+- 30 model SVG riêng: 6 quân x 5 phong cách.
+- Tiêu chuẩn: Staunton điêu khắc, hình khối cân đối.
+- Khủng long: trứng hóa thạch, raptor, T-Rex, cánh pterosaur và núi lửa.
+- Tương lai: mecha đa giác, lõi năng lượng và đường mạch neon.
+- Phục Hưng: cẩm thạch, đồng cổ, hoa văn hoàng gia và chạm khắc.
+- Pha lê: khối cắt mặt, phản quang, đường facet trong suốt.
+- Mỗi phong cách có vật liệu bàn cờ, ánh sáng và bóng riêng.
+- Gallery theme hiện trực tiếp mẫu Vua, Hậu và Mã của từng bộ.
+
+UPDATE GITHUB
+1. Giải nén NqznZee_Web_Share_V7_3_Art_Pieces.zip.
+2. Vào repository nqznzee-chess-arena.
+3. Add file > Upload files.
+4. Kéo toàn bộ file lên và ghi đè file cũ.
+5. Commit vào nhánh main.
+6. Mở link với ?v=7.3 để tránh cache.

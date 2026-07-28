@@ -1,0 +1,833 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+body {
+    margin: 0;
+    padding: 24px;
+    color: #eef2ff;
+    background: #080a10;
+    font-family: Inter, Arial, sans-serif;
+}
+h1 { margin: 0 0 18px; }
+.row {
+    margin: 0 0 18px;
+    padding: 14px;
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 16px;
+    background: #151823;
+}
+.row h2 { margin: 0 0 10px; font-size: 16px; }
+.pieces {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(48px, 1fr));
+    gap: 5px;
+    align-items: end;
+}
+.cell {
+    min-height: 88px;
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+    background:
+        linear-gradient(135deg, rgba(255,255,255,.07), transparent),
+        #242838;
+}
+.piece-image { width: 82px; height: 82px; overflow: visible; }
+</style>
+</head>
+<body>
+<h1>NqznZee V7.3 · Art Piece Collection</h1>
+<div id="gallery"></div>
+<script>
+    const NQZ_ART_PALETTES = {
+        standard: {
+            white: {
+                top: "#fffdf5",
+                mid: "#ded9c8",
+                low: "#85857e",
+                edge: "#686b68",
+                line: "#444946",
+                glow: "#fffbe9",
+            },
+            black: {
+                top: "#62686c",
+                mid: "#272b2e",
+                low: "#090b0c",
+                edge: "#050606",
+                line: "#a3aaa8",
+                glow: "#747d7b",
+            },
+        },
+        dinosaur: {
+            white: {
+                top: "#f2df9d",
+                mid: "#9ca45a",
+                low: "#46552d",
+                edge: "#34401f",
+                line: "#62572d",
+                glow: "#f6e9a8",
+            },
+            black: {
+                top: "#708254",
+                mid: "#314229",
+                low: "#10170f",
+                edge: "#090e08",
+                line: "#a6b06c",
+                glow: "#7ea85d",
+            },
+        },
+        future: {
+            white: {
+                top: "#f1fdff",
+                mid: "#4cecff",
+                low: "#294dff",
+                edge: "#102487",
+                line: "#d9ffff",
+                glow: "#3deaff",
+            },
+            black: {
+                top: "#ffd9ff",
+                mid: "#bd58ff",
+                low: "#30105f",
+                edge: "#15052f",
+                line: "#ffd9ff",
+                glow: "#c55cff",
+            },
+        },
+        renaissance: {
+            white: {
+                top: "#fff4cf",
+                mid: "#d7a84e",
+                low: "#75431f",
+                edge: "#553016",
+                line: "#fff0b0",
+                glow: "#e8bd67",
+            },
+            black: {
+                top: "#a55d3a",
+                mid: "#54291d",
+                low: "#190d0b",
+                edge: "#100706",
+                line: "#dda15e",
+                glow: "#9e5933",
+            },
+        },
+        crystal: {
+            white: {
+                top: "#ffffff",
+                mid: "#a9ecff",
+                low: "#4c9fc7",
+                edge: "#367f9f",
+                line: "#ffffff",
+                glow: "#bcefff",
+            },
+            black: {
+                top: "#91d8f2",
+                mid: "#376f9d",
+                low: "#102a46",
+                edge: "#091a2e",
+                line: "#b7ebff",
+                glow: "#63bfe9",
+            },
+        },
+    };
+
+    function nqzPieceBase(id, palette, themeId) {
+        if (themeId === "dinosaur") {
+            return `
+                <path d="M20 83 C27 77 73 77 80 83 L76 91 H24 Z"
+                    fill="url(#${id}-body)" stroke="${palette.edge}" stroke-width="2.2"/>
+                <path d="M25 84 L18 88 M38 82 L34 91 M62 82 L66 91 M75 84 L82 88"
+                    fill="none" stroke="${palette.line}" stroke-width="2.2" stroke-linecap="round"/>
+                <path d="M27 85 Q50 90 73 85"
+                    fill="none" stroke="${palette.glow}" stroke-width="1.4" opacity=".45"/>
+            `;
+        }
+
+        if (themeId === "future") {
+            return `
+                <path d="M19 84 L28 76 H72 L81 84 L75 92 H25 Z"
+                    fill="url(#${id}-body)" stroke="${palette.edge}" stroke-width="2"/>
+                <path d="M28 80 H72 M24 86 H76"
+                    stroke="${palette.glow}" stroke-width="1.5" opacity=".72"/>
+                <circle cx="50" cy="84" r="3.2"
+                    fill="url(#${id}-core)" stroke="${palette.line}" stroke-width="1"/>
+            `;
+        }
+
+        if (themeId === "renaissance") {
+            return `
+                <path d="M18 86 Q24 78 32 78 H68 Q76 78 82 86 L78 92 H22 Z"
+                    fill="url(#${id}-body)" stroke="${palette.edge}" stroke-width="2.1"/>
+                <path d="M25 84 Q50 89 75 84 M29 79 Q50 83 71 79"
+                    fill="none" stroke="${palette.line}" stroke-width="1.5" opacity=".72"/>
+                <circle cx="22" cy="86" r="2.3" fill="${palette.mid}"/>
+                <circle cx="78" cy="86" r="2.3" fill="${palette.mid}"/>
+            `;
+        }
+
+        if (themeId === "crystal") {
+            return `
+                <path d="M18 84 L31 76 H69 L82 84 L74 93 H26 Z"
+                    fill="url(#${id}-glass)" stroke="${palette.edge}" stroke-width="1.8"/>
+                <path d="M18 84 L50 88 L82 84 M31 76 L50 88 L69 76 M26 93 L50 88 L74 93"
+                    fill="none" stroke="${palette.line}" stroke-width="1.05" opacity=".6"/>
+            `;
+        }
+
+        return `
+            <path d="M20 84 Q24 77 32 76 H68 Q76 77 80 84 L76 92 H24 Z"
+                fill="url(#${id}-body)" stroke="${palette.edge}" stroke-width="2.1"/>
+            <path d="M26 82 Q50 86 74 82 M28 77 Q50 81 72 77"
+                fill="none" stroke="${palette.line}" stroke-width="1.35" opacity=".55"/>
+        `;
+    }
+
+    function nqzStandardShape(type, id, p) {
+        const fill = `url(#${id}-body)`;
+        const base = nqzPieceBase(id, p, "standard");
+
+        const shapes = {
+            p: `
+                <circle cx="50" cy="25" r="11.5"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2"/>
+                <path d="M38 39 Q50 34 62 39 L58 47 H42 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2"/>
+                <path d="M43 46 C42 57 35 66 30 76 H70 C65 66 58 57 57 46 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.2"/>
+                <path d="M39 62 Q50 68 61 62"
+                    fill="none" stroke="${p.line}" stroke-width="1.4" opacity=".55"/>
+                ${base}
+            `,
+            r: `
+                <path d="M28 18 V28 H72 V18 H63 V23 H55 V18 H45 V23 H37 V18 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.2" stroke-linejoin="round"/>
+                <path d="M32 29 H68 L64 38 H36 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2"/>
+                <path d="M37 37 L34 72 H66 L63 37 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.2"/>
+                <path d="M42 42 V68 M58 42 V68"
+                    stroke="${p.line}" stroke-width="1.4" opacity=".45"/>
+                <path d="M29 72 H71 L68 79 H32 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2"/>
+                ${base}
+            `,
+            n: `
+                <path d="M29 73
+                         C31 61 35 51 41 44
+                         C34 39 34 30 42 22
+                         C49 15 60 15 69 20
+                         L62 25
+                         C70 29 73 38 71 47
+                         L63 44
+                         C60 52 56 59 58 73 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.4" stroke-linejoin="round"/>
+                <path d="M42 23 L37 17 L48 20"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2"/>
+                <circle cx="57" cy="31" r="2.3" fill="${p.line}"/>
+                <path d="M49 40 Q59 43 66 39"
+                    fill="none" stroke="${p.line}" stroke-width="1.7"/>
+                <path d="M34 72 H66 L69 79 H30 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2"/>
+                ${base}
+            `,
+            b: `
+                <path d="M50 15
+                         C61 22 65 31 60 40
+                         C57 45 55 48 58 52
+                         H42 C45 48 43 45 40 40
+                         C35 31 39 22 50 15 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.2"/>
+                <path d="M54 22 L44 38"
+                    stroke="${p.line}" stroke-width="3" stroke-linecap="round"/>
+                <path d="M39 51 H61 L64 59 H36 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2"/>
+                <path d="M40 58 C39 64 34 69 31 75 H69 C66 69 61 64 60 58 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.2"/>
+                ${base}
+            `,
+            q: `
+                <circle cx="27" cy="23" r="4.2" fill="${fill}" stroke="${p.edge}" stroke-width="1.7"/>
+                <circle cx="50" cy="16" r="4.5" fill="${fill}" stroke="${p.edge}" stroke-width="1.7"/>
+                <circle cx="73" cy="23" r="4.2" fill="${fill}" stroke="${p.edge}" stroke-width="1.7"/>
+                <path d="M24 28 L34 39 L50 24 L66 39 L76 28 L70 48 H30 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.2" stroke-linejoin="round"/>
+                <path d="M34 48 H66 L64 57 H36 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2"/>
+                <path d="M39 56 C38 64 32 70 29 76 H71 C68 70 62 64 61 56 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.2"/>
+                <path d="M38 43 Q50 48 62 43"
+                    fill="none" stroke="${p.line}" stroke-width="1.4" opacity=".65"/>
+                ${base}
+            `,
+            k: `
+                <path d="M47 11 H53 V19 H60 V25 H53 V32 H47 V25 H40 V19 H47 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="1.8"/>
+                <path d="M34 34 Q50 25 66 34 L62 46 H38 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.1"/>
+                <path d="M38 46 H62 L65 55 H35 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2"/>
+                <path d="M39 54 C38 63 31 69 28 76 H72 C69 69 62 63 61 54 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.3"/>
+                <path d="M41 39 Q50 44 59 39"
+                    fill="none" stroke="${p.line}" stroke-width="1.4" opacity=".62"/>
+                ${base}
+            `,
+        };
+        return shapes[type] || "";
+    }
+
+    function nqzDinosaurShape(type, id, p) {
+        const fill = `url(#${id}-body)`;
+        const core = `url(#${id}-core)`;
+        const base = nqzPieceBase(id, p, "dinosaur");
+
+        const scaleMarks = `
+            <path d="M36 55 Q40 50 44 55 M46 59 Q50 54 54 59 M56 54 Q60 49 64 54"
+                fill="none" stroke="${p.line}" stroke-width="1.4" opacity=".55"/>
+        `;
+
+        const shapes = {
+            p: `
+                <path d="M50 17
+                         C63 18 70 31 67 45
+                         C65 56 59 65 56 75
+                         H44 C41 65 35 56 33 45
+                         C30 31 37 18 50 17 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.4"/>
+                <path d="M43 28 L49 35 L45 42 L54 47 L49 55"
+                    fill="none" stroke="${p.line}" stroke-width="2.1" stroke-linecap="round"/>
+                <circle cx="56" cy="31" r="2.2" fill="${p.glow}" opacity=".75"/>
+                ${scaleMarks}
+                ${base}
+            `,
+            r: `
+                <path d="M27 25 L34 17 L40 24 L49 14 L57 24 L66 17 L74 26 L69 37 H31 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.4" stroke-linejoin="round"/>
+                <path d="M34 36 L30 73 H70 L66 36 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.4"/>
+                <path d="M42 38 L47 50 L43 58 L49 70"
+                    fill="none" stroke="${p.glow}" stroke-width="2.1" opacity=".72"/>
+                <path d="M31 49 Q50 40 69 49"
+                    fill="none" stroke="${p.line}" stroke-width="1.5" opacity=".55"/>
+                <path d="M27 72 H73 L68 80 H32 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.1"/>
+                ${base}
+            `,
+            n: `
+                <path d="M25 74
+                         C29 62 35 53 42 47
+                         C37 43 34 37 36 29
+                         L43 33
+                         C44 23 53 17 66 19
+                         L61 25
+                         C72 28 77 37 73 47
+                         L65 45
+                         L70 52
+                         C62 56 55 61 57 74 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.5" stroke-linejoin="round"/>
+                <path d="M44 31 L40 22 L48 28 M50 26 L50 18 L56 25 M57 26 L63 19 L63 29"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="1.8" stroke-linejoin="round"/>
+                <circle cx="61" cy="34" r="2.4" fill="${p.glow}"/>
+                <path d="M56 42 L71 39 M58 46 L69 47"
+                    stroke="${p.line}" stroke-width="1.7" stroke-linecap="round"/>
+                <path d="M63 42 L66 45 L69 41"
+                    fill="none" stroke="${p.glow}" stroke-width="1.4"/>
+                ${scaleMarks}
+                ${base}
+            `,
+            b: `
+                <path d="M48 14
+                         C58 18 64 27 61 36
+                         L70 45
+                         L58 46
+                         C57 53 60 58 64 63
+                         H36 C40 58 43 53 42 46
+                         L30 45
+                         L39 36
+                         C36 27 40 18 48 14 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.4" stroke-linejoin="round"/>
+                <path d="M51 20 L43 37"
+                    stroke="${p.glow}" stroke-width="3" stroke-linecap="round"/>
+                <path d="M39 37 L26 31 L34 45 M61 37 L75 31 L66 45"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2"/>
+                <circle cx="52" cy="29" r="2" fill="${p.line}"/>
+                <path d="M35 62 L30 75 H70 L65 62 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.2"/>
+                ${base}
+            `,
+            q: `
+                <path d="M27 34 L20 21 L35 28 L42 14 L50 29 L59 14 L66 29 L81 21 L74 42 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.4" stroke-linejoin="round"/>
+                <path d="M26 39
+                         C32 31 39 30 50 31
+                         C61 30 68 31 74 39
+                         L67 54
+                         C61 59 58 64 60 73
+                         H40
+                         C42 64 39 59 33 54 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.5"/>
+                <path d="M31 37 L21 43 M69 37 L79 43 M38 33 L33 22 M62 33 L67 22"
+                    stroke="${p.glow}" stroke-width="3" stroke-linecap="round"/>
+                <circle cx="43" cy="43" r="2.1" fill="${p.line}"/>
+                <circle cx="57" cy="43" r="2.1" fill="${p.line}"/>
+                <path d="M42 51 Q50 56 58 51"
+                    fill="none" stroke="${p.line}" stroke-width="1.7"/>
+                ${scaleMarks}
+                ${base}
+            `,
+            k: `
+                <path d="M48 10 H54 L53 18 L61 16 L62 22 L54 25 L59 32 L53 35 L49 27 L43 34 L38 30 L44 24 L36 20 L39 15 L47 18 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="1.8"/>
+                <path d="M31 42
+                         C33 31 42 25 54 27
+                         C65 29 73 37 73 47
+                         L64 45
+                         L70 53
+                         C64 59 58 64 59 74
+                         H39
+                         C40 64 34 57 29 52 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.6" stroke-linejoin="round"/>
+                <path d="M38 31 L34 23 L43 28 M46 27 L47 18 L52 28 M55 29 L63 22 L61 33"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="1.9"/>
+                <circle cx="59" cy="38" r="2.4" fill="${p.glow}"/>
+                <path d="M55 47 L70 44 L64 50"
+                    fill="none" stroke="${p.line}" stroke-width="1.8"/>
+                ${scaleMarks}
+                ${base}
+            `,
+        };
+        return shapes[type] || "";
+    }
+
+    function nqzFutureShape(type, id, p) {
+        const fill = `url(#${id}-body)`;
+        const core = `url(#${id}-core)`;
+        const base = nqzPieceBase(id, p, "future");
+        const wire = `stroke="${p.line}" stroke-width="1.6" fill="none" opacity=".82"`;
+
+        const shapes = {
+            p: `
+                <circle cx="50" cy="25" r="12"
+                    fill="${core}" stroke="${p.edge}" stroke-width="2"/>
+                <path d="M41 38 L50 32 L59 38 L63 52 L57 72 H43 L37 52 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.2"/>
+                <path d="M42 42 H58 M39 52 H61 M45 60 H55"
+                    ${wire}/>
+                <circle cx="50" cy="25" r="4.2" fill="${p.glow}" opacity=".76"/>
+                ${base}
+            `,
+            r: `
+                <path d="M26 19 L35 15 L41 22 L50 15 L59 22 L65 15 L74 19 L70 34 H30 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.2" stroke-linejoin="round"/>
+                <path d="M34 34 L30 72 L38 78 H62 L70 72 L66 34 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.2"/>
+                <path d="M39 38 L37 68 M50 35 V74 M61 38 L63 68"
+                    ${wire}/>
+                <path d="M32 49 H68 M31 63 H69"
+                    stroke="${p.glow}" stroke-width="1.4" opacity=".65"/>
+                ${base}
+            `,
+            n: `
+                <path d="M27 73 L33 54 L43 44 L38 35 L46 20 L65 18 L72 30 L67 39 L74 48 L62 51 L56 72 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.4" stroke-linejoin="round"/>
+                <path d="M46 21 L53 14 L58 20 M42 43 L55 34 L68 38 M36 55 L57 54"
+                    ${wire}/>
+                <circle cx="61" cy="29" r="3.2" fill="${core}" stroke="${p.line}" stroke-width="1.2"/>
+                <path d="M65 41 L73 45 L66 48"
+                    fill="none" stroke="${p.glow}" stroke-width="1.8"/>
+                ${base}
+            `,
+            b: `
+                <path d="M50 13 L63 29 L57 44 L65 55 L58 72 H42 L35 55 L43 44 L37 29 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.3" stroke-linejoin="round"/>
+                <path d="M50 16 V70 M42 31 L58 31 M39 54 H61"
+                    ${wire}/>
+                <path d="M54 21 L44 40"
+                    stroke="${p.glow}" stroke-width="3.2" stroke-linecap="round"/>
+                <circle cx="50" cy="52" r="4" fill="${core}" opacity=".9"/>
+                ${base}
+            `,
+            q: `
+                <path d="M24 31 L31 17 L42 30 L50 12 L58 30 L69 17 L76 31 L69 47 H31 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.3" stroke-linejoin="round"/>
+                <circle cx="31" cy="17" r="3.2" fill="${core}"/>
+                <circle cx="50" cy="12" r="3.2" fill="${core}"/>
+                <circle cx="69" cy="17" r="3.2" fill="${core}"/>
+                <path d="M35 48 L40 72 H60 L65 48 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.2"/>
+                <path d="M39 51 H61 M43 60 H57 M50 32 V71"
+                    ${wire}/>
+                <circle cx="50" cy="42" r="4.1" fill="${core}"/>
+                ${base}
+            `,
+            k: `
+                <path d="M46 9 H54 V18 H63 V26 H54 V35 H46 V26 H37 V18 H46 Z"
+                    fill="${core}" stroke="${p.edge}" stroke-width="2"/>
+                <path d="M31 39 L42 30 H58 L69 39 L64 52 H36 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.2"/>
+                <path d="M37 52 L41 72 H59 L63 52 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.2"/>
+                <path d="M40 42 H60 M38 55 H62 M50 32 V71"
+                    ${wire}/>
+                <circle cx="50" cy="47" r="4.4" fill="${core}"/>
+                ${base}
+            `,
+        };
+        return shapes[type] || "";
+    }
+
+    function nqzRenaissanceShape(type, id, p) {
+        const fill = `url(#${id}-body)`;
+        const base = nqzPieceBase(id, p, "renaissance");
+        const ornament = `
+            <path d="M39 66 Q43 61 47 66 Q50 70 53 66 Q57 61 61 66"
+                fill="none" stroke="${p.line}" stroke-width="1.4" opacity=".75"/>
+        `;
+
+        const shapes = {
+            p: `
+                <circle cx="50" cy="24" r="10.5"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2"/>
+                <path d="M39 38 Q50 32 61 38 L58 46 H42 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2"/>
+                <path d="M43 45 C42 57 35 65 30 76 H70 C65 65 58 57 57 45 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.2"/>
+                <path d="M45 20 Q50 15 55 20 M42 55 Q50 60 58 55"
+                    fill="none" stroke="${p.line}" stroke-width="1.5"/>
+                ${ornament}
+                ${base}
+            `,
+            r: `
+                <path d="M27 17 V29 H73 V17 H64 V23 H56 V17 H44 V23 H36 V17 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.2"/>
+                <path d="M31 29 H69 L66 38 H34 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2"/>
+                <path d="M36 37 L32 72 H68 L64 37 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.2"/>
+                <path d="M42 44 Q50 36 58 44 V65 H42 Z"
+                    fill="rgba(40,20,13,.24)" stroke="${p.line}" stroke-width="1.5"/>
+                <path d="M30 72 H70 L67 80 H33 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2"/>
+                ${ornament}
+                ${base}
+            `,
+            n: `
+                <path d="M27 74 C30 61 36 52 43 46
+                         C37 40 36 32 42 24
+                         C49 16 62 16 70 23
+                         L63 29 C70 33 72 41 69 49
+                         L61 46 C58 55 55 62 58 74 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.4"/>
+                <path d="M43 24 L40 15 L49 21 M48 20 Q55 10 63 18"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="1.8"/>
+                <circle cx="58" cy="31" r="2.1" fill="${p.line}"/>
+                <path d="M46 39 Q57 45 67 40"
+                    fill="none" stroke="${p.line}" stroke-width="1.7"/>
+                <path d="M33 72 H67 L70 80 H30 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2"/>
+                ${ornament}
+                ${base}
+            `,
+            b: `
+                <path d="M50 13 C62 21 65 32 59 42 C56 47 56 50 60 54 H40 C44 50 44 47 41 42 C35 32 38 21 50 13 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.2"/>
+                <path d="M54 20 L44 38"
+                    stroke="${p.line}" stroke-width="3" stroke-linecap="round"/>
+                <path d="M38 52 H62 L65 60 H35 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2"/>
+                <path d="M40 59 C39 66 34 70 30 76 H70 C66 70 61 66 60 59 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.2"/>
+                <path d="M40 30 Q50 23 60 30"
+                    fill="none" stroke="${p.line}" stroke-width="1.4"/>
+                ${ornament}
+                ${base}
+            `,
+            q: `
+                <path d="M24 31 L28 18 L39 30 L50 13 L61 30 L72 18 L76 31 L69 47 H31 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.3" stroke-linejoin="round"/>
+                <path d="M27 18 Q28 12 33 17 M47 13 Q50 6 53 13 M67 17 Q72 12 73 18"
+                    fill="none" stroke="${p.line}" stroke-width="2"/>
+                <path d="M35 47 H65 L63 56 H37 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2"/>
+                <path d="M39 55 C38 64 32 70 29 76 H71 C68 70 62 64 61 55 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.2"/>
+                <path d="M35 40 Q50 49 65 40"
+                    fill="none" stroke="${p.line}" stroke-width="1.5"/>
+                ${ornament}
+                ${base}
+            `,
+            k: `
+                <path d="M47 9 H53 V18 H61 V24 H53 V32 H47 V24 H39 V18 H47 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="1.8"/>
+                <path d="M32 36 Q50 25 68 36 L63 49 H37 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.2"/>
+                <path d="M36 49 H64 L66 57 H34 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2"/>
+                <path d="M39 56 C38 64 31 70 28 76 H72 C69 70 62 64 61 56 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.2"/>
+                <path d="M38 40 Q50 48 62 40"
+                    fill="none" stroke="${p.line}" stroke-width="1.5"/>
+                ${ornament}
+                ${base}
+            `,
+        };
+        return shapes[type] || "";
+    }
+
+    function nqzCrystalShape(type, id, p) {
+        const glass = `url(#${id}-glass)`;
+        const core = `url(#${id}-core)`;
+        const base = nqzPieceBase(id, p, "crystal");
+        const facet = `stroke="${p.line}" stroke-width="1.05" fill="none" opacity=".58"`;
+
+        const shapes = {
+            p: `
+                <path d="M50 14 L63 25 L58 39 L50 45 L42 39 L37 25 Z"
+                    fill="${glass}" stroke="${p.edge}" stroke-width="1.9"/>
+                <path d="M50 14 V45 M37 25 L50 31 L63 25 M42 39 L50 31 L58 39"
+                    ${facet}/>
+                <path d="M43 43 L35 61 L31 76 H69 L65 61 L57 43 Z"
+                    fill="${glass}" stroke="${p.edge}" stroke-width="2"/>
+                <path d="M43 43 L50 63 L57 43 M35 61 L50 63 L65 61"
+                    ${facet}/>
+                ${base}
+            `,
+            r: `
+                <path d="M27 18 L36 14 L42 23 L50 14 L58 23 L64 14 L73 18 L68 34 H32 Z"
+                    fill="${glass}" stroke="${p.edge}" stroke-width="2"/>
+                <path d="M34 34 L29 72 L50 78 L71 72 L66 34 Z"
+                    fill="${glass}" stroke="${p.edge}" stroke-width="2"/>
+                <path d="M34 34 L50 48 L66 34 M29 72 L50 48 L71 72 M50 14 V78"
+                    ${facet}/>
+                ${base}
+            `,
+            n: `
+                <path d="M27 74 L34 55 L44 45 L39 35 L47 19 L64 17 L72 29 L66 39 L74 49 L61 51 L56 73 Z"
+                    fill="${glass}" stroke="${p.edge}" stroke-width="2.1" stroke-linejoin="round"/>
+                <path d="M47 19 L54 35 L64 17 M44 45 L54 35 L66 39 M34 55 L54 57 L61 51 M54 57 L56 73"
+                    ${facet}/>
+                <circle cx="61" cy="29" r="2.3" fill="${core}"/>
+                ${base}
+            `,
+            b: `
+                <path d="M50 11 L64 29 L57 45 L64 57 L57 73 H43 L36 57 L43 45 L36 29 Z"
+                    fill="${glass}" stroke="${p.edge}" stroke-width="2"/>
+                <path d="M50 11 V73 M36 29 L50 38 L64 29 M43 45 L50 38 L57 45 M36 57 L50 61 L64 57"
+                    ${facet}/>
+                <path d="M55 20 L44 40"
+                    stroke="${p.glow}" stroke-width="3" stroke-linecap="round" opacity=".82"/>
+                ${base}
+            `,
+            q: `
+                <path d="M22 31 L29 16 L41 29 L50 10 L59 29 L71 16 L78 31 L68 48 H32 Z"
+                    fill="${glass}" stroke="${p.edge}" stroke-width="2" stroke-linejoin="round"/>
+                <path d="M29 16 L50 38 L71 16 M41 29 L50 38 L59 29 M22 31 L50 38 L78 31"
+                    ${facet}/>
+                <path d="M36 47 L40 72 L50 78 L60 72 L64 47 Z"
+                    fill="${glass}" stroke="${p.edge}" stroke-width="2"/>
+                <path d="M36 47 L50 59 L64 47 M40 72 L50 59 L60 72"
+                    ${facet}/>
+                ${base}
+            `,
+            k: `
+                <path d="M46 8 H54 V18 H64 V26 H54 V36 H46 V26 H36 V18 H46 Z"
+                    fill="${glass}" stroke="${p.edge}" stroke-width="1.9"/>
+                <path d="M31 39 L42 29 H58 L69 39 L63 52 H37 Z"
+                    fill="${glass}" stroke="${p.edge}" stroke-width="2"/>
+                <path d="M37 52 L41 72 L50 78 L59 72 L63 52 Z"
+                    fill="${glass}" stroke="${p.edge}" stroke-width="2"/>
+                <path d="M31 39 L50 45 L69 39 M42 29 L50 45 L58 29 M37 52 L50 61 L63 52 M41 72 L50 61 L59 72"
+                    ${facet}/>
+                <circle cx="50" cy="45" r="3.8" fill="${core}"/>
+                ${base}
+            `,
+        };
+        return shapes[type] || "";
+    }
+
+    function renderPieceSvg(symbol, themeId) {
+        const isWhite =
+            symbol === symbol.toUpperCase();
+
+        const type =
+            symbol.toLowerCase();
+
+        const resolvedTheme =
+            NQZ_ART_PALETTES[themeId]
+                ? themeId
+                : "standard";
+
+        const palette =
+            NQZ_ART_PALETTES[resolvedTheme][
+                isWhite ? "white" : "black"
+            ];
+
+        const id =
+            `nqz-art-${resolvedTheme}-${symbol}-` +
+            Math.random().toString(36).slice(2);
+
+        const sculptors = {
+            standard: nqzStandardShape,
+            dinosaur: nqzDinosaurShape,
+            future: nqzFutureShape,
+            renaissance: nqzRenaissanceShape,
+            crystal: nqzCrystalShape,
+        };
+
+        const sculpture =
+            sculptors[resolvedTheme](
+                type,
+                id,
+                palette
+            );
+
+        if (!sculpture) {
+            return "";
+        }
+
+        const glowOpacity =
+            resolvedTheme === "future"
+                ? ".62"
+                : resolvedTheme === "crystal"
+                ? ".38"
+                : ".16";
+
+        return `
+            <svg
+                class="piece-image nqz-themed-piece nqz-piece-${resolvedTheme} nqz-piece-${type}"
+                viewBox="0 0 100 100"
+                aria-hidden="true"
+                focusable="false"
+            >
+                <defs>
+                    <linearGradient
+                        id="${id}-body"
+                        x1="0"
+                        y1="0"
+                        x2="1"
+                        y2="1"
+                    >
+                        <stop offset="0" stop-color="${palette.top}"/>
+                        <stop offset=".52" stop-color="${palette.mid}"/>
+                        <stop offset="1" stop-color="${palette.low}"/>
+                    </linearGradient>
+
+                    <linearGradient
+                        id="${id}-glass"
+                        x1="0"
+                        y1="0"
+                        x2="1"
+                        y2="1"
+                    >
+                        <stop offset="0" stop-color="${palette.top}" stop-opacity=".95"/>
+                        <stop offset=".45" stop-color="${palette.mid}" stop-opacity=".78"/>
+                        <stop offset="1" stop-color="${palette.low}" stop-opacity=".92"/>
+                    </linearGradient>
+
+                    <radialGradient
+                        id="${id}-core"
+                        cx=".38"
+                        cy=".32"
+                        r=".72"
+                    >
+                        <stop offset="0" stop-color="#ffffff"/>
+                        <stop offset=".24" stop-color="${palette.glow}"/>
+                        <stop offset="1" stop-color="${palette.low}"/>
+                    </radialGradient>
+
+                    <filter
+                        id="${id}-shadow"
+                        x="-30%"
+                        y="-30%"
+                        width="160%"
+                        height="170%"
+                    >
+                        <feDropShadow
+                            dx="0"
+                            dy="4.2"
+                            stdDeviation="2.6"
+                            flood-color="#000000"
+                            flood-opacity=".46"
+                        />
+                    </filter>
+
+                    <filter
+                        id="${id}-glow"
+                        x="-50%"
+                        y="-50%"
+                        width="200%"
+                        height="200%"
+                    >
+                        <feGaussianBlur stdDeviation="2.6" result="blur"/>
+                        <feMerge>
+                            <feMergeNode in="blur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                    </filter>
+                </defs>
+
+                <ellipse
+                    cx="50"
+                    cy="91"
+                    rx="28"
+                    ry="4.2"
+                    fill="#000000"
+                    opacity=".18"
+                />
+
+                <g filter="url(#${id}-shadow)">
+                    ${sculpture}
+                </g>
+
+                <path
+                    d="M29 24 Q43 13 56 17"
+                    fill="none"
+                    stroke="${palette.top}"
+                    stroke-width="2.1"
+                    stroke-linecap="round"
+                    opacity=".34"
+                />
+
+                <g
+                    filter="url(#${id}-glow)"
+                    opacity="${glowOpacity}"
+                    pointer-events="none"
+                >
+                    <circle
+                        cx="50"
+                        cy="48"
+                        r="2.1"
+                        fill="${palette.glow}"
+                    />
+                </g>
+            </svg>
+        `;
+    }
+
+
+const names = {
+    standard: "Tiêu chuẩn",
+    dinosaur: "Khủng long",
+    future: "Tương lai",
+    renaissance: "Phục Hưng",
+    crystal: "Pha lê"
+};
+const symbols = ["K","Q","R","B","N","P","k","q","r","b","n","p"];
+document.getElementById("gallery").innerHTML =
+    Object.keys(names).map(theme => `
+        <section class="row">
+            <h2>${names[theme]}</h2>
+            <div class="pieces">
+                ${symbols.map(symbol =>
+                    `<div class="cell">${renderPieceSvg(symbol, theme)}</div>`
+                ).join("")}
+            </div>
+        </section>
+    `).join("");
+</script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+NQZNZEE WEB SHARE V7.1 — SỬA TÊN NGƯỜI CHƠI
+
+ĐÃ SỬA
+- Chữ “Bạn” trên thanh người chơi được thay bằng tên/biệt danh đã nhập.
+- Tên không bị đổi lại sau mỗi nước.
+- Hoạt động khi người chơi cầm Trắng hoặc Đen.
+- Hoạt động khi đảo bàn, đổi bot và kết thúc ván.
+- Có bộ kiểm tra định kỳ để giữ tên khi giao diện render lại.
+
+UPDATE GITHUB
+1. Giải nén NqznZee_Web_Share_V7_1.zip.
+2. Vào repository nqznzee-chess-arena.
+3. Add file > Upload files.
+4. Kéo toàn bộ file lên và ghi đè file cũ.
+5. Commit vào nhánh main.
+6. Mở link với ?v=7.1 để tránh cache.

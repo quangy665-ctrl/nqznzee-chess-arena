@@ -1309,13 +1309,210 @@ body.compact-coach .coach-card { display: none; }
 .theme-card strong { display:block; margin-top:6px; color:#fff; font-size:9px; }
 .theme-card small { display:block; margin-top:2px; color:#858b9c; font-size:7px; line-height:1.35; }
 
-body[data-nqz-theme="dinosaur"] { --light-square:#d9cf9f; --dark-square:#66894a; --accent:#82b85c; --accent-dark:#466f36; }
-body[data-nqz-theme="dinosaur"] .board-stage { box-shadow:0 8px 28px rgba(27,58,25,.42); }
-body[data-nqz-theme="future"] { --light-square:#17233d; --dark-square:#352458; --accent:#22d3ee; --accent-dark:#7c5cff; --surface:#161925; --surface-2:#20243a; }
-body[data-nqz-theme="future"] .square { box-shadow:inset 0 0 0 1px rgba(34,211,238,.055); }
-body[data-nqz-theme="renaissance"] { --light-square:#ead7af; --dark-square:#8e5b42; --accent:#c89b4c; --accent-dark:#7f402e; --surface:#2b211d; --surface-2:#3a2921; }
-body[data-nqz-theme="crystal"] { --light-square:#e2f4fb; --dark-square:#6e9eb8; --accent:#63d7ed; --accent-dark:#527fa9; --surface:#202934; --surface-2:#2b3744; }
-body[data-nqz-theme="crystal"] .board-stage { box-shadow:0 10px 30px rgba(80,170,210,.24); }
+
+.theme-board-preview {
+    position: relative;
+    isolation: isolate;
+}
+.theme-preview-pieces {
+    position: absolute;
+    inset: 7% 8%;
+    z-index: 3;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    pointer-events: none;
+}
+.theme-preview-pieces .piece-image {
+    position: static;
+    width: 29%;
+    height: 86%;
+    max-height: 42px;
+    transform: none !important;
+}
+.theme-card.active .theme-preview-pieces .piece-image {
+    filter: brightness(1.08);
+}
+
+body[data-nqz-theme="standard"] {
+    --light-square: #ebe3cf;
+    --dark-square: #78925d;
+    --accent: #8eb35d;
+    --accent-dark: #4f6f3b;
+}
+body[data-nqz-theme="standard"] .square.light {
+    background-color: #ebe3cf;
+    background-image:
+        linear-gradient(135deg, rgba(255,255,255,.13), transparent 42%),
+        repeating-linear-gradient(
+            8deg,
+            rgba(104,82,56,.025) 0 1px,
+            transparent 1px 7px
+        );
+}
+body[data-nqz-theme="standard"] .square.dark {
+    background-color: #78925d;
+    background-image:
+        linear-gradient(135deg, rgba(255,255,255,.055), transparent 48%),
+        repeating-linear-gradient(
+            -8deg,
+            rgba(29,48,24,.04) 0 1px,
+            transparent 1px 8px
+        );
+}
+body[data-nqz-theme="standard"] .board-stage {
+    box-shadow:
+        0 9px 28px rgba(0,0,0,.36),
+        inset 0 0 0 1px rgba(255,255,255,.08);
+}
+
+body[data-nqz-theme="dinosaur"] {
+    --light-square: #d9cf9f;
+    --dark-square: #66894a;
+    --accent: #82b85c;
+    --accent-dark: #466f36;
+    --surface: #20241d;
+    --surface-2: #2a3023;
+}
+body[data-nqz-theme="dinosaur"] .square.light {
+    background-color: #d9cf9f;
+    background-image:
+        radial-gradient(circle at 18% 23%, rgba(101,78,40,.12) 0 1px, transparent 1.6px),
+        radial-gradient(circle at 72% 68%, rgba(255,247,188,.15) 0 1px, transparent 1.8px),
+        linear-gradient(145deg, rgba(255,255,255,.12), transparent 48%);
+    background-size: 17px 19px, 23px 21px, auto;
+}
+body[data-nqz-theme="dinosaur"] .square.dark {
+    background-color: #66894a;
+    background-image:
+        repeating-linear-gradient(
+            48deg,
+            rgba(30,64,31,.08) 0 2px,
+            transparent 2px 11px
+        ),
+        radial-gradient(circle at 25% 30%, rgba(210,231,123,.08), transparent 35%);
+}
+body[data-nqz-theme="dinosaur"] .board-stage {
+    border-color: rgba(153,196,99,.26);
+    box-shadow:
+        0 10px 34px rgba(27,58,25,.48),
+        0 0 38px rgba(92,144,60,.12);
+}
+body[data-nqz-theme="dinosaur"] .nqz-themed-piece {
+    filter: drop-shadow(0 7px 4px rgba(17,28,12,.42));
+}
+
+body[data-nqz-theme="future"] {
+    --light-square: #17233d;
+    --dark-square: #352458;
+    --accent: #22d3ee;
+    --accent-dark: #7c5cff;
+    --surface: #111827;
+    --surface-2: #19223a;
+}
+body[data-nqz-theme="future"] .square.light {
+    background-color: #17233d;
+    background-image:
+        linear-gradient(rgba(34,211,238,.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(34,211,238,.07) 1px, transparent 1px),
+        radial-gradient(circle at 50% 50%, rgba(65,182,255,.08), transparent 65%);
+    background-size: 15px 15px, 15px 15px, auto;
+}
+body[data-nqz-theme="future"] .square.dark {
+    background-color: #352458;
+    background-image:
+        linear-gradient(rgba(180,74,255,.075) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(180,74,255,.075) 1px, transparent 1px),
+        linear-gradient(145deg, rgba(255,255,255,.045), transparent 44%);
+    background-size: 15px 15px, 15px 15px, auto;
+}
+body[data-nqz-theme="future"] .square {
+    box-shadow: inset 0 0 0 1px rgba(34,211,238,.055);
+}
+body[data-nqz-theme="future"] .board-stage {
+    border-color: rgba(34,211,238,.25);
+    box-shadow:
+        0 0 0 1px rgba(124,92,255,.18),
+        0 12px 42px rgba(12,22,62,.62),
+        0 0 45px rgba(34,211,238,.12);
+}
+body[data-nqz-theme="future"] .nqz-themed-piece {
+    filter:
+        drop-shadow(0 0 5px rgba(34,211,238,.24))
+        drop-shadow(0 7px 4px rgba(0,0,0,.45));
+}
+
+body[data-nqz-theme="renaissance"] {
+    --light-square: #ead7af;
+    --dark-square: #8e5b42;
+    --accent: #c89b4c;
+    --accent-dark: #7f402e;
+    --surface: #281d18;
+    --surface-2: #3a2921;
+}
+body[data-nqz-theme="renaissance"] .square.light {
+    background-color: #ead7af;
+    background-image:
+        repeating-linear-gradient(
+            4deg,
+            rgba(115,75,37,.045) 0 1px,
+            transparent 1px 6px
+        ),
+        linear-gradient(145deg, rgba(255,252,220,.16), transparent 50%);
+}
+body[data-nqz-theme="renaissance"] .square.dark {
+    background-color: #8e5b42;
+    background-image:
+        repeating-linear-gradient(
+            -5deg,
+            rgba(62,27,20,.09) 0 1px,
+            transparent 1px 7px
+        ),
+        radial-gradient(circle at 50% 45%, rgba(229,177,99,.06), transparent 62%);
+}
+body[data-nqz-theme="renaissance"] .board-stage {
+    border-color: rgba(211,165,85,.31);
+    box-shadow:
+        0 13px 38px rgba(54,27,16,.52),
+        inset 0 0 0 2px rgba(245,211,139,.08);
+}
+body[data-nqz-theme="renaissance"] .nqz-themed-piece {
+    filter:
+        drop-shadow(0 6px 4px rgba(53,25,12,.40))
+        saturate(1.05);
+}
+
+body[data-nqz-theme="crystal"] {
+    --light-square: #e2f4fb;
+    --dark-square: #6e9eb8;
+    --accent: #63d7ed;
+    --accent-dark: #527fa9;
+    --surface: #18242f;
+    --surface-2: #243746;
+}
+body[data-nqz-theme="crystal"] .square.light {
+    background-color: #e2f4fb;
+    background-image:
+        linear-gradient(135deg, rgba(255,255,255,.55), transparent 36%),
+        linear-gradient(45deg, transparent 64%, rgba(73,151,190,.09) 65% 66%, transparent 67%);
+}
+body[data-nqz-theme="crystal"] .square.dark {
+    background-color: #6e9eb8;
+    background-image:
+        linear-gradient(135deg, rgba(217,249,255,.16), transparent 40%),
+        linear-gradient(45deg, transparent 60%, rgba(24,73,105,.11) 61% 63%, transparent 64%);
+}
+body[data-nqz-theme="crystal"] .board-stage {
+    border-color: rgba(131,222,244,.32);
+    box-shadow:
+        0 12px 38px rgba(35,93,124,.34),
+        0 0 44px rgba(80,170,210,.19);
+}
+body[data-nqz-theme="crystal"] .nqz-themed-piece {
+    filter:
+        drop-shadow(0 0 6px rgba(173,240,255,.25))
+        drop-shadow(0 8px 5px rgba(18,48,65,.34));
+}
 
 @media (max-width:720px) {
     .nqz-tabs { grid-template-columns:repeat(3,minmax(0,1fr)); }
@@ -1903,8 +2100,7 @@ body[data-nqz-theme="crystal"] .board-stage { box-shadow:0 10px 30px rgba(80,170
         }
 
         if (
-            window.NQZ_THEME_ENGINE &&
-            window.NQZ_THEME_ENGINE.current !== "standard"
+            window.NQZ_THEME_ENGINE
         ) {
             const themed =
                 window.NQZ_THEME_ENGINE.renderPiece(symbol);
@@ -4658,7 +4854,7 @@ body[data-nqz-theme="crystal"] .board-stage { box-shadow:0 10px 30px rgba(80,170
         {id:"expert", name:"Expert", elo:2000, note:"Ít sai lầm"},
         {id:"master", name:"Master", elo:2400, note:"Tính toán sâu"},
         {id:"gm", name:"Grandmaster", elo:2800, note:"Rất khó"},
-        {id:"apex", name:"Apex", elo:3200, note:"Mức tối đa của lab"},
+        {id:"apex", name:"NguyenRIVAL", elo:3200, note:"Mức tối đa của lab"},
     ];
 
     const $ = id => document.getElementById(id);
@@ -5280,11 +5476,45 @@ body[data-nqz-theme="crystal"] .board-stage { box-shadow:0 10px 30px rgba(80,170
         const bot = profileByElo(elo);
         const mode = $("nqzGameMode").value;
 
-        let whiteName = "Bạn", blackName = `${bot.name} Bot`;
-        let whiteMeta = "Người chơi", blackMeta = `Elo cố định ${elo}`;
-        if (mode === "human-bot" && playerSide === "b") {
-            whiteName = `${bot.name} Bot`; blackName = "Bạn";
-            whiteMeta = `Elo cố định ${elo}`; blackMeta = "Người chơi";
+        const savedPlayerName =
+            (
+                window.NQZ_PLAYER_V7?.getName?.() ||
+                localStorage.getItem(
+                    "nqz-player-name-v7"
+                ) ||
+                "Bạn"
+            )
+                .trim()
+                .slice(0, 100) ||
+            "Bạn";
+
+        let whiteName =
+            savedPlayerName;
+
+        let blackName =
+            `${bot.name} Bot`;
+
+        let whiteMeta =
+            "Người chơi";
+
+        let blackMeta =
+            `Elo cố định ${elo}`;
+
+        if (
+            mode === "human-bot" &&
+            playerSide === "b"
+        ) {
+            whiteName =
+                `${bot.name} Bot`;
+
+            blackName =
+                savedPlayerName;
+
+            whiteMeta =
+                `Elo cố định ${elo}`;
+
+            blackMeta =
+                "Người chơi";
         } else if (mode === "human-human") {
             whiteName = "Người chơi Trắng"; blackName = "Người chơi Đen";
             whiteMeta = blackMeta = "Hai người cùng máy";
@@ -6461,41 +6691,41 @@ body[data-nqz-theme="crystal"] .board-stage { box-shadow:0 10px 30px rgba(80,170
         {id:"expert", name:"Expert", elo:2000, note:"Ít sai lầm rõ rệt"},
         {id:"master", name:"Master", elo:2400, note:"Tính toán sâu và chắc"},
         {id:"gm", name:"Grandmaster", elo:2800, note:"Rất khó để đánh bại"},
-        {id:"apex", name:"NQZ Apex", elo:3200, note:"Đỉnh tháp của phòng lab"},
+        {id:"apex", name:"NguyenRIVAL", elo:3200, note:"Đỉnh tháp của phòng lab"},
     ];
 
     const THEMES = {
         standard: {
             name: "Tiêu chuẩn",
-            note: "Bộ quân cổ điển hiện tại, bàn xanh kem dễ đọc.",
+            note: "Staunton điêu khắc mềm, cân đối và rõ nét trên bàn xanh kem.",
             light: "#ebecd0",
             dark: "#779556",
             accent: "#81b64c",
         },
         dinosaur: {
             name: "Khủng long",
-            note: "Đá cổ đại, vảy rồng và bàn cờ rừng tiền sử.",
+            note: "Trứng hóa thạch, raptor, T-Rex và pháo đài núi lửa giữa rừng tiền sử.",
             light: "#d9cf9f",
             dark: "#66894a",
             accent: "#82b85c",
         },
         future: {
             name: "Tương lai",
-            note: "Quân neon dạng lõi năng lượng, bàn tím xanh cyber.",
+            note: "Mecha đa giác, lõi năng lượng và đường mạch neon trên bàn cyber.",
             light: "#17233d",
             dark: "#352458",
             accent: "#22d3ee",
         },
         renaissance: {
             name: "Thời đại Phục Hưng",
-            note: "Đồng cổ, vàng son và bàn gỗ cung điện.",
+            note: "Tượng cẩm thạch, hoa văn hoàng gia và kim loại dát vàng trên bàn gỗ cung điện.",
             light: "#ead7af",
             dark: "#8e5b42",
             accent: "#c89b4c",
         },
         crystal: {
             name: "Pha lê",
-            note: "Quân đa diện băng sáng trên bàn xanh thủy tinh.",
+            note: "Pha lê cắt mặt, phản quang băng lam và bàn kính đa diện.",
             light: "#e2f4fb",
             dark: "#6e9eb8",
             accent: "#63d7ed",
@@ -6724,32 +6954,777 @@ body[data-nqz-theme="crystal"] .board-stage { box-shadow:0 10px 30px rgba(80,170
         }
     }
 
-    function renderPieceSvg(symbol, themeId) {
-        const isWhite = symbol === symbol.toUpperCase();
-        const type = symbol.toLowerCase();
-        const glyphs = {
-            w:{p:"♙",n:"♘",b:"♗",r:"♖",q:"♕",k:"♔"},
-            b:{p:"♟",n:"♞",b:"♝",r:"♜",q:"♛",k:"♚"},
-        };
-        const glyph = glyphs[isWhite ? "w" : "b"][type];
-        const id = `nqz-${themeId}-${symbol}-${Math.random().toString(36).slice(2)}`;
-        const palette = {
-            dinosaur: isWhite ? ["#e7d493","#8e9c50","#4d5c2e"] : ["#667948","#293821","#11170e"],
-            future: isWhite ? ["#e9fbff","#3de8ff","#3050ff"] : ["#ffdbff","#bc4dff","#35115d"],
-            renaissance: isWhite ? ["#fff2c8","#d7a84f","#7d4924"] : ["#8c4d32","#4c241c","#1f1110"],
-            crystal: isWhite ? ["#ffffff","#a8e8ff","#4b9ec2"] : ["#7bc9e7","#2d668d","#112b43"],
-        }[themeId];
-        if (!palette) return "";
-        const stroke = isWhite ? "rgba(30,35,44,.72)" : "rgba(0,0,0,.88)";
-        const decoration = themeId === "dinosaur"
-            ? `<path d="M21 72 L28 64 L34 72 L41 63 L48 72 L55 63 L62 72 L69 64 L77 72" fill="none" stroke="${palette[1]}" stroke-width="5" stroke-linejoin="round"/><circle cx="28" cy="35" r="3" fill="${palette[2]}"/><circle cx="70" cy="45" r="2.5" fill="${palette[2]}"/>`
-            : themeId === "future"
-            ? `<circle cx="50" cy="50" r="42" fill="none" stroke="${palette[1]}" stroke-width="1.5" opacity=".45"/><path d="M12 50 H88 M50 12 V88" stroke="${palette[1]}" stroke-width="1" opacity=".28"/><circle cx="50" cy="50" r="35" fill="none" stroke="${palette[0]}" stroke-dasharray="4 6" opacity=".25"/>`
-            : themeId === "renaissance"
-            ? `<path d="M18 82 Q50 65 82 82" fill="none" stroke="${palette[1]}" stroke-width="5"/><circle cx="18" cy="82" r="4" fill="${palette[1]}"/><circle cx="82" cy="82" r="4" fill="${palette[1]}"/><path d="M23 22 Q50 8 77 22" fill="none" stroke="${palette[1]}" stroke-width="3"/>`
-            : `<path d="M50 7 L82 29 L76 70 L50 93 L24 70 L18 29 Z" fill="none" stroke="${palette[1]}" stroke-width="2" opacity=".5"/><path d="M18 29 L50 50 L82 29 M24 70 L50 50 L76 70 M50 7 V93" stroke="${palette[0]}" stroke-width="1.2" opacity=".32"/>`;
-        return `<svg class="piece-image nqz-themed-piece" viewBox="0 0 100 100" aria-hidden="true"><defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${palette[0]}"/><stop offset="52%" stop-color="${palette[1]}"/><stop offset="100%" stop-color="${palette[2]}"/></linearGradient><filter id="${id}-s"><feDropShadow dx="0" dy="4" stdDeviation="2.7" flood-color="rgba(0,0,0,.48)"/></filter></defs><g filter="url(#${id}-s)">${decoration}<text x="50" y="78" text-anchor="middle" font-family="Georgia, 'Segoe UI Symbol', serif" font-size="76" font-weight="700" fill="url(#${id})" stroke="${stroke}" stroke-width="1.8" paint-order="stroke">${glyph}</text></g></svg>`;
+    const NQZ_ART_PALETTES = {
+        standard: {
+            white: {
+                top: "#fffdf5",
+                mid: "#ded9c8",
+                low: "#85857e",
+                edge: "#686b68",
+                line: "#444946",
+                glow: "#fffbe9",
+            },
+            black: {
+                top: "#62686c",
+                mid: "#272b2e",
+                low: "#090b0c",
+                edge: "#050606",
+                line: "#a3aaa8",
+                glow: "#747d7b",
+            },
+        },
+        dinosaur: {
+            white: {
+                top: "#f2df9d",
+                mid: "#9ca45a",
+                low: "#46552d",
+                edge: "#34401f",
+                line: "#62572d",
+                glow: "#f6e9a8",
+            },
+            black: {
+                top: "#708254",
+                mid: "#314229",
+                low: "#10170f",
+                edge: "#090e08",
+                line: "#a6b06c",
+                glow: "#7ea85d",
+            },
+        },
+        future: {
+            white: {
+                top: "#f1fdff",
+                mid: "#4cecff",
+                low: "#294dff",
+                edge: "#102487",
+                line: "#d9ffff",
+                glow: "#3deaff",
+            },
+            black: {
+                top: "#ffd9ff",
+                mid: "#bd58ff",
+                low: "#30105f",
+                edge: "#15052f",
+                line: "#ffd9ff",
+                glow: "#c55cff",
+            },
+        },
+        renaissance: {
+            white: {
+                top: "#fff4cf",
+                mid: "#d7a84e",
+                low: "#75431f",
+                edge: "#553016",
+                line: "#fff0b0",
+                glow: "#e8bd67",
+            },
+            black: {
+                top: "#a55d3a",
+                mid: "#54291d",
+                low: "#190d0b",
+                edge: "#100706",
+                line: "#dda15e",
+                glow: "#9e5933",
+            },
+        },
+        crystal: {
+            white: {
+                top: "#ffffff",
+                mid: "#a9ecff",
+                low: "#4c9fc7",
+                edge: "#367f9f",
+                line: "#ffffff",
+                glow: "#bcefff",
+            },
+            black: {
+                top: "#91d8f2",
+                mid: "#376f9d",
+                low: "#102a46",
+                edge: "#091a2e",
+                line: "#b7ebff",
+                glow: "#63bfe9",
+            },
+        },
+    };
+
+    function nqzPieceBase(id, palette, themeId) {
+        if (themeId === "dinosaur") {
+            return `
+                <path d="M20 83 C27 77 73 77 80 83 L76 91 H24 Z"
+                    fill="url(#${id}-body)" stroke="${palette.edge}" stroke-width="2.2"/>
+                <path d="M25 84 L18 88 M38 82 L34 91 M62 82 L66 91 M75 84 L82 88"
+                    fill="none" stroke="${palette.line}" stroke-width="2.2" stroke-linecap="round"/>
+                <path d="M27 85 Q50 90 73 85"
+                    fill="none" stroke="${palette.glow}" stroke-width="1.4" opacity=".45"/>
+            `;
+        }
+
+        if (themeId === "future") {
+            return `
+                <path d="M19 84 L28 76 H72 L81 84 L75 92 H25 Z"
+                    fill="url(#${id}-body)" stroke="${palette.edge}" stroke-width="2"/>
+                <path d="M28 80 H72 M24 86 H76"
+                    stroke="${palette.glow}" stroke-width="1.5" opacity=".72"/>
+                <circle cx="50" cy="84" r="3.2"
+                    fill="url(#${id}-core)" stroke="${palette.line}" stroke-width="1"/>
+            `;
+        }
+
+        if (themeId === "renaissance") {
+            return `
+                <path d="M18 86 Q24 78 32 78 H68 Q76 78 82 86 L78 92 H22 Z"
+                    fill="url(#${id}-body)" stroke="${palette.edge}" stroke-width="2.1"/>
+                <path d="M25 84 Q50 89 75 84 M29 79 Q50 83 71 79"
+                    fill="none" stroke="${palette.line}" stroke-width="1.5" opacity=".72"/>
+                <circle cx="22" cy="86" r="2.3" fill="${palette.mid}"/>
+                <circle cx="78" cy="86" r="2.3" fill="${palette.mid}"/>
+            `;
+        }
+
+        if (themeId === "crystal") {
+            return `
+                <path d="M18 84 L31 76 H69 L82 84 L74 93 H26 Z"
+                    fill="url(#${id}-glass)" stroke="${palette.edge}" stroke-width="1.8"/>
+                <path d="M18 84 L50 88 L82 84 M31 76 L50 88 L69 76 M26 93 L50 88 L74 93"
+                    fill="none" stroke="${palette.line}" stroke-width="1.05" opacity=".6"/>
+            `;
+        }
+
+        return `
+            <path d="M20 84 Q24 77 32 76 H68 Q76 77 80 84 L76 92 H24 Z"
+                fill="url(#${id}-body)" stroke="${palette.edge}" stroke-width="2.1"/>
+            <path d="M26 82 Q50 86 74 82 M28 77 Q50 81 72 77"
+                fill="none" stroke="${palette.line}" stroke-width="1.35" opacity=".55"/>
+        `;
     }
+
+    function nqzStandardShape(type, id, p) {
+        const fill = `url(#${id}-body)`;
+        const base = nqzPieceBase(id, p, "standard");
+
+        const shapes = {
+            p: `
+                <circle cx="50" cy="25" r="11.5"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2"/>
+                <path d="M38 39 Q50 34 62 39 L58 47 H42 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2"/>
+                <path d="M43 46 C42 57 35 66 30 76 H70 C65 66 58 57 57 46 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.2"/>
+                <path d="M39 62 Q50 68 61 62"
+                    fill="none" stroke="${p.line}" stroke-width="1.4" opacity=".55"/>
+                ${base}
+            `,
+            r: `
+                <path d="M28 18 V28 H72 V18 H63 V23 H55 V18 H45 V23 H37 V18 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.2" stroke-linejoin="round"/>
+                <path d="M32 29 H68 L64 38 H36 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2"/>
+                <path d="M37 37 L34 72 H66 L63 37 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.2"/>
+                <path d="M42 42 V68 M58 42 V68"
+                    stroke="${p.line}" stroke-width="1.4" opacity=".45"/>
+                <path d="M29 72 H71 L68 79 H32 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2"/>
+                ${base}
+            `,
+            n: `
+                <path d="M29 73
+                         C31 61 35 51 41 44
+                         C34 39 34 30 42 22
+                         C49 15 60 15 69 20
+                         L62 25
+                         C70 29 73 38 71 47
+                         L63 44
+                         C60 52 56 59 58 73 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.4" stroke-linejoin="round"/>
+                <path d="M42 23 L37 17 L48 20"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2"/>
+                <circle cx="57" cy="31" r="2.3" fill="${p.line}"/>
+                <path d="M49 40 Q59 43 66 39"
+                    fill="none" stroke="${p.line}" stroke-width="1.7"/>
+                <path d="M34 72 H66 L69 79 H30 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2"/>
+                ${base}
+            `,
+            b: `
+                <path d="M50 15
+                         C61 22 65 31 60 40
+                         C57 45 55 48 58 52
+                         H42 C45 48 43 45 40 40
+                         C35 31 39 22 50 15 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.2"/>
+                <path d="M54 22 L44 38"
+                    stroke="${p.line}" stroke-width="3" stroke-linecap="round"/>
+                <path d="M39 51 H61 L64 59 H36 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2"/>
+                <path d="M40 58 C39 64 34 69 31 75 H69 C66 69 61 64 60 58 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.2"/>
+                ${base}
+            `,
+            q: `
+                <circle cx="27" cy="23" r="4.2" fill="${fill}" stroke="${p.edge}" stroke-width="1.7"/>
+                <circle cx="50" cy="16" r="4.5" fill="${fill}" stroke="${p.edge}" stroke-width="1.7"/>
+                <circle cx="73" cy="23" r="4.2" fill="${fill}" stroke="${p.edge}" stroke-width="1.7"/>
+                <path d="M24 28 L34 39 L50 24 L66 39 L76 28 L70 48 H30 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.2" stroke-linejoin="round"/>
+                <path d="M34 48 H66 L64 57 H36 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2"/>
+                <path d="M39 56 C38 64 32 70 29 76 H71 C68 70 62 64 61 56 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.2"/>
+                <path d="M38 43 Q50 48 62 43"
+                    fill="none" stroke="${p.line}" stroke-width="1.4" opacity=".65"/>
+                ${base}
+            `,
+            k: `
+                <path d="M47 11 H53 V19 H60 V25 H53 V32 H47 V25 H40 V19 H47 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="1.8"/>
+                <path d="M34 34 Q50 25 66 34 L62 46 H38 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.1"/>
+                <path d="M38 46 H62 L65 55 H35 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2"/>
+                <path d="M39 54 C38 63 31 69 28 76 H72 C69 69 62 63 61 54 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.3"/>
+                <path d="M41 39 Q50 44 59 39"
+                    fill="none" stroke="${p.line}" stroke-width="1.4" opacity=".62"/>
+                ${base}
+            `,
+        };
+        return shapes[type] || "";
+    }
+
+    function nqzDinosaurShape(type, id, p) {
+        const fill = `url(#${id}-body)`;
+        const core = `url(#${id}-core)`;
+        const base = nqzPieceBase(id, p, "dinosaur");
+
+        const scaleMarks = `
+            <path d="M36 55 Q40 50 44 55 M46 59 Q50 54 54 59 M56 54 Q60 49 64 54"
+                fill="none" stroke="${p.line}" stroke-width="1.4" opacity=".55"/>
+        `;
+
+        const shapes = {
+            p: `
+                <path d="M50 17
+                         C63 18 70 31 67 45
+                         C65 56 59 65 56 75
+                         H44 C41 65 35 56 33 45
+                         C30 31 37 18 50 17 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.4"/>
+                <path d="M43 28 L49 35 L45 42 L54 47 L49 55"
+                    fill="none" stroke="${p.line}" stroke-width="2.1" stroke-linecap="round"/>
+                <circle cx="56" cy="31" r="2.2" fill="${p.glow}" opacity=".75"/>
+                ${scaleMarks}
+                ${base}
+            `,
+            r: `
+                <path d="M27 25 L34 17 L40 24 L49 14 L57 24 L66 17 L74 26 L69 37 H31 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.4" stroke-linejoin="round"/>
+                <path d="M34 36 L30 73 H70 L66 36 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.4"/>
+                <path d="M42 38 L47 50 L43 58 L49 70"
+                    fill="none" stroke="${p.glow}" stroke-width="2.1" opacity=".72"/>
+                <path d="M31 49 Q50 40 69 49"
+                    fill="none" stroke="${p.line}" stroke-width="1.5" opacity=".55"/>
+                <path d="M27 72 H73 L68 80 H32 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.1"/>
+                ${base}
+            `,
+            n: `
+                <path d="M25 74
+                         C29 62 35 53 42 47
+                         C37 43 34 37 36 29
+                         L43 33
+                         C44 23 53 17 66 19
+                         L61 25
+                         C72 28 77 37 73 47
+                         L65 45
+                         L70 52
+                         C62 56 55 61 57 74 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.5" stroke-linejoin="round"/>
+                <path d="M44 31 L40 22 L48 28 M50 26 L50 18 L56 25 M57 26 L63 19 L63 29"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="1.8" stroke-linejoin="round"/>
+                <circle cx="61" cy="34" r="2.4" fill="${p.glow}"/>
+                <path d="M56 42 L71 39 M58 46 L69 47"
+                    stroke="${p.line}" stroke-width="1.7" stroke-linecap="round"/>
+                <path d="M63 42 L66 45 L69 41"
+                    fill="none" stroke="${p.glow}" stroke-width="1.4"/>
+                ${scaleMarks}
+                ${base}
+            `,
+            b: `
+                <path d="M48 14
+                         C58 18 64 27 61 36
+                         L70 45
+                         L58 46
+                         C57 53 60 58 64 63
+                         H36 C40 58 43 53 42 46
+                         L30 45
+                         L39 36
+                         C36 27 40 18 48 14 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.4" stroke-linejoin="round"/>
+                <path d="M51 20 L43 37"
+                    stroke="${p.glow}" stroke-width="3" stroke-linecap="round"/>
+                <path d="M39 37 L26 31 L34 45 M61 37 L75 31 L66 45"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2"/>
+                <circle cx="52" cy="29" r="2" fill="${p.line}"/>
+                <path d="M35 62 L30 75 H70 L65 62 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.2"/>
+                ${base}
+            `,
+            q: `
+                <path d="M27 34 L20 21 L35 28 L42 14 L50 29 L59 14 L66 29 L81 21 L74 42 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.4" stroke-linejoin="round"/>
+                <path d="M26 39
+                         C32 31 39 30 50 31
+                         C61 30 68 31 74 39
+                         L67 54
+                         C61 59 58 64 60 73
+                         H40
+                         C42 64 39 59 33 54 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.5"/>
+                <path d="M31 37 L21 43 M69 37 L79 43 M38 33 L33 22 M62 33 L67 22"
+                    stroke="${p.glow}" stroke-width="3" stroke-linecap="round"/>
+                <circle cx="43" cy="43" r="2.1" fill="${p.line}"/>
+                <circle cx="57" cy="43" r="2.1" fill="${p.line}"/>
+                <path d="M42 51 Q50 56 58 51"
+                    fill="none" stroke="${p.line}" stroke-width="1.7"/>
+                ${scaleMarks}
+                ${base}
+            `,
+            k: `
+                <path d="M48 10 H54 L53 18 L61 16 L62 22 L54 25 L59 32 L53 35 L49 27 L43 34 L38 30 L44 24 L36 20 L39 15 L47 18 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="1.8"/>
+                <path d="M31 42
+                         C33 31 42 25 54 27
+                         C65 29 73 37 73 47
+                         L64 45
+                         L70 53
+                         C64 59 58 64 59 74
+                         H39
+                         C40 64 34 57 29 52 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.6" stroke-linejoin="round"/>
+                <path d="M38 31 L34 23 L43 28 M46 27 L47 18 L52 28 M55 29 L63 22 L61 33"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="1.9"/>
+                <circle cx="59" cy="38" r="2.4" fill="${p.glow}"/>
+                <path d="M55 47 L70 44 L64 50"
+                    fill="none" stroke="${p.line}" stroke-width="1.8"/>
+                ${scaleMarks}
+                ${base}
+            `,
+        };
+        return shapes[type] || "";
+    }
+
+    function nqzFutureShape(type, id, p) {
+        const fill = `url(#${id}-body)`;
+        const core = `url(#${id}-core)`;
+        const base = nqzPieceBase(id, p, "future");
+        const wire = `stroke="${p.line}" stroke-width="1.6" fill="none" opacity=".82"`;
+
+        const shapes = {
+            p: `
+                <circle cx="50" cy="25" r="12"
+                    fill="${core}" stroke="${p.edge}" stroke-width="2"/>
+                <path d="M41 38 L50 32 L59 38 L63 52 L57 72 H43 L37 52 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.2"/>
+                <path d="M42 42 H58 M39 52 H61 M45 60 H55"
+                    ${wire}/>
+                <circle cx="50" cy="25" r="4.2" fill="${p.glow}" opacity=".76"/>
+                ${base}
+            `,
+            r: `
+                <path d="M26 19 L35 15 L41 22 L50 15 L59 22 L65 15 L74 19 L70 34 H30 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.2" stroke-linejoin="round"/>
+                <path d="M34 34 L30 72 L38 78 H62 L70 72 L66 34 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.2"/>
+                <path d="M39 38 L37 68 M50 35 V74 M61 38 L63 68"
+                    ${wire}/>
+                <path d="M32 49 H68 M31 63 H69"
+                    stroke="${p.glow}" stroke-width="1.4" opacity=".65"/>
+                ${base}
+            `,
+            n: `
+                <path d="M27 73 L33 54 L43 44 L38 35 L46 20 L65 18 L72 30 L67 39 L74 48 L62 51 L56 72 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.4" stroke-linejoin="round"/>
+                <path d="M46 21 L53 14 L58 20 M42 43 L55 34 L68 38 M36 55 L57 54"
+                    ${wire}/>
+                <circle cx="61" cy="29" r="3.2" fill="${core}" stroke="${p.line}" stroke-width="1.2"/>
+                <path d="M65 41 L73 45 L66 48"
+                    fill="none" stroke="${p.glow}" stroke-width="1.8"/>
+                ${base}
+            `,
+            b: `
+                <path d="M50 13 L63 29 L57 44 L65 55 L58 72 H42 L35 55 L43 44 L37 29 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.3" stroke-linejoin="round"/>
+                <path d="M50 16 V70 M42 31 L58 31 M39 54 H61"
+                    ${wire}/>
+                <path d="M54 21 L44 40"
+                    stroke="${p.glow}" stroke-width="3.2" stroke-linecap="round"/>
+                <circle cx="50" cy="52" r="4" fill="${core}" opacity=".9"/>
+                ${base}
+            `,
+            q: `
+                <path d="M24 31 L31 17 L42 30 L50 12 L58 30 L69 17 L76 31 L69 47 H31 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.3" stroke-linejoin="round"/>
+                <circle cx="31" cy="17" r="3.2" fill="${core}"/>
+                <circle cx="50" cy="12" r="3.2" fill="${core}"/>
+                <circle cx="69" cy="17" r="3.2" fill="${core}"/>
+                <path d="M35 48 L40 72 H60 L65 48 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.2"/>
+                <path d="M39 51 H61 M43 60 H57 M50 32 V71"
+                    ${wire}/>
+                <circle cx="50" cy="42" r="4.1" fill="${core}"/>
+                ${base}
+            `,
+            k: `
+                <path d="M46 9 H54 V18 H63 V26 H54 V35 H46 V26 H37 V18 H46 Z"
+                    fill="${core}" stroke="${p.edge}" stroke-width="2"/>
+                <path d="M31 39 L42 30 H58 L69 39 L64 52 H36 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.2"/>
+                <path d="M37 52 L41 72 H59 L63 52 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.2"/>
+                <path d="M40 42 H60 M38 55 H62 M50 32 V71"
+                    ${wire}/>
+                <circle cx="50" cy="47" r="4.4" fill="${core}"/>
+                ${base}
+            `,
+        };
+        return shapes[type] || "";
+    }
+
+    function nqzRenaissanceShape(type, id, p) {
+        const fill = `url(#${id}-body)`;
+        const base = nqzPieceBase(id, p, "renaissance");
+        const ornament = `
+            <path d="M39 66 Q43 61 47 66 Q50 70 53 66 Q57 61 61 66"
+                fill="none" stroke="${p.line}" stroke-width="1.4" opacity=".75"/>
+        `;
+
+        const shapes = {
+            p: `
+                <circle cx="50" cy="24" r="10.5"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2"/>
+                <path d="M39 38 Q50 32 61 38 L58 46 H42 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2"/>
+                <path d="M43 45 C42 57 35 65 30 76 H70 C65 65 58 57 57 45 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.2"/>
+                <path d="M45 20 Q50 15 55 20 M42 55 Q50 60 58 55"
+                    fill="none" stroke="${p.line}" stroke-width="1.5"/>
+                ${ornament}
+                ${base}
+            `,
+            r: `
+                <path d="M27 17 V29 H73 V17 H64 V23 H56 V17 H44 V23 H36 V17 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.2"/>
+                <path d="M31 29 H69 L66 38 H34 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2"/>
+                <path d="M36 37 L32 72 H68 L64 37 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.2"/>
+                <path d="M42 44 Q50 36 58 44 V65 H42 Z"
+                    fill="rgba(40,20,13,.24)" stroke="${p.line}" stroke-width="1.5"/>
+                <path d="M30 72 H70 L67 80 H33 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2"/>
+                ${ornament}
+                ${base}
+            `,
+            n: `
+                <path d="M27 74 C30 61 36 52 43 46
+                         C37 40 36 32 42 24
+                         C49 16 62 16 70 23
+                         L63 29 C70 33 72 41 69 49
+                         L61 46 C58 55 55 62 58 74 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.4"/>
+                <path d="M43 24 L40 15 L49 21 M48 20 Q55 10 63 18"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="1.8"/>
+                <circle cx="58" cy="31" r="2.1" fill="${p.line}"/>
+                <path d="M46 39 Q57 45 67 40"
+                    fill="none" stroke="${p.line}" stroke-width="1.7"/>
+                <path d="M33 72 H67 L70 80 H30 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2"/>
+                ${ornament}
+                ${base}
+            `,
+            b: `
+                <path d="M50 13 C62 21 65 32 59 42 C56 47 56 50 60 54 H40 C44 50 44 47 41 42 C35 32 38 21 50 13 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.2"/>
+                <path d="M54 20 L44 38"
+                    stroke="${p.line}" stroke-width="3" stroke-linecap="round"/>
+                <path d="M38 52 H62 L65 60 H35 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2"/>
+                <path d="M40 59 C39 66 34 70 30 76 H70 C66 70 61 66 60 59 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.2"/>
+                <path d="M40 30 Q50 23 60 30"
+                    fill="none" stroke="${p.line}" stroke-width="1.4"/>
+                ${ornament}
+                ${base}
+            `,
+            q: `
+                <path d="M24 31 L28 18 L39 30 L50 13 L61 30 L72 18 L76 31 L69 47 H31 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.3" stroke-linejoin="round"/>
+                <path d="M27 18 Q28 12 33 17 M47 13 Q50 6 53 13 M67 17 Q72 12 73 18"
+                    fill="none" stroke="${p.line}" stroke-width="2"/>
+                <path d="M35 47 H65 L63 56 H37 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2"/>
+                <path d="M39 55 C38 64 32 70 29 76 H71 C68 70 62 64 61 55 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.2"/>
+                <path d="M35 40 Q50 49 65 40"
+                    fill="none" stroke="${p.line}" stroke-width="1.5"/>
+                ${ornament}
+                ${base}
+            `,
+            k: `
+                <path d="M47 9 H53 V18 H61 V24 H53 V32 H47 V24 H39 V18 H47 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="1.8"/>
+                <path d="M32 36 Q50 25 68 36 L63 49 H37 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.2"/>
+                <path d="M36 49 H64 L66 57 H34 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2"/>
+                <path d="M39 56 C38 64 31 70 28 76 H72 C69 70 62 64 61 56 Z"
+                    fill="${fill}" stroke="${p.edge}" stroke-width="2.2"/>
+                <path d="M38 40 Q50 48 62 40"
+                    fill="none" stroke="${p.line}" stroke-width="1.5"/>
+                ${ornament}
+                ${base}
+            `,
+        };
+        return shapes[type] || "";
+    }
+
+    function nqzCrystalShape(type, id, p) {
+        const glass = `url(#${id}-glass)`;
+        const core = `url(#${id}-core)`;
+        const base = nqzPieceBase(id, p, "crystal");
+        const facet = `stroke="${p.line}" stroke-width="1.05" fill="none" opacity=".58"`;
+
+        const shapes = {
+            p: `
+                <path d="M50 14 L63 25 L58 39 L50 45 L42 39 L37 25 Z"
+                    fill="${glass}" stroke="${p.edge}" stroke-width="1.9"/>
+                <path d="M50 14 V45 M37 25 L50 31 L63 25 M42 39 L50 31 L58 39"
+                    ${facet}/>
+                <path d="M43 43 L35 61 L31 76 H69 L65 61 L57 43 Z"
+                    fill="${glass}" stroke="${p.edge}" stroke-width="2"/>
+                <path d="M43 43 L50 63 L57 43 M35 61 L50 63 L65 61"
+                    ${facet}/>
+                ${base}
+            `,
+            r: `
+                <path d="M27 18 L36 14 L42 23 L50 14 L58 23 L64 14 L73 18 L68 34 H32 Z"
+                    fill="${glass}" stroke="${p.edge}" stroke-width="2"/>
+                <path d="M34 34 L29 72 L50 78 L71 72 L66 34 Z"
+                    fill="${glass}" stroke="${p.edge}" stroke-width="2"/>
+                <path d="M34 34 L50 48 L66 34 M29 72 L50 48 L71 72 M50 14 V78"
+                    ${facet}/>
+                ${base}
+            `,
+            n: `
+                <path d="M27 74 L34 55 L44 45 L39 35 L47 19 L64 17 L72 29 L66 39 L74 49 L61 51 L56 73 Z"
+                    fill="${glass}" stroke="${p.edge}" stroke-width="2.1" stroke-linejoin="round"/>
+                <path d="M47 19 L54 35 L64 17 M44 45 L54 35 L66 39 M34 55 L54 57 L61 51 M54 57 L56 73"
+                    ${facet}/>
+                <circle cx="61" cy="29" r="2.3" fill="${core}"/>
+                ${base}
+            `,
+            b: `
+                <path d="M50 11 L64 29 L57 45 L64 57 L57 73 H43 L36 57 L43 45 L36 29 Z"
+                    fill="${glass}" stroke="${p.edge}" stroke-width="2"/>
+                <path d="M50 11 V73 M36 29 L50 38 L64 29 M43 45 L50 38 L57 45 M36 57 L50 61 L64 57"
+                    ${facet}/>
+                <path d="M55 20 L44 40"
+                    stroke="${p.glow}" stroke-width="3" stroke-linecap="round" opacity=".82"/>
+                ${base}
+            `,
+            q: `
+                <path d="M22 31 L29 16 L41 29 L50 10 L59 29 L71 16 L78 31 L68 48 H32 Z"
+                    fill="${glass}" stroke="${p.edge}" stroke-width="2" stroke-linejoin="round"/>
+                <path d="M29 16 L50 38 L71 16 M41 29 L50 38 L59 29 M22 31 L50 38 L78 31"
+                    ${facet}/>
+                <path d="M36 47 L40 72 L50 78 L60 72 L64 47 Z"
+                    fill="${glass}" stroke="${p.edge}" stroke-width="2"/>
+                <path d="M36 47 L50 59 L64 47 M40 72 L50 59 L60 72"
+                    ${facet}/>
+                ${base}
+            `,
+            k: `
+                <path d="M46 8 H54 V18 H64 V26 H54 V36 H46 V26 H36 V18 H46 Z"
+                    fill="${glass}" stroke="${p.edge}" stroke-width="1.9"/>
+                <path d="M31 39 L42 29 H58 L69 39 L63 52 H37 Z"
+                    fill="${glass}" stroke="${p.edge}" stroke-width="2"/>
+                <path d="M37 52 L41 72 L50 78 L59 72 L63 52 Z"
+                    fill="${glass}" stroke="${p.edge}" stroke-width="2"/>
+                <path d="M31 39 L50 45 L69 39 M42 29 L50 45 L58 29 M37 52 L50 61 L63 52 M41 72 L50 61 L59 72"
+                    ${facet}/>
+                <circle cx="50" cy="45" r="3.8" fill="${core}"/>
+                ${base}
+            `,
+        };
+        return shapes[type] || "";
+    }
+
+    function renderPieceSvg(symbol, themeId) {
+        const isWhite =
+            symbol === symbol.toUpperCase();
+
+        const type =
+            symbol.toLowerCase();
+
+        const resolvedTheme =
+            NQZ_ART_PALETTES[themeId]
+                ? themeId
+                : "standard";
+
+        const palette =
+            NQZ_ART_PALETTES[resolvedTheme][
+                isWhite ? "white" : "black"
+            ];
+
+        const id =
+            `nqz-art-${resolvedTheme}-${symbol}-` +
+            Math.random().toString(36).slice(2);
+
+        const sculptors = {
+            standard: nqzStandardShape,
+            dinosaur: nqzDinosaurShape,
+            future: nqzFutureShape,
+            renaissance: nqzRenaissanceShape,
+            crystal: nqzCrystalShape,
+        };
+
+        const sculpture =
+            sculptors[resolvedTheme](
+                type,
+                id,
+                palette
+            );
+
+        if (!sculpture) {
+            return "";
+        }
+
+        const glowOpacity =
+            resolvedTheme === "future"
+                ? ".62"
+                : resolvedTheme === "crystal"
+                ? ".38"
+                : ".16";
+
+        return `
+            <svg
+                class="piece-image nqz-themed-piece nqz-piece-${resolvedTheme} nqz-piece-${type}"
+                viewBox="0 0 100 100"
+                aria-hidden="true"
+                focusable="false"
+            >
+                <defs>
+                    <linearGradient
+                        id="${id}-body"
+                        x1="0"
+                        y1="0"
+                        x2="1"
+                        y2="1"
+                    >
+                        <stop offset="0" stop-color="${palette.top}"/>
+                        <stop offset=".52" stop-color="${palette.mid}"/>
+                        <stop offset="1" stop-color="${palette.low}"/>
+                    </linearGradient>
+
+                    <linearGradient
+                        id="${id}-glass"
+                        x1="0"
+                        y1="0"
+                        x2="1"
+                        y2="1"
+                    >
+                        <stop offset="0" stop-color="${palette.top}" stop-opacity=".95"/>
+                        <stop offset=".45" stop-color="${palette.mid}" stop-opacity=".78"/>
+                        <stop offset="1" stop-color="${palette.low}" stop-opacity=".92"/>
+                    </linearGradient>
+
+                    <radialGradient
+                        id="${id}-core"
+                        cx=".38"
+                        cy=".32"
+                        r=".72"
+                    >
+                        <stop offset="0" stop-color="#ffffff"/>
+                        <stop offset=".24" stop-color="${palette.glow}"/>
+                        <stop offset="1" stop-color="${palette.low}"/>
+                    </radialGradient>
+
+                    <filter
+                        id="${id}-shadow"
+                        x="-30%"
+                        y="-30%"
+                        width="160%"
+                        height="170%"
+                    >
+                        <feDropShadow
+                            dx="0"
+                            dy="4.2"
+                            stdDeviation="2.6"
+                            flood-color="#000000"
+                            flood-opacity=".46"
+                        />
+                    </filter>
+
+                    <filter
+                        id="${id}-glow"
+                        x="-50%"
+                        y="-50%"
+                        width="200%"
+                        height="200%"
+                    >
+                        <feGaussianBlur stdDeviation="2.6" result="blur"/>
+                        <feMerge>
+                            <feMergeNode in="blur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                    </filter>
+                </defs>
+
+                <ellipse
+                    cx="50"
+                    cy="91"
+                    rx="28"
+                    ry="4.2"
+                    fill="#000000"
+                    opacity=".18"
+                />
+
+                <g filter="url(#${id}-shadow)">
+                    ${sculpture}
+                </g>
+
+                <path
+                    d="M29 24 Q43 13 56 17"
+                    fill="none"
+                    stroke="${palette.top}"
+                    stroke-width="2.1"
+                    stroke-linecap="round"
+                    opacity=".34"
+                />
+
+                <g
+                    filter="url(#${id}-glow)"
+                    opacity="${glowOpacity}"
+                    pointer-events="none"
+                >
+                    <circle
+                        cx="50"
+                        cy="48"
+                        r="2.1"
+                        fill="${palette.glow}"
+                    />
+                </g>
+            </svg>
+        `;
+    }
+
+    window.NQZ_THEME_ART = {
+        version: "7.3",
+        renderPieceSvg,
+        themes: Object.keys(THEMES),
+    };
 
     window.NQZ_THEME_ENGINE = {
         current: "standard",
@@ -6777,7 +7752,28 @@ body[data-nqz-theme="crystal"] .board-stage { box-shadow:0 10px 30px rgba(80,170
         holder.innerHTML = Object.entries(THEMES).map(([id, theme]) => {
             let squares = "";
             for (let index = 0; index < 16; index += 1) squares += `<i style="background:${index % 2 ? theme.dark : theme.light}"></i>`;
-            return `<button class="theme-card ${store.settings.theme === id ? "active" : ""}" data-theme="${id}" type="button"><span class="theme-board-preview">${squares}</span><strong>${escapeHtml(theme.name)}</strong><small>${escapeHtml(theme.note)}</small></button>`;
+            const previewPieces = `
+                <span class="theme-preview-pieces">
+                    ${renderPieceSvg("K", id)}
+                    ${renderPieceSvg("q", id)}
+                    ${renderPieceSvg("N", id)}
+                </span>
+            `;
+
+            return `
+                <button
+                    class="theme-card ${store.settings.theme === id ? "active" : ""}"
+                    data-theme="${id}"
+                    type="button"
+                >
+                    <span class="theme-board-preview">
+                        ${squares}
+                        ${previewPieces}
+                    </span>
+                    <strong>${escapeHtml(theme.name)}</strong>
+                    <small>${escapeHtml(theme.note)}</small>
+                </button>
+            `;
         }).join("");
         holder.querySelectorAll(".theme-card").forEach(card => card.addEventListener("click", () => window.NQZ_THEME_ENGINE.apply(card.dataset.theme)));
     }
@@ -7290,7 +8286,7 @@ body[data-nqz-theme="crystal"] .board-stage { box-shadow:0 10px 30px rgba(80,170
 
 <script id="nqz-web-share-build">
 window.addEventListener("DOMContentLoaded", () => {
-    document.documentElement.dataset.nqzBuild = "web-share-v1";
+    document.documentElement.dataset.nqzBuild = "web-share-v7-3";
     const badge = document.getElementById("nqzBuildHealth");
     if (badge && !badge.textContent.includes("WEB")) {
         badge.title = (badge.title ? badge.title + "\n" : "") +
@@ -7298,6 +8294,1077 @@ window.addEventListener("DOMContentLoaded", () => {
     }
 });
 </script>
+
+
+<!-- NQZ PLAYER IDENTITY V7 START -->
+<style id="nqz-player-identity-v7-style">
+    body.nqz-name-gate-open {
+        overflow: hidden !important;
+    }
+
+    .nqz-v7-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 2147483000;
+
+        display: none;
+        place-items: center;
+
+        padding:
+            max(18px, env(safe-area-inset-top))
+            max(18px, env(safe-area-inset-right))
+            max(18px, env(safe-area-inset-bottom))
+            max(18px, env(safe-area-inset-left));
+
+        background:
+            radial-gradient(
+                circle at 50% 28%,
+                rgba(124, 92, 255, .23),
+                transparent 42%
+            ),
+            rgba(5, 6, 11, .88);
+
+        -webkit-backdrop-filter: blur(14px);
+        backdrop-filter: blur(14px);
+    }
+
+    .nqz-v7-backdrop.open {
+        display: grid;
+    }
+
+    .nqz-v7-dialog {
+        width: min(440px, 100%);
+        max-height: min(720px, 92vh);
+        overflow: auto;
+
+        border: 1px solid rgba(255, 255, 255, .11);
+        border-radius: 20px;
+
+        padding: 22px;
+
+        background:
+            linear-gradient(
+                145deg,
+                rgba(25, 24, 36, .98),
+                rgba(10, 11, 18, .98)
+            );
+
+        box-shadow:
+            0 26px 90px rgba(0, 0, 0, .62),
+            0 0 54px rgba(124, 92, 255, .14);
+    }
+
+    .nqz-v7-logo {
+        width: 58px;
+        height: 58px;
+
+        display: grid;
+        place-items: center;
+
+        margin-bottom: 14px;
+
+        border: 1px solid rgba(124, 92, 255, .38);
+        border-radius: 17px;
+
+        color: #f1eeff;
+        background:
+            linear-gradient(
+                145deg,
+                rgba(124, 92, 255, .24),
+                rgba(34, 211, 238, .08)
+            );
+
+        font-family:
+            "Segoe UI Symbol",
+            "Noto Sans Symbols 2",
+            serif;
+
+        font-size: 37px;
+        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, .42));
+    }
+
+    .nqz-v7-dialog h2 {
+        margin: 0;
+        color: #f4f2ff;
+        font-size: clamp(22px, 5vw, 30px);
+        line-height: 1.1;
+    }
+
+    .nqz-v7-dialog p {
+        margin: 10px 0 0;
+        color: #aeb3c5;
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+    .nqz-v7-field {
+        margin-top: 18px;
+    }
+
+    .nqz-v7-field label {
+        display: block;
+        margin-bottom: 7px;
+
+        color: #d8d4e8;
+        font-size: 11px;
+        font-weight: 850;
+        letter-spacing: .35px;
+    }
+
+    .nqz-v7-field input {
+        width: 100%;
+        min-height: 50px;
+
+        box-sizing: border-box;
+        padding: 0 14px;
+
+        border: 1px solid rgba(255, 255, 255, .11);
+        border-radius: 12px;
+        outline: none;
+
+        color: #f7f6ff;
+        background: rgba(0, 0, 0, .24);
+
+        font: inherit;
+        font-size: 15px;
+    }
+
+    .nqz-v7-field input:focus {
+        border-color: rgba(124, 92, 255, .72);
+        box-shadow: 0 0 0 4px rgba(124, 92, 255, .12);
+    }
+
+    .nqz-v7-field input.invalid {
+        border-color: rgba(255, 95, 127, .75);
+        box-shadow: 0 0 0 4px rgba(255, 95, 127, .10);
+    }
+
+    .nqz-v7-input-meta {
+        min-height: 18px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+
+        margin-top: 6px;
+    }
+
+    .nqz-v7-error {
+        color: #ff7892;
+        font-size: 10px;
+        font-weight: 750;
+    }
+
+    .nqz-v7-count {
+        margin-left: auto;
+        color: #777e91;
+        font-size: 10px;
+        font-weight: 800;
+    }
+
+    .nqz-v7-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 9px;
+
+        margin-top: 18px;
+    }
+
+    .nqz-v7-button {
+        min-height: 44px;
+        flex: 1 1 130px;
+
+        border: 1px solid rgba(255, 255, 255, .09);
+        border-radius: 11px;
+
+        padding: 0 15px;
+
+        color: #f7f6ff;
+        background: rgba(255, 255, 255, .05);
+
+        font: inherit;
+        font-size: 12px;
+        font-weight: 900;
+
+        cursor: pointer;
+    }
+
+    .nqz-v7-button.primary {
+        border-color: rgba(124, 92, 255, .48);
+        background:
+            linear-gradient(
+                135deg,
+                #795cff,
+                #6243e9
+            );
+
+        box-shadow:
+            0 10px 28px rgba(98, 67, 233, .25);
+    }
+
+    .nqz-v7-button:hover {
+        filter: brightness(1.08);
+    }
+
+    .nqz-v7-result-mark {
+        width: 68px;
+        height: 68px;
+
+        display: grid;
+        place-items: center;
+
+        margin-bottom: 16px;
+
+        border-radius: 21px;
+
+        color: #fff;
+        background:
+            linear-gradient(
+                145deg,
+                rgba(112, 224, 173, .22),
+                rgba(124, 92, 255, .20)
+            );
+
+        font-size: 34px;
+        font-weight: 950;
+    }
+
+    .nqz-v7-result-message {
+        white-space: pre-line;
+    }
+
+    .nqz-v7-name-chip {
+        display: inline-flex;
+        align-items: center;
+
+        min-width: 0;
+        max-width: 190px;
+
+        margin-left: 8px;
+        padding: 4px 8px;
+
+        border: 1px solid rgba(124, 92, 255, .22);
+        border-radius: 999px;
+
+        color: #cfc6ff;
+        background: rgba(124, 92, 255, .08);
+
+        font-size: 9px;
+        font-weight: 900;
+
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        vertical-align: middle;
+    }
+
+    @media (max-width: 560px) {
+        .nqz-v7-dialog {
+            padding: 18px;
+            border-radius: 17px;
+        }
+
+        .nqz-v7-actions {
+            flex-direction: column;
+        }
+
+        .nqz-v7-button {
+            width: 100%;
+            flex-basis: auto;
+        }
+    }
+</style>
+
+<div
+    id="nqzNameGateV7"
+    class="nqz-v7-backdrop"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="nqzNameTitleV7"
+>
+    <form id="nqzNameFormV7" class="nqz-v7-dialog" novalidate>
+        <div class="nqz-v7-logo" aria-hidden="true">♟</div>
+
+        <h2 id="nqzNameTitleV7">Nhập tên của bạn</h2>
+
+        <p>
+            Hãy nhập tên hoặc biệt danh từ 1 đến 100 ký tự.
+            Tên này sẽ xuất hiện trên bàn cờ và trong thông báo cuối ván.
+        </p>
+
+        <div class="nqz-v7-field">
+            <label for="nqzPlayerNameV7">Tên hoặc biệt danh</label>
+
+            <input
+                id="nqzPlayerNameV7"
+                type="text"
+                inputmode="text"
+                autocomplete="nickname"
+                placeholder="Ví dụ: NQZ Player"
+                aria-describedby="nqzNameErrorV7 nqzNameCountV7"
+            >
+
+            <div class="nqz-v7-input-meta">
+                <span id="nqzNameErrorV7" class="nqz-v7-error"></span>
+                <span id="nqzNameCountV7" class="nqz-v7-count">0/100</span>
+            </div>
+        </div>
+
+        <div class="nqz-v7-actions">
+            <button class="nqz-v7-button primary" type="submit">
+                Bắt đầu chơi
+            </button>
+        </div>
+    </form>
+</div>
+
+<div
+    id="nqzResultGateV7"
+    class="nqz-v7-backdrop"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="nqzResultTitleV7"
+>
+    <div class="nqz-v7-dialog">
+        <div id="nqzResultMarkV7" class="nqz-v7-result-mark">♟</div>
+
+        <h2 id="nqzResultTitleV7">Kết quả ván đấu</h2>
+
+        <p id="nqzResultTextV7" class="nqz-v7-result-message"></p>
+
+        <div class="nqz-v7-actions">
+            <button
+                id="nqzResultContinueV7"
+                class="nqz-v7-button primary"
+                type="button"
+            >
+                Chơi tiếp
+            </button>
+
+            <button
+                id="nqzResultLaterV7"
+                class="nqz-v7-button"
+                type="button"
+            >
+                Để sau
+            </button>
+        </div>
+    </div>
+</div>
+
+<script id="nqz-player-identity-v7-script">
+(() => {
+    "use strict";
+
+    const BUILD = "WEB V7.3";
+    const NAME_KEY = "nqz-player-name-v7";
+
+    const $ = id =>
+        document.getElementById(id);
+
+    const api = () =>
+        window.NQZ_API || null;
+
+    const nameGate =
+        $("nqzNameGateV7");
+
+    const nameForm =
+        $("nqzNameFormV7");
+
+    const nameInput =
+        $("nqzPlayerNameV7");
+
+    const nameError =
+        $("nqzNameErrorV7");
+
+    const nameCount =
+        $("nqzNameCountV7");
+
+    const resultGate =
+        $("nqzResultGateV7");
+
+    const resultTitle =
+        $("nqzResultTitleV7");
+
+    const resultText =
+        $("nqzResultTextV7");
+
+    const resultMark =
+        $("nqzResultMarkV7");
+
+    let playerName = "";
+    let nameConfirmed = false;
+    let assistanceUsed = false;
+    let assistanceSources = new Set();
+    let lastResultSignature = "";
+    let previousHistoryLength = 0;
+    let clockWasPaused = null;
+
+    function characterCount(value) {
+        return Array.from(
+            String(value || "")
+        ).length;
+    }
+
+    function normalizedName(value) {
+        return String(value || "")
+            .trim()
+            .replace(/\s+/g, " ");
+    }
+
+    function validateName(value) {
+        const clean =
+            normalizedName(value);
+
+        const length =
+            characterCount(clean);
+
+        if (length < 1) {
+            return {
+                ok: false,
+                message:
+                    "Bạn cần nhập ít nhất 1 ký tự.",
+            };
+        }
+
+        if (length > 100) {
+            return {
+                ok: false,
+                message:
+                    "Tên hoặc biệt danh chỉ được tối đa 100 ký tự.",
+            };
+        }
+
+        return {
+            ok: true,
+            value: clean,
+        };
+    }
+
+    function updateNameCounter() {
+        const length =
+            characterCount(nameInput.value);
+
+        nameCount.textContent =
+            `${length}/100`;
+
+        nameCount.style.color =
+            length > 100
+                ? "#ff7892"
+                : "#777e91";
+
+        nameInput.classList.toggle(
+            "invalid",
+            length > 100
+        );
+    }
+
+    function pauseForNameGate() {
+        const state =
+            window.NQZ_V5_CLOCK?.state;
+
+        if (!state) return;
+
+        if (clockWasPaused === null) {
+            clockWasPaused =
+                Boolean(state.paused);
+        }
+
+        state.paused = true;
+    }
+
+    function resumeAfterNameGate() {
+        const state =
+            window.NQZ_V5_CLOCK?.state;
+
+        if (!state) return;
+
+        state.paused =
+            clockWasPaused === null
+                ? false
+                : clockWasPaused;
+
+        state.lastNow =
+            performance.now();
+
+        clockWasPaused = null;
+    }
+
+    function openNameGate() {
+        const saved =
+            localStorage.getItem(NAME_KEY) || "";
+
+        nameInput.value = saved;
+        updateNameCounter();
+
+        nameError.textContent = "";
+        nameInput.classList.remove("invalid");
+
+        nameGate.classList.add("open");
+        document.body.classList.add(
+            "nqz-name-gate-open"
+        );
+
+        pauseForNameGate();
+
+        window.setTimeout(
+            () => {
+                nameInput.focus();
+                nameInput.select();
+            },
+            80
+        );
+    }
+
+    function closeNameGate() {
+        nameGate.classList.remove("open");
+        document.body.classList.remove(
+            "nqz-name-gate-open"
+        );
+
+        resumeAfterNameGate();
+    }
+
+    function applyPlayerName() {
+        if (!nameConfirmed || !playerName) {
+            return;
+        }
+
+        const currentApi = api();
+
+        if (!currentApi) return;
+
+        const mode =
+            $("nqzGameMode")?.value ||
+            window.NQZ_PLAY_MODE ||
+            "human-bot";
+
+        if (mode === "human-bot") {
+            const orientation =
+                currentApi.state.orientation;
+
+            const playerSide =
+                currentApi.state.playerColor;
+
+            const topSide =
+                orientation === "black"
+                    ? "w"
+                    : "b";
+
+            const target =
+                topSide === playerSide
+                    ? $("topPlayerName")
+                    : $("bottomPlayerName");
+
+            if (target) {
+                if (
+                    target.textContent !==
+                    playerName
+                ) {
+                    target.textContent =
+                        playerName;
+                }
+
+                target.dataset.nqzPlayerName =
+                    playerName;
+            }
+
+            const other =
+                target === $("topPlayerName")
+                    ? $("bottomPlayerName")
+                    : $("topPlayerName");
+
+            if (
+                other &&
+                other.dataset.nqzPlayerName
+            ) {
+                delete other.dataset
+                    .nqzPlayerName;
+            }
+        }
+
+        const turnText =
+            $("turnText");
+
+        if (
+            turnText &&
+            turnText.textContent.startsWith(
+                "Bạn:"
+            )
+        ) {
+            turnText.textContent =
+                playerName +
+                turnText.textContent.slice(3);
+        }
+
+        let chip =
+            $("nqzPlayerNameChipV7");
+
+        if (!chip) {
+            const anchor =
+                $("nqzBuildHealth");
+
+            if (anchor) {
+                chip =
+                    document.createElement("span");
+
+                chip.id =
+                    "nqzPlayerNameChipV7";
+
+                chip.className =
+                    "nqz-v7-name-chip";
+
+                anchor.insertAdjacentElement(
+                    "afterend",
+                    chip
+                );
+            }
+        }
+
+        if (chip) {
+            chip.textContent =
+                playerName;
+
+            chip.title =
+                "Người chơi: " +
+                playerName;
+        }
+    }
+
+    function confirmName(event) {
+        event.preventDefault();
+
+        const validation =
+            validateName(nameInput.value);
+
+        if (!validation.ok) {
+            nameError.textContent =
+                validation.message;
+
+            nameInput.classList.add(
+                "invalid"
+            );
+
+            nameInput.focus();
+            return;
+        }
+
+        playerName =
+            validation.value;
+
+        nameConfirmed = true;
+
+        localStorage.setItem(
+            NAME_KEY,
+            playerName
+        );
+
+        nameInput.value =
+            playerName;
+
+        nameError.textContent = "";
+        nameInput.classList.remove(
+            "invalid"
+        );
+
+        closeNameGate();
+        applyPlayerName();
+
+        window.dispatchEvent(
+            new CustomEvent(
+                "nqz-player-name-ready",
+                {
+                    detail: {
+                        name: playerName,
+                    },
+                }
+            )
+        );
+
+        evaluateFinishedGame();
+    }
+
+    function markAssistance(source) {
+        assistanceUsed = true;
+        assistanceSources.add(source);
+
+        document.documentElement.dataset
+            .nqzAssistanceUsed = "true";
+    }
+
+    function resetGameSession() {
+        assistanceUsed = false;
+        assistanceSources.clear();
+        lastResultSignature = "";
+
+        document.documentElement.dataset
+            .nqzAssistanceUsed = "false";
+
+        window.setTimeout(
+            applyPlayerName,
+            60
+        );
+    }
+
+    function assistanceDetected() {
+        const logs =
+            api()?.state?.logs || [];
+
+        return (
+            assistanceUsed ||
+            logs.some(
+                entry =>
+                    Boolean(
+                        entry?.assistanceUsed
+                    )
+            )
+        );
+    }
+
+    function resultSignature(game) {
+        return [
+            game.fen(),
+            game.history().length,
+            game.in_checkmate()
+                ? "mate"
+                : "other",
+        ].join("|");
+    }
+
+    function openResult({
+        title,
+        message,
+        mark,
+    }) {
+        resultTitle.textContent = title;
+        resultText.textContent = message;
+        resultMark.textContent = mark;
+
+        resultGate.classList.add("open");
+        document.body.classList.add(
+            "nqz-name-gate-open"
+        );
+    }
+
+    function closeResult() {
+        resultGate.classList.remove("open");
+        document.body.classList.remove(
+            "nqz-name-gate-open"
+        );
+    }
+
+    function evaluateFinishedGame() {
+        const currentApi = api();
+
+        if (
+            !currentApi ||
+            !nameConfirmed
+        ) {
+            return;
+        }
+
+        const mode =
+            $("nqzGameMode")?.value ||
+            window.NQZ_PLAY_MODE ||
+            "human-bot";
+
+        if (mode !== "human-bot") {
+            return;
+        }
+
+        const game =
+            currentApi.game;
+
+        if (!game.game_over()) {
+            return;
+        }
+
+        const signature =
+            resultSignature(game);
+
+        if (
+            signature ===
+            lastResultSignature
+        ) {
+            return;
+        }
+
+        lastResultSignature =
+            signature;
+
+        if (!game.in_checkmate()) {
+            openResult({
+                title:
+                    "Ván đấu hòa",
+                message:
+                    `Ván này hòa rồi, ${playerName}. ` +
+                    "Bạn tiếp tục chứ?",
+                mark:
+                    "½",
+            });
+
+            return;
+        }
+
+        const losingSide =
+            game.turn();
+
+        const playerWon =
+            currentApi.state.playerColor !==
+            losingSide;
+
+        if (playerWon) {
+            if (assistanceDetected()) {
+                openResult({
+                    title:
+                        "Chiến thắng có trợ giúp",
+                    message:
+                        "Trợ giúp có thể khiến bạn thắng " +
+                        "nhưng không thể giúp trình độ bạn " +
+                        `nâng cao lên đâu, ${playerName} à.`,
+                    mark:
+                        "⚡",
+                });
+            } else {
+                openResult({
+                    title:
+                        "Chiến thắng",
+                    message:
+                        `Bạn thật sự giỏi đấy, ${playerName}! ` +
+                        "Cảm ơn bạn đã tham gia. " +
+                        "Bạn tiếp tục chứ?",
+                    mark:
+                        "★",
+                });
+            }
+
+            return;
+        }
+
+        openResult({
+            title:
+                "Thất bại",
+            message:
+                `Bạn có trình không, ${playerName}? ` +
+                "Thử lại một ván nữa nhé.",
+            mark:
+                "↻",
+        });
+    }
+
+    function installAssistanceTracking() {
+        const helpers = {
+            suggestBtn:
+                "quét thế cờ",
+            nqzSuggest:
+                "gợi ý engine",
+            coachBestBtn:
+                "Coach hiện nước tốt",
+            simBtn:
+                "tác nhân tự đi",
+        };
+
+        for (
+            const [id, source]
+            of Object.entries(helpers)
+        ) {
+            const element = $(id);
+
+            if (!element) continue;
+
+            element.addEventListener(
+                "click",
+                () => {
+                    markAssistance(source);
+                },
+                true
+            );
+        }
+    }
+
+    function installSessionTracking() {
+        const resetIds = [
+            "nqzNewGame",
+            "resetBtn",
+            "nqzLoadFen",
+            "loadFenBtn",
+            "nqzLoadPgn",
+        ];
+
+        for (const id of resetIds) {
+            const element = $(id);
+
+            if (!element) continue;
+
+            element.addEventListener(
+                "click",
+                resetGameSession,
+                true
+            );
+        }
+
+        window.addEventListener(
+            "nqz-board-rendered",
+            () => {
+                const currentApi = api();
+
+                if (!currentApi) return;
+
+                const historyLength =
+                    currentApi.game
+                        .history()
+                        .length;
+
+                if (
+                    historyLength === 0 &&
+                    previousHistoryLength > 0 &&
+                    !currentApi.game
+                        .game_over()
+                ) {
+                    resetGameSession();
+                }
+
+                previousHistoryLength =
+                    historyLength;
+
+                applyPlayerName();
+                evaluateFinishedGame();
+            }
+        );
+    }
+
+    function installResultActions() {
+        $("nqzResultContinueV7")
+            .addEventListener(
+                "click",
+                () => {
+                    closeResult();
+                    resetGameSession();
+
+                    const newGame =
+                        $("nqzNewGame") ||
+                        $("resetBtn");
+
+                    if (newGame) {
+                        newGame.click();
+                    } else {
+                        api()?.startNewGame();
+                    }
+
+                    window.setTimeout(
+                        applyPlayerName,
+                        80
+                    );
+                }
+            );
+
+        $("nqzResultLaterV7")
+            .addEventListener(
+                "click",
+                closeResult
+            );
+    }
+
+    function updateBuildBadge() {
+        const badge =
+            $("nqzBuildHealth");
+
+        if (!badge) return;
+
+        badge.title =
+            (
+                badge.title
+                    ? badge.title + "\n"
+                    : ""
+            ) +
+            BUILD +
+            " · Name Gate + Result Messages";
+
+        document.documentElement.dataset
+            .nqzIdentityBuild = BUILD;
+    }
+
+    function bootWhenReady() {
+        if (!api()) {
+            window.setTimeout(
+                bootWhenReady,
+                50
+            );
+
+            return;
+        }
+
+        previousHistoryLength =
+            api().game.history().length;
+
+        installAssistanceTracking();
+        installSessionTracking();
+        installResultActions();
+        updateBuildBadge();
+
+        window.setInterval(
+            applyPlayerName,
+            250
+        );
+    }
+
+    nameInput.addEventListener(
+        "input",
+        () => {
+            updateNameCounter();
+            nameError.textContent = "";
+            nameInput.classList.remove(
+                "invalid"
+            );
+        }
+    );
+
+    nameForm.addEventListener(
+        "submit",
+        confirmName
+    );
+
+    document.addEventListener(
+        "keydown",
+        event => {
+            if (
+                event.key === "Escape" &&
+                nameGate.classList.contains(
+                    "open"
+                )
+            ) {
+                event.preventDefault();
+                nameInput.focus();
+            }
+        },
+        true
+    );
+
+    window.NQZ_PLAYER_V7 = {
+        getName: () => playerName,
+        setName: value => {
+            nameInput.value =
+                String(value || "");
+
+            return validateName(
+                nameInput.value
+            );
+        },
+        markAssistance,
+        evaluateFinishedGame,
+        resetGameSession,
+        diagnostics: {
+            build: BUILD,
+            validateName,
+        },
+    };
+
+    openNameGate();
+    bootWhenReady();
+})();
+</script>
+<!-- NQZ PLAYER IDENTITY V7 END -->
 
 </body>
 </html>

@@ -1,0 +1,21 @@
+NQZNZEE WEB SHARE V7.1 — NAME DISPLAY DIAGNOSTICS
+========================================================================
+[OK] File: index.html
+[OK] File: 404.html
+[OK] File: nqznzee-pawn.png
+[OK] File: manifest.webmanifest
+[OK] File: _redirects
+[OK] File: _headers
+[OK] File: HUONG_DAN_UPDATE_V7_1.txt
+[OK] JavaScript syntax: 6 inline blocks
+[OK] Core card reads saved player name
+[OK] White player uses saved name
+[OK] Black player uses saved name
+[OK] Name watchdog installed
+[OK] Build upgraded to V7.1
+[OK] Mapping: White player, normal orientation
+[OK] Mapping: Black player, normal orientation
+[OK] Mapping: White player, flipped board
+[OK] Mapping: Black player, flipped board
+------------------------------------------------------------------------
+RESULT: PASS — READY TO UPLOAD TO GITHUB

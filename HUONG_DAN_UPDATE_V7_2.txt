@@ -1,0 +1,14 @@
+NQZNZEE WEB SHARE V7.2 — ĐỔI TÊN BOSS
+
+ĐÃ THAY ĐỔI
+- Boss cuối Bot Ladder đổi từ NQZ Apex thành NguyenRIVAL.
+- Tên mới xuất hiện trong danh sách bot, hồ sơ, lịch sử và giao diện liên quan.
+- Elo và sức mạnh của boss không thay đổi.
+
+UPDATE GITHUB
+1. Giải nén NqznZee_Web_Share_V7_2.zip.
+2. Vào repository nqznzee-chess-arena.
+3. Chọn Add file > Upload files.
+4. Kéo toàn bộ file lên và ghi đè file cũ.
+5. Commit vào nhánh main.
+6. Mở link với ?v=7.2 để tránh cache.

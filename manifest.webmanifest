@@ -1,7 +1,7 @@
 {
   "name": "NqznZee Chess Arena",
   "short_name": "NqznZee Chess",
-  "description": "Chess Arena với bot, Game Review, Puzzle và Bot Ladder.",
+  "description": "NqznZee Chess Arena V7.3 — 5 bộ quân nghệ thuật hoàn toàn riêng: Staunton, Khủng long, Tương lai, Phục Hưng và Pha lê.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
