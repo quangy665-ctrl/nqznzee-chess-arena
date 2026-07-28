@@ -1,0 +1,37 @@
+NQZNZEE WEB SHARE V7.8 — TAP FIRST
+
+THAY ĐỔI QUAN TRỌNG
+- Chạm quân rồi chạm ô đích là thao tác chính trên mobile.
+- Pointerdown của một cú chạm gần như không làm công việc nặng.
+- Nước đi được xử lý ngay khi nhấc ngón tay.
+- Chạm lại quân đang chọn để bỏ chọn.
+- Chạm quân khác của mình để đổi lựa chọn ngay.
+- Chạm nhầm ô không hợp lệ vẫn giữ quân cũ được chọn.
+- Chấm nước hợp lệ và vòng bắt quân luôn bám theo quân đang chọn.
+
+TỐI ƯU RENDER
+- 64 ô cờ chỉ được tạo một lần.
+- Không xóa rồi dựng lại cả bàn sau mỗi cú chạm.
+- Chỉ những ô có quân thay đổi mới dựng lại SVG.
+- Đảo bàn mới tái tạo thứ tự 64 ô.
+- Một nước thường chỉ cập nhật ô đi và ô đến.
+- Nhập thành, bắt tốt qua đường và phong cấp vẫn được nhận diện qua bản đồ quân.
+
+KÉO QUÂN
+- Vẫn hỗ trợ nhưng là thao tác phụ.
+- Cần rê rõ khoảng 12px, hoặc giữ 90ms rồi rê khoảng 8px.
+- Rung tay nhẹ không còn vô tình kích hoạt kéo.
+- Ghost vẫn chạy bằng translate3d và GPU.
+
+PC
+- Bố cục PC giữ nguyên.
+- Render bàn cờ mới cũng giúp thao tác chuột nhẹ hơn.
+
+CẬP NHẬT GITHUB
+1. Giải nén NqznZee_Web_Share_V7_8_Tap_First.zip.
+2. Vào repository nqznzee-chess-arena.
+3. Add file > Upload files.
+4. Kéo toàn bộ file lên và ghi đè file cũ.
+5. Commit directly to the main branch.
+6. Mở:
+   https://quangy665-ctrl.github.io/nqznzee-chess-arena/?v=7.8

@@ -1,0 +1,27 @@
+NQZNZEE WEB SHARE V7.8 — TAP FIRST DIAGNOSTICS
+======================================================================================
+[OK] File: index.html
+[OK] File: 404.html
+[OK] File: nqznzee-pawn.png
+[OK] File: manifest.webmanifest
+[OK] File: _redirects
+[OK] File: _headers
+[OK] File: HUONG_DAN_UPDATE_V7_8.txt
+[OK] JavaScript syntax: 7 inline blocks
+[OK] Persistent 64-square board
+[OK] Pieces update only when changed
+[OK] Full board clear only during board creation
+[OK] Tap again cancels selection
+[OK] Tap own piece switches selection
+[OK] Invalid target keeps selection
+[OK] Tap path does no heavy work on pointerdown
+[OK] Tap executes on pointerup
+[OK] Drag has deliberate threshold
+[OK] GPU drag remains available
+[OK] Old V7.7 controller removed
+[OK] Desktop grid unchanged
+[OK] Build upgraded to V7.8
+[OK] Changed-square model: normal move and castling
+[OK] HTML IDs unique: 168
+--------------------------------------------------------------------------------------
+RESULT: PASS — READY TO UPLOAD TO GITHUB

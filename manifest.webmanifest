@@ -1,7 +1,7 @@
 {
   "name": "NqznZee Chess Arena",
   "short_name": "NqznZee Chess",
-  "description": "NqznZee Chess Arena V7.7 — Smooth Touch sử dụng GPU translate3d, cache vị trí ô, giảm SVG filter và hạn chế cập nhật DOM khi kéo quân.",
+  "description": "NqznZee Chess Arena V7.8 — Tap First: chạm quân rồi chạm ô đích, bàn cờ DOM cố định, chỉ cập nhật các ô thay đổi; kéo quân là thao tác phụ.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
