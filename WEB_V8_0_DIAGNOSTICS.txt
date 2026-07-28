@@ -1,0 +1,37 @@
+NQZNZEE WEB SHARE V8.0 — ACCOUNT LOGIN DIAGNOSTICS
+========================================================================================
+[OK] File: index.html
+[OK] File: 404.html
+[OK] File: login.html
+[OK] File: profile.html
+[OK] File: account.js
+[OK] File: account.css
+[OK] File: supabase-config.js
+[OK] File: nqznzee-pawn.png
+[OK] File: HUONG_DAN_V8_0_ACCOUNT.txt
+[OK] File: supabase/functions/register-username/index.ts
+[OK] File: supabase/database/02_service_role_grants.sql
+[OK] JavaScript syntax: account.js
+[OK] JavaScript syntax: supabase-config.js
+[OK] Inline JavaScript checked: index.html (9 blocks)
+[OK] Inline JavaScript checked: login.html (1 blocks)
+[OK] Inline JavaScript checked: profile.html (1 blocks)
+[OK] Known Project URL configured
+[OK] Publishable key placeholder present
+[OK] No actual secret key embedded
+[OK] Supabase CDN loaded
+[OK] Username registration invokes Edge Function
+[OK] Username login uses password auth
+[OK] Persistent session enabled
+[OK] Profile and rating loading enabled
+[OK] Game account widget enabled
+[OK] Cloud profile skips local name gate
+[OK] Guest play remains available
+[OK] Profile editing enabled
+[OK] V8 build marker enabled
+[OK] Desktop grid unchanged
+[OK] HTML IDs unique: index.html (170)
+[OK] HTML IDs unique: login.html (21)
+[OK] HTML IDs unique: profile.html (12)
+----------------------------------------------------------------------------------------
+RESULT: PASS — READY FOR PUBLISHABLE KEY AND v8-account UPLOAD

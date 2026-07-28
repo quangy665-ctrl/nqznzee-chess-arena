@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>NqznZee Chess Arena — V7.10 Mobile Options Fix</title>
+<title>NqznZee Chess Arena — V8.0 Account Login</title>
 
 <!--
 NqznZee Chess Arena
@@ -2606,6 +2606,12 @@ body[data-nqz-theme="crystal"] .nqz-themed-piece {
 <link rel="apple-touch-icon" href="./nqznzee-pawn.png">
 <link rel="manifest" href="./manifest.webmanifest">
 
+
+<link rel="stylesheet" href="./account.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./supabase-config.js"></script>
+<script src="./account.js" defer></script>
+
 </head>
 
 <body data-nqz-theme="standard" data-nqz-default-theme="standard">
@@ -2613,7 +2619,7 @@ body[data-nqz-theme="crystal"] .nqz-themed-piece {
 <div class="arena-topbar">
     <div class="arena-brand">
         <div class="arena-mark">NQZ</div>
-        <div><strong>NqznZee Chess Arena</strong><small>ULTIMATE V6 · CAREER EDITION</small></div>
+        <div><strong>NqznZee Chess Arena</strong><small>V8.0 · ACCOUNT CLOUD</small></div>
     </div>
     <div class="arena-actions">
         <span id="nqzBuildHealth" class="nqz-build-health">
@@ -2630,7 +2636,7 @@ body[data-nqz-theme="crystal"] .nqz-themed-piece {
             <div>
                 <h1>NqznZee Chess Arena</h1>
                 <div class="subtitle">
-                    ULTIMATE V6 · Game Review · Puzzle cá nhân · Bot Ladder · Hồ sơ · 5 bộ quân & bàn
+                    V8.0 · Account Cloud · Game Review · Puzzle · Bot Ladder · 5 bộ quân & bàn
                 </div>
             </div>
         </div>
@@ -9765,7 +9771,7 @@ body[data-nqz-theme="crystal"] .nqz-themed-piece {
 
 <script id="nqz-web-share-build">
 window.addEventListener("DOMContentLoaded", () => {
-    document.documentElement.dataset.nqzBuild = "web-share-v7-10";
+    document.documentElement.dataset.nqzBuild = "web-share-v8-0";
     const badge = document.getElementById("nqzBuildHealth");
     if (badge && !badge.textContent.includes("WEB")) {
         badge.title = (badge.title ? badge.title + "\n" : "") +
@@ -10136,7 +10142,7 @@ window.addEventListener("DOMContentLoaded", () => {
 (() => {
     "use strict";
 
-    const BUILD = "WEB V7.10";
+    const BUILD = "WEB V8.0";
     const NAME_KEY = "nqz-player-name-v7";
 
     const $ = id =>
@@ -10271,6 +10277,65 @@ window.addEventListener("DOMContentLoaded", () => {
     }
 
     function openNameGate() {
+        /*
+        V8.0: a signed-in account stores a small public profile cache.
+        Read it synchronously so the old local-name gate does not flash
+        before Supabase finishes restoring the session.
+        */
+        try {
+            const accountCache =
+                JSON.parse(
+                    localStorage.getItem(
+                        "nqz-account-profile-cache-v8"
+                    ) || "null"
+                );
+
+            const accountName =
+                normalizedName(
+                    accountCache
+                        ?.display_name ||
+                    ""
+                );
+
+            if (accountName) {
+                playerName =
+                    accountName;
+
+                nameConfirmed =
+                    true;
+
+                localStorage.setItem(
+                    NAME_KEY,
+                    playerName
+                );
+
+                nameInput.value =
+                    playerName;
+
+                applyPlayerName();
+
+                window.dispatchEvent(
+                    new CustomEvent(
+                        "nqz-player-name-ready",
+                        {
+                            detail: {
+                                name:
+                                    playerName,
+                                source:
+                                    "account-cloud",
+                            },
+                        }
+                    )
+                );
+
+                return;
+            }
+        } catch {
+            localStorage.removeItem(
+                "nqz-account-profile-cache-v8"
+            );
+        }
+
         const saved =
             localStorage.getItem(NAME_KEY) || "";
 
@@ -12421,5 +12486,17 @@ window.addEventListener("DOMContentLoaded", () => {
 </script>
 <!-- NQZ MOBILE CONTROLS V7.10 END -->
 
+
+<script>
+window.addEventListener(
+    "nqz-player-name-ready",
+    event => {
+        document.documentElement
+            .dataset.nqzPlayerIdentity =
+            event.detail?.source ||
+            "local";
+    }
+);
+</script>
 </body>
 </html>
