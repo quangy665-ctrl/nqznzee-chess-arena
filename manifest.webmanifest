@@ -1,7 +1,7 @@
 {
   "name": "NqznZee Chess Arena",
   "short_name": "NqznZee Chess",
-  "description": "NqznZee Chess Arena V7.8 — Tap First: chạm quân rồi chạm ô đích, bàn cờ DOM cố định, chỉ cập nhật các ô thay đổi; kéo quân là thao tác phụ.",
+  "description": "NqznZee Chess Arena V7.9 — Standard mặc định ổn định, sửa hình quân khi đổi theme và Instant Tap không render ở cú chạm đầu.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

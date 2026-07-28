@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>NqznZee Chess Arena — V7.8 Tap First</title>
+<title>NqznZee Chess Arena — V7.9 Instant Tap</title>
 
 <!--
 NqznZee Chess Arena
@@ -2488,6 +2488,22 @@ body[data-nqz-theme="crystal"] .nqz-themed-piece {
             rgba(255, 106, 128, .62);
     }
 
+
+    /* V7.9: remove expensive SVG presentation filters on mobile. */
+    .board.nqz-touch-performance svg [filter] {
+        filter: none !important;
+    }
+
+    .board.nqz-touch-performance .piece-image {
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+        contain: layout paint style;
+    }
+
+    .board.nqz-touch-performance .square {
+        contain: layout paint style;
+    }
+
 }
 
 /* Compact phone landscape without changing desktop. */
@@ -2537,7 +2553,7 @@ body[data-nqz-theme="crystal"] .nqz-themed-piece {
 
 </head>
 
-<body>
+<body data-nqz-theme="standard" data-nqz-default-theme="standard">
 
 <div class="arena-topbar">
     <div class="arena-brand">
@@ -3164,6 +3180,14 @@ body[data-nqz-theme="crystal"] .nqz-themed-piece {
             "-" +
             Math.random().toString(36).slice(2);
 
+        const mobileLite =
+            window.matchMedia?.(
+                "(max-width: 767px), " +
+                "(max-width: 940px) and " +
+                "(max-height: 540px)"
+            ).matches ||
+            false;
+
         const base = `
             <defs>
                 <linearGradient
@@ -3333,7 +3357,11 @@ body[data-nqz-theme="crystal"] .nqz-themed-piece {
                 focusable="false"
             >
                 ${base}
-                <g filter="url(#${gradientId}-shadow)">
+                <g ${
+                    mobileLite
+                        ? ""
+                        : `filter="url(#${gradientId}-shadow)"`
+                }>
                     ${designs[type]}
                 </g>
             </svg>
@@ -4867,6 +4895,9 @@ body[data-nqz-theme="crystal"] .nqz-themed-piece {
             button.dataset.pieceSymbol =
                 "";
 
+            button.dataset.pieceTheme =
+                "";
+
             const visualCol =
                 index % 8;
 
@@ -4924,11 +4955,24 @@ body[data-nqz-theme="crystal"] .nqz-themed-piece {
         const next =
             symbol || "";
 
+        const activeTheme =
+            window.NQZ_THEME_ENGINE
+                ?.current ||
+            "standard";
+
         const previous =
             button.dataset.pieceSymbol ||
             "";
 
-        if (previous === next) {
+        const previousTheme =
+            button.dataset.pieceTheme ||
+            "";
+
+        if (
+            previous === next &&
+            previousTheme ===
+                activeTheme
+        ) {
             return;
         }
 
@@ -4947,6 +4991,9 @@ body[data-nqz-theme="crystal"] .nqz-themed-piece {
 
         button.dataset.pieceSymbol =
             next;
+
+        button.dataset.pieceTheme =
+            activeTheme;
     }
 
     function render() {
@@ -5268,45 +5315,60 @@ body[data-nqz-theme="crystal"] .nqz-themed-piece {
 
         state.selected = null;
 
-        addLog({
-            actor: "human",
-            assistanceUsed: false,
-            mode: "manual",
-            moveUci:
-                move.from +
-                move.to +
-                (move.promotion || ""),
-            moveSan: move.san,
-        });
-
         const postFen =
             game.fen();
 
-        playMoveSound(move);
-
-        say(
-            "Nước của bạn: " +
-            move.san +
-            "."
-        );
-
+        /*
+        Paint the move immediately.
+        Logging, sound, Coach and bot scheduling wait until after this frame.
+        */
         render();
 
-        if (
-            config().coachEnabled &&
-            state.engineReady
-        ) {
-            reviewMove({
+        const continueAfterPaint = () => {
+            addLog({
                 actor: "human",
-                preFen,
-                postFen,
-                move,
-            }).finally(
-                scheduleOpponentIfNeeded
+                assistanceUsed: false,
+                mode: "manual",
+                moveUci:
+                    move.from +
+                    move.to +
+                    (move.promotion || ""),
+                moveSan: move.san,
+            });
+
+            playMoveSound(move);
+
+            say(
+                "Nước của bạn: " +
+                move.san +
+                "."
             );
-        } else {
-            scheduleOpponentIfNeeded();
-        }
+
+            if (
+                config().coachEnabled &&
+                state.engineReady
+            ) {
+                reviewMove({
+                    actor: "human",
+                    preFen,
+                    postFen,
+                    move,
+                }).finally(
+                    scheduleOpponentIfNeeded
+                );
+            } else {
+                scheduleOpponentIfNeeded();
+            }
+        };
+
+        window.requestAnimationFrame(
+            () => {
+                window.setTimeout(
+                    continueAfterPaint,
+                    0
+                );
+            }
+        );
     }
 
     function addLog(entry) {
@@ -7998,8 +8060,8 @@ body[data-nqz-theme="crystal"] .nqz-themed-piece {
 
     const THEMES = {
         standard: {
-            name: "Tiêu chuẩn",
-            note: "Staunton điêu khắc mềm, cân đối và rõ nét trên bàn xanh kem.",
+            name: "Mặc định",
+            note: "Bộ quân cổ điển rõ nét, nhẹ và ổn định nhất khi chơi trên điện thoại.",
             light: "#ebecd0",
             dark: "#779556",
             accent: "#81b64c",
@@ -9030,19 +9092,66 @@ body[data-nqz-theme="crystal"] .nqz-themed-piece {
 
     window.NQZ_THEME_ENGINE = {
         current: "standard",
+
         renderPiece(symbol) {
-            return renderPieceSvg(symbol, this.current);
+            /*
+            Standard deliberately returns an empty string so pieceSvg()
+            falls back to the stable classic chess model.
+            Artistic SVG models are opt-in only.
+            */
+            if (this.current === "standard") {
+                return "";
+            }
+
+            return renderPieceSvg(
+                symbol,
+                this.current
+            );
         },
-        apply(themeId) {
-            if (!THEMES[themeId]) themeId = "standard";
+
+        apply(
+            themeId,
+            {
+                persist = true,
+            } = {}
+        ) {
+            if (!THEMES[themeId]) {
+                themeId = "standard";
+            }
+
             this.current = themeId;
             store.settings.theme = themeId;
-            saveStore();
-            document.body.dataset.nqzTheme = themeId;
-            document.documentElement.style.setProperty("--light-square", THEMES[themeId].light);
-            document.documentElement.style.setProperty("--dark-square", THEMES[themeId].dark);
-            document.documentElement.style.setProperty("--accent", THEMES[themeId].accent);
-            if ($("nqzPieceTheme")) $("nqzPieceTheme").value = themeId;
+
+            if (persist) {
+                saveStore();
+            }
+
+            document.body.dataset.nqzTheme =
+                themeId;
+
+            document.documentElement
+                .style.setProperty(
+                    "--light-square",
+                    THEMES[themeId].light
+                );
+
+            document.documentElement
+                .style.setProperty(
+                    "--dark-square",
+                    THEMES[themeId].dark
+                );
+
+            document.documentElement
+                .style.setProperty(
+                    "--accent",
+                    THEMES[themeId].accent
+                );
+
+            if ($("nqzPieceTheme")) {
+                $("nqzPieceTheme").value =
+                    themeId;
+            }
+
             renderThemeGallery();
             api()?.render();
         },
@@ -9556,11 +9665,24 @@ body[data-nqz-theme="crystal"] .nqz-themed-piece {
             window.setTimeout(boot, 60);
             return;
         }
+        /*
+        Every new page visit starts in the stable default style.
+        Players can still switch theme from the Style panel.
+        */
+        store.settings.theme =
+            "standard";
+
         renderThemeGallery();
         renderCareer();
         renderPuzzles();
         installEvents();
-        window.NQZ_THEME_ENGINE.apply(store.settings.theme || "standard");
+
+        window.NQZ_THEME_ENGINE.apply(
+            "standard",
+            {
+                persist: false,
+            }
+        );
         window.setTimeout(() => {
             if (!restoreAutosave()) {
                 sessionStartFen = api().game.history().length ? sessionStartFen : api().game.fen();
@@ -9588,7 +9710,7 @@ body[data-nqz-theme="crystal"] .nqz-themed-piece {
 
 <script id="nqz-web-share-build">
 window.addEventListener("DOMContentLoaded", () => {
-    document.documentElement.dataset.nqzBuild = "web-share-v7-8";
+    document.documentElement.dataset.nqzBuild = "web-share-v7-9";
     const badge = document.getElementById("nqzBuildHealth");
     if (badge && !badge.textContent.includes("WEB")) {
         badge.title = (badge.title ? badge.title + "\n" : "") +
@@ -9959,7 +10081,7 @@ window.addEventListener("DOMContentLoaded", () => {
 (() => {
     "use strict";
 
-    const BUILD = "WEB V7.8";
+    const BUILD = "WEB V7.9";
     const NAME_KEY = "nqz-player-name-v7";
 
     const $ = id =>
@@ -10677,13 +10799,13 @@ window.addEventListener("DOMContentLoaded", () => {
 
 
 
-<!-- NQZ TAP FIRST V7.8 START -->
-<script id="nqz-tap-first-v7-8">
+<!-- NQZ INSTANT TAP V7.9 START -->
+<script id="nqz-instant-tap-v7-9">
 (() => {
     "use strict";
 
     const BUILD =
-        "WEB V7.8 TAP FIRST";
+        "WEB V7.9 INSTANT TAP";
 
     const PHONE_QUERY =
         "(max-width: 767px), " +
@@ -11321,21 +11443,81 @@ window.addEventListener("DOMContentLoaded", () => {
 
         if (
             !currentApi ||
-            !square
+            !square ||
+            !canInteract()
         ) {
             return;
         }
 
+        const selected =
+            currentApi.state.selected;
+
         /*
-        selectSquare now uses persistent board rendering,
-        so both selection and move placement avoid a full board rebuild.
+        First tap: update only the selected state and hint classes.
+        No render(), event dispatch, FEN update or autosave.
+        */
+        if (!selected) {
+            if (!canPick(square)) {
+                vibrate(12);
+                return;
+            }
+
+            currentApi.state.selected =
+                square;
+
+            currentApi.state.suggestion =
+                null;
+
+            showTapHints(square);
+            return;
+        }
+
+        /*
+        Tapping the selected piece again cancels instantly.
+        */
+        if (square === selected) {
+            currentApi.state.selected =
+                null;
+
+            clearTapHints();
+            return;
+        }
+
+        /*
+        Tapping another own piece switches instantly without rendering.
+        */
+        if (canPick(square)) {
+            currentApi.state.selected =
+                square;
+
+            currentApi.state.suggestion =
+                null;
+
+            showTapHints(square);
+            return;
+        }
+
+        const legal =
+            legalMoves(selected).some(
+                move =>
+                    move.to === square
+            );
+
+        if (!legal) {
+            showTapHints(selected);
+            vibrate([12, 18, 12]);
+            return;
+        }
+
+        /*
+        Only a real move enters the core controller.
+        The core now paints first and defers non-visual work.
         */
         currentApi.selectSquare(
             square
         );
 
-        refreshHints();
-        vibrate(4);
+        clearTapHints();
     }
 
     function performDragMove(
@@ -11385,8 +11567,6 @@ window.addEventListener("DOMContentLoaded", () => {
         if (!squareElement) return;
 
         event.preventDefault();
-
-        cacheGeometry();
 
         interaction.active =
             true;
@@ -11463,10 +11643,10 @@ window.addEventListener("DOMContentLoaded", () => {
         Tiny finger wobble remains a tap.
         */
         const deliberateDrag =
-            distanceSquared >= 144 ||
+            distanceSquared >= 196 ||
             (
-                heldFor >= 90 &&
-                distanceSquared >= 64
+                heldFor >= 100 &&
+                distanceSquared >= 100
             );
 
         if (
@@ -11480,6 +11660,12 @@ window.addEventListener("DOMContentLoaded", () => {
             ) {
                 return;
             }
+
+            /*
+            Layout reads are delayed until the user deliberately drags.
+            Ordinary taps never call getBoundingClientRect().
+            */
+            cacheGeometry();
 
             interaction.legal =
                 showTapHints(
@@ -11579,11 +11765,6 @@ window.addEventListener("DOMContentLoaded", () => {
         }
 
         const tappedSquare =
-            squareAtPoint(
-                event.clientX,
-                event.clientY,
-                12
-            ) ||
             interaction.downSquare;
 
         resetPointer();
@@ -11618,6 +11799,11 @@ window.addEventListener("DOMContentLoaded", () => {
 
         board?.classList.toggle(
             "nqz-tap-ready",
+            active
+        );
+
+        board?.classList.toggle(
+            "nqz-touch-performance",
             active
         );
 
@@ -11731,7 +11917,7 @@ window.addEventListener("DOMContentLoaded", () => {
         );
     }
 
-    window.NQZ_TOUCH_V78 = {
+    window.NQZ_TOUCH_V79 = {
         build: BUILD,
         isPhone,
         refreshHints,
@@ -11742,7 +11928,7 @@ window.addEventListener("DOMContentLoaded", () => {
     syncMode();
 })();
 </script>
-<!-- NQZ TAP FIRST V7.8 END -->
+<!-- NQZ INSTANT TAP V7.9 END -->
 
 </body>
 </html>

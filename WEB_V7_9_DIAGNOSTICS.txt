@@ -1,0 +1,28 @@
+NQZNZEE WEB SHARE V7.9 — DEFAULT + INSTANT TAP DIAGNOSTICS
+========================================================================================
+[OK] File: index.html
+[OK] File: 404.html
+[OK] File: nqznzee-pawn.png
+[OK] File: manifest.webmanifest
+[OK] File: _redirects
+[OK] File: _headers
+[OK] File: HUONG_DAN_UPDATE_V7_9.txt
+[OK] JavaScript syntax: 7 inline blocks
+[OK] Body declares Standard immediately
+[OK] Page boot forces Standard
+[OK] Standard uses classic fallback
+[OK] Theme switch refreshes unchanged pieces
+[OK] Mobile classic shadow disabled
+[OK] Mobile SVG filters disabled
+[OK] First tap bypasses core render
+[OK] Normal pointerdown has no geometry read
+[OK] Geometry read delayed until drag
+[OK] Tap uses touched element square
+[OK] Move paints before nonvisual work
+[OK] Persistent board remains enabled
+[OK] Desktop grid unchanged
+[OK] Build upgraded to V7.9
+[OK] Theme token refresh model
+[OK] HTML IDs unique: 168
+----------------------------------------------------------------------------------------
+RESULT: PASS — READY TO UPLOAD TO GITHUB

@@ -1,0 +1,33 @@
+NQZNZEE WEB SHARE V7.9 — DEFAULT + INSTANT TAP
+
+SỬA LỖI HÌNH ẢNH
+- Mỗi lần mở trang đều bắt đầu bằng phong cách Mặc định.
+- Mặc định dùng bộ quân cổ điển ổn định, không dùng model nghệ thuật thử nghiệm.
+- Các phong cách nghệ thuật chỉ được tải khi người chơi chủ động chọn.
+- Sửa lỗi đổi theme nhưng một số quân vẫn giữ hình của theme cũ.
+- Mỗi ô lưu cả ký hiệu quân và theme hiện tại để biết lúc nào cần dựng lại hình.
+- Bộ lọc SVG nặng bị tắt trên mobile.
+
+TỐI ƯU CHẠM
+- Cú chạm đầu không gọi render().
+- Cú chạm đầu không dispatch sự kiện bàn cờ.
+- Cú chạm đầu không cập nhật FEN, autosave, Coach hay panel phụ.
+- Chọn, bỏ chọn và chuyển sang quân khác chỉ đổi state + class của vài ô.
+- Pointerdown thông thường không gọi getBoundingClientRect().
+- Ô chạm lấy trực tiếp từ phần tử người dùng đặt ngón tay lên.
+- Chỉ khi kéo thật sự mới đo kích thước bàn.
+- Kéo cần rê rõ hơn để rung tay không bị hiểu nhầm là kéo.
+- Sau nước đi, quân được vẽ trước; âm thanh, log, Coach và bot chạy sau khung hình.
+
+PC
+- Bố cục PC giữ nguyên.
+- Mặc định cũng dùng bộ quân cổ điển ổn định.
+
+CẬP NHẬT GITHUB
+1. Giải nén NqznZee_Web_Share_V7_9_Default_Instant_Tap.zip.
+2. Vào repository nqznzee-chess-arena.
+3. Add file > Upload files.
+4. Kéo toàn bộ file lên và ghi đè file cũ.
+5. Chọn Commit directly to the main branch.
+6. Mở:
+   https://quangy665-ctrl.github.io/nqznzee-chess-arena/?v=7.9
