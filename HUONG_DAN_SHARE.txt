@@ -1,0 +1,26 @@
+NQZNZEE WEB SHARE — CÁCH TẠO LINK CHƠI
+
+CÁCH NHANH NHẤT: NETLIFY DROP
+1. Giải nén file NqznZee_Web_Share.zip.
+2. Mở trang Netlify Drop và đăng nhập.
+3. Kéo CẢ THƯ MỤC NqznZee_Web_Share vào vùng upload.
+4. Chờ vài giây, Netlify cấp một link dạng:
+   https://ten-ngau-nhien.netlify.app
+5. Gửi link đó cho người khác chơi.
+
+QUAN TRỌNG
+- File index.html phải nằm ngay ở tầng đầu của thư mục upload.
+- Không upload riêng mỗi file HTML nếu icon/manifest cũng cần hoạt động.
+- Game cần Internet để tải chess.js và Stockfish từ CDN.
+- Mỗi người chơi có lịch sử/hồ sơ riêng trong trình duyệt của họ.
+- Đây là bản thử nghiệm tĩnh; chưa có phòng đấu online giữa hai máy.
+
+CLOUDFLARE PAGES
+Có thể dùng Direct Upload và kéo cả ZIP hoặc thư mục vào Workers & Pages.
+
+TỆP CHÍNH
+- index.html
+- nqznzee-pawn.png
+- manifest.webmanifest
+- _redirects
+- _headers

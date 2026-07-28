@@ -1,0 +1,13 @@
+NQZNZEE WEB SHARE DIAGNOSTICS
+======================================================
+[OK] index.html
+[OK] 404.html
+[OK] nqznzee-pawn.png
+[OK] manifest.webmanifest
+[OK] _redirects
+[OK] _headers
+[OK] HUONG_DAN_SHARE.txt
+[OK] JavaScript syntax blocks checked: 5
+[OK] HTTP smoke test: 200
+------------------------------------------------------
+RESULT: PASS — READY TO UPLOAD

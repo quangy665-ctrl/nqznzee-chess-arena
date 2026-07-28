@@ -1,0 +1,18 @@
+{
+  "name": "NqznZee Chess Arena",
+  "short_name": "NqznZee Chess",
+  "description": "Chess Arena với bot, Game Review, Puzzle và Bot Ladder.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#080a10",
+  "theme_color": "#080a10",
+  "icons": [
+    {
+      "src": "./nqznzee-pawn.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
