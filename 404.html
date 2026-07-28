@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>NqznZee Chess Arena — V7.5 Mobile Play</title>
+<title>NqznZee Chess Arena — V7.7 Smooth Touch</title>
 
 <!--
 NqznZee Chess Arena
@@ -2174,6 +2174,220 @@ body[data-nqz-theme="crystal"] .nqz-themed-piece {
         max-height: calc(100dvh - 24px);
         padding: 18px;
     }
+
+    /* V7.6 Touch Pro overrides */
+    .square.nqz-touch-source::before {
+        content: "";
+        position: absolute;
+        z-index: 7;
+        inset: 5%;
+        border: 3px solid rgba(255, 255, 255, .74);
+        border-radius: 10px;
+        background: rgba(255, 255, 255, .07);
+        pointer-events: none;
+    }
+
+    .square.nqz-touch-source .piece-image {
+        transform: scale(1.045);
+        filter:
+            brightness(1.07)
+            drop-shadow(0 5px 5px rgba(0, 0, 0, .34));
+    }
+
+    .square.nqz-legal-move::after {
+        content: "";
+        position: absolute;
+        z-index: 8;
+        width: 31%;
+        aspect-ratio: 1;
+        border-radius: 999px;
+        background: rgba(15, 20, 17, .35);
+        box-shadow: 0 0 0 5px rgba(255, 255, 255, .055);
+        pointer-events: none;
+    }
+
+    .square.nqz-legal-capture::after {
+        content: "";
+        position: absolute;
+        z-index: 8;
+        inset: 4%;
+        border:
+            clamp(4px, 1.35vw, 6px)
+            solid rgba(16, 21, 18, .33);
+        border-radius: 999px;
+        box-shadow:
+            inset 0 0 0 2px rgba(255, 255, 255, .08);
+        pointer-events: none;
+    }
+
+    .square.nqz-touch-target-valid {
+        box-shadow:
+            inset 0 0 0 5px rgba(112, 226, 150, .80),
+            inset 0 0 25px rgba(112, 226, 150, .22);
+    }
+
+    .square.nqz-touch-target-invalid {
+        box-shadow:
+            inset 0 0 0 4px rgba(255, 105, 128, .66);
+    }
+
+    .square.nqz-touch-invalid-flash {
+        animation: nqz-touch-invalid-shake .20s linear;
+    }
+
+    @keyframes nqz-touch-invalid-shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-2px); }
+        75% { transform: translateX(2px); }
+    }
+
+    .nqz-touch-ghost {
+        position: fixed;
+        z-index: 999999;
+        display: block;
+        width: var(--nqz-ghost-size, 64px);
+        height: var(--nqz-ghost-size, 64px);
+        pointer-events: none;
+        transform: translate(-50%, -88%) scale(1.12);
+        transform-origin: center;
+        filter:
+            drop-shadow(0 13px 9px rgba(0, 0, 0, .46));
+        opacity: .98;
+        will-change: left, top, transform;
+    }
+
+    .nqz-touch-ghost .piece-image {
+        width: 100%;
+        height: 100%;
+    }
+
+    .nqz-touch-toast {
+        position: fixed;
+        z-index: 999998;
+        left: 50%;
+        bottom:
+            calc(
+                14px +
+                env(safe-area-inset-bottom)
+            );
+        display: none;
+        max-width: min(88vw, 360px);
+        padding: 8px 12px;
+        border: 1px solid rgba(255, 255, 255, .10);
+        border-radius: 999px;
+        color: #f7f5fb;
+        background: rgba(31, 30, 36, .95);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, .35);
+        font-size: 10px;
+        font-weight: 850;
+        text-align: center;
+        transform: translateX(-50%);
+        pointer-events: none;
+    }
+
+    .nqz-touch-toast.show {
+        display: block;
+        animation: nqz-touch-toast-in .16s ease-out;
+    }
+
+    @keyframes nqz-touch-toast-in {
+        from {
+            opacity: 0;
+            transform: translate(-50%, 5px);
+        }
+        to {
+            opacity: 1;
+            transform: translate(-50%, 0);
+        }
+    }
+
+
+    /* V7.7 Smooth Touch performance layer */
+    .board-stage,
+    .board,
+    .square {
+        -webkit-user-select: none;
+        user-select: none;
+        touch-action: none;
+        overscroll-behavior: contain;
+    }
+
+    .board.nqz-dragging {
+        cursor: grabbing;
+    }
+
+    .board.nqz-dragging .square,
+    .board.nqz-dragging .piece-image {
+        transition: none !important;
+        animation: none !important;
+    }
+
+    /*
+    SVG blur/glow filters are expensive on mobile GPUs.
+    Keep the artwork, but remove real-time filters while touching the board.
+    */
+    .board.nqz-touch-performance .nqz-themed-piece,
+    .board.nqz-dragging .piece-image {
+        filter: none !important;
+    }
+
+    .board.nqz-dragging .square.nqz-touch-source .piece-image {
+        opacity: .18;
+        transform: scale(.96);
+    }
+
+    .nqz-touch-ghost {
+        position: fixed;
+        z-index: 999999;
+        top: 0;
+        left: 0;
+        display: block;
+        width: var(--nqz-ghost-size, 64px);
+        height: var(--nqz-ghost-size, 64px);
+        pointer-events: none;
+        opacity: .98;
+
+        /*
+        Only transform changes during dragging.
+        translate3d promotes the ghost to a compositor layer.
+        */
+        transform:
+            translate3d(
+                var(--nqz-ghost-x, 0px),
+                var(--nqz-ghost-y, 0px),
+                0
+            )
+            translate(-50%, -88%)
+            scale(1.08);
+
+        transform-origin: center;
+        will-change: transform;
+        contain: layout paint style;
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+    }
+
+    .nqz-touch-ghost .piece-image {
+        width: 100%;
+        height: 100%;
+        filter: none !important;
+        transform: none !important;
+    }
+
+    .square.nqz-touch-target-valid,
+    .square.nqz-touch-target-invalid {
+        transition: none !important;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .nqz-touch-ghost,
+        .square,
+        .piece-image {
+            transition: none !important;
+            animation: none !important;
+        }
+    }
+
 }
 
 /* Compact phone landscape without changing desktop. */
@@ -5553,6 +5767,7 @@ body[data-nqz-theme="crystal"] .nqz-themed-piece {
         analysePosition,
         baselineMove,
         makeMoveUci,
+        selectSquare,
         initEngine,
         clearOpponentTimer,
         resolvePlayerColor,
@@ -9012,7 +9227,7 @@ body[data-nqz-theme="crystal"] .nqz-themed-piece {
 
 <script id="nqz-web-share-build">
 window.addEventListener("DOMContentLoaded", () => {
-    document.documentElement.dataset.nqzBuild = "web-share-v7-5";
+    document.documentElement.dataset.nqzBuild = "web-share-v7-7";
     const badge = document.getElementById("nqzBuildHealth");
     if (badge && !badge.textContent.includes("WEB")) {
         badge.title = (badge.title ? badge.title + "\n" : "") +
@@ -9383,7 +9598,7 @@ window.addEventListener("DOMContentLoaded", () => {
 (() => {
     "use strict";
 
-    const BUILD = "WEB V7.5";
+    const BUILD = "WEB V7.7";
     const NAME_KEY = "nqz-player-name-v7";
 
     const $ = id =>
@@ -10095,19 +10310,23 @@ window.addEventListener("DOMContentLoaded", () => {
 
 
 
-<!-- NQZ MOBILE PLAY V7.5 START -->
-<button
-    id="nqzPhoneSheetOverlay"
-    class="nqz-mobile-sheet-overlay"
-    type="button"
-    aria-label="Đóng bảng tùy chọn"
-></button>
 
-<script id="nqz-mobile-play-v7-5">
+
+
+
+<!-- NQZ SMOOTH TOUCH V7.7 START -->
+<div
+    id="nqzTouchToast"
+    class="nqz-touch-toast"
+    role="status"
+    aria-live="polite"
+></div>
+
+<script id="nqz-smooth-touch-v7-7">
 (() => {
     "use strict";
 
-    const BUILD = "WEB V7.5 MOBILE PLAY";
+    const BUILD = "WEB V7.7 SMOOTH TOUCH";
     const PHONE_QUERY =
         "(max-width: 767px), " +
         "(max-width: 940px) and (max-height: 540px)";
@@ -10121,41 +10340,39 @@ window.addEventListener("DOMContentLoaded", () => {
     const board =
         $("board");
 
-    const controls =
-        document.querySelector(".controls");
+    const toast =
+        $("nqzTouchToast");
 
-    const coach =
-        document.querySelector(".coach-card");
+    const api = () =>
+        window.NQZ_API || null;
 
-    const overlay =
-        $("nqzPhoneSheetOverlay");
-
-    const menuButton =
-        $("nqzPhoneMenu");
-
-    const coachButton =
-        $("nqzPhoneCoach");
-
-    let closeButton = null;
-    let syntheticClick = false;
-    let suppressClickUntil = 0;
-
-    const drag = {
+    const touch = {
         active: false,
-        moving: false,
+        dragging: false,
         pointerId: null,
         from: "",
         current: "",
+        legal: [],
+        legalSet: new Set(),
+        centers: new Map(),
+        boardRect: null,
+        squareSize: 0,
         startX: 0,
         startY: 0,
+        latestX: 0,
+        latestY: 0,
         ghost: null,
+        frame: 0,
+        suppressClickUntil: 0,
+        toastTimer: 0,
+        lastHighlighted: "",
     };
 
     function isPhone() {
         return media.matches;
     }
 
-    function vibrate(pattern = 8) {
+    function vibrate(pattern = 6) {
         if (
             isPhone() &&
             typeof navigator.vibrate ===
@@ -10165,194 +10382,139 @@ window.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    function installCloseButton() {
-        if (!controls) return;
+    function showToast(message) {
+        if (!toast) return;
 
-        closeButton =
-            controls.querySelector(
-                ".nqz-mobile-sheet-close"
-            );
+        toast.textContent = message;
+        toast.classList.add("show");
 
-        if (closeButton) return;
-
-        closeButton =
-            document.createElement("button");
-
-        closeButton.type = "button";
-        closeButton.className =
-            "nqz-mobile-sheet-close";
-        closeButton.setAttribute(
-            "aria-label",
-            "Đóng bảng tùy chọn"
-        );
-        closeButton.textContent = "×";
-
-        controls.prepend(closeButton);
-
-        closeButton.addEventListener(
-            "click",
-            closeSheet
-        );
-    }
-
-    function setSheet(open) {
-        if (
-            !controls ||
-            !overlay ||
-            !menuButton
-        ) {
-            return;
-        }
-
-        const visible =
-            Boolean(open) && isPhone();
-
-        controls.classList.toggle(
-            "nqz-phone-sheet-visible",
-            visible
+        window.clearTimeout(
+            touch.toastTimer
         );
 
-        overlay.classList.toggle(
-            "open",
-            visible
-        );
-
-        menuButton.classList.toggle(
-            "active",
-            visible
-        );
-
-        menuButton.setAttribute(
-            "aria-expanded",
-            String(visible)
-        );
-
-        document.body.classList.toggle(
-            "nqz-phone-sheet-open",
-            visible
-        );
-
-        if (visible) {
+        touch.toastTimer =
             window.setTimeout(
                 () => {
-                    closeButton?.focus({
-                        preventScroll: true,
-                    });
+                    toast.classList.remove(
+                        "show"
+                    );
                 },
-                0
+                850
             );
-        }
     }
 
-    function openSheet() {
-        setSheet(true);
-    }
+    function clearTargetHighlight() {
+        if (!touch.lastHighlighted) return;
 
-    function closeSheet() {
-        setSheet(false);
-    }
-
-    function toggleCoach() {
-        if (!coach || !coachButton) {
-            return;
-        }
-
-        const open =
-            !coach.classList.contains(
-                "nqz-phone-coach-open"
+        const previous =
+            board?.querySelector(
+                `[data-square="${touch.lastHighlighted}"]`
             );
 
-        coach.classList.toggle(
-            "nqz-phone-coach-open",
-            open
+        previous?.classList.remove(
+            "nqz-touch-target-valid",
+            "nqz-touch-target-invalid"
         );
 
-        coachButton.classList.toggle(
-            "active",
-            open
-        );
-
-        coachButton.setAttribute(
-            "aria-expanded",
-            String(open)
-        );
-
-        if (open) {
-            closeSheet();
-
-            window.setTimeout(
-                () => {
-                    coach.scrollIntoView({
-                        behavior: "smooth",
-                        block: "start",
-                    });
-                },
-                30
-            );
-        }
+        touch.lastHighlighted = "";
     }
 
-    function clickExisting(
-        primaryId,
-        fallbackId = null
-    ) {
-        const target =
-            $(primaryId) ||
-            (
-                fallbackId
-                    ? $(fallbackId)
-                    : null
-            );
+    function clearHints() {
+        clearTargetHighlight();
 
-        if (!target) return false;
-
-        target.click();
-        vibrate(12);
-        return true;
-    }
-
-    function clearMoveHints() {
         board
             ?.querySelectorAll(
-                ".nqz-legal-move, " +
-                ".nqz-legal-capture, " +
                 ".nqz-touch-source, " +
-                ".nqz-touch-target"
+                ".nqz-legal-move, " +
+                ".nqz-legal-capture"
             )
             .forEach(element => {
                 element.classList.remove(
-                    "nqz-legal-move",
-                    "nqz-legal-capture",
                     "nqz-touch-source",
-                    "nqz-touch-target"
+                    "nqz-legal-move",
+                    "nqz-legal-capture"
                 );
             });
     }
 
-    function legalMoves(square) {
-        const game =
-            window.NQZ_API?.game;
+    function pieceAt(square) {
+        try {
+            return api()?.game.get(
+                square
+            ) || null;
+        } catch (_) {
+            return null;
+        }
+    }
+
+    function humanColor() {
+        const currentApi = api();
+
+        if (!currentApi) return null;
+
+        return (
+            window.NQZ_PLAY_MODE ===
+                "human-human"
+                ? currentApi.game.turn()
+                : currentApi.state.playerColor
+        );
+    }
+
+    function canInteract() {
+        const currentApi = api();
+
+        if (!currentApi) return false;
 
         if (
-            !game ||
-            typeof game.moves !==
-                "function"
+            currentApi.state.engineBusy ||
+            currentApi.state.opponentThinking ||
+            currentApi.game.game_over()
         ) {
-            return [];
+            return false;
         }
 
+        if (
+            window.NQZ_PLAY_MODE !==
+                "human-human" &&
+            currentApi.game.turn() !==
+                currentApi.state.playerColor
+        ) {
+            return false;
+        }
+
+        return true;
+    }
+
+    function canPick(square) {
+        const piece =
+            pieceAt(square);
+
+        return Boolean(
+            canInteract() &&
+            piece &&
+            piece.color === humanColor()
+        );
+    }
+
+    function legalMoves(square) {
+        const currentApi = api();
+
+        if (!currentApi) return [];
+
         try {
-            return game.moves({
-                square,
-                verbose: true,
-            }) || [];
+            return (
+                currentApi.game.moves({
+                    square,
+                    verbose: true,
+                }) || []
+            );
         } catch (_) {
             return [];
         }
     }
 
-    function showMoveHints(square) {
-        clearMoveHints();
+    function showHints(square) {
+        clearHints();
 
         const source =
             board?.querySelector(
@@ -10363,7 +10525,10 @@ window.addEventListener("DOMContentLoaded", () => {
             "nqz-touch-source"
         );
 
-        for (const move of legalMoves(square)) {
+        const moves =
+            legalMoves(square);
+
+        for (const move of moves) {
             const target =
                 board?.querySelector(
                     `[data-square="${move.to}"]`
@@ -10377,23 +10542,237 @@ window.addEventListener("DOMContentLoaded", () => {
                     : "nqz-legal-move"
             );
         }
+
+        return moves;
     }
 
-    function squareFromPoint(x, y) {
-        const element =
-            document.elementFromPoint(x, y);
+    function orderedSquareAt(
+        row,
+        column
+    ) {
+        const orientation =
+            api()?.state.orientation ||
+            "white";
 
-        return element?.closest(
-            "#board .square"
-        ) || null;
+        const white =
+            orientation === "white";
+
+        const files =
+            white
+                ? "abcdefgh"
+                : "hgfedcba";
+
+        const ranks =
+            white
+                ? "87654321"
+                : "12345678";
+
+        return (
+            files[column] +
+            ranks[row]
+        );
+    }
+
+    function cacheGeometry() {
+        const rect =
+            board?.getBoundingClientRect();
+
+        if (
+            !rect ||
+            rect.width <= 0 ||
+            rect.height <= 0
+        ) {
+            touch.boardRect = null;
+            touch.squareSize = 0;
+            touch.centers.clear();
+            return;
+        }
+
+        touch.boardRect = {
+            left: rect.left,
+            top: rect.top,
+            right: rect.right,
+            bottom: rect.bottom,
+            width: rect.width,
+            height: rect.height,
+        };
+
+        touch.squareSize =
+            Math.min(
+                rect.width,
+                rect.height
+            ) / 8;
+
+        touch.centers.clear();
+
+        for (const move of touch.legal) {
+            const element =
+                board.querySelector(
+                    `[data-square="${move.to}"]`
+                );
+
+            if (!element) continue;
+
+            const targetRect =
+                element.getBoundingClientRect();
+
+            touch.centers.set(
+                move.to,
+                {
+                    x:
+                        targetRect.left +
+                        targetRect.width / 2,
+                    y:
+                        targetRect.top +
+                        targetRect.height / 2,
+                }
+            );
+        }
+    }
+
+    function squareAtPoint(
+        clientX,
+        clientY,
+        margin = 20
+    ) {
+        const rect =
+            touch.boardRect;
+
+        const size =
+            touch.squareSize;
+
+        if (!rect || !size) return "";
+
+        if (
+            clientX <
+                rect.left - margin ||
+            clientX >
+                rect.right + margin ||
+            clientY <
+                rect.top - margin ||
+            clientY >
+                rect.bottom + margin
+        ) {
+            return "";
+        }
+
+        const x =
+            Math.min(
+                rect.right - .01,
+                Math.max(
+                    rect.left,
+                    clientX
+                )
+            );
+
+        const y =
+            Math.min(
+                rect.bottom - .01,
+                Math.max(
+                    rect.top,
+                    clientY
+                )
+            );
+
+        const column =
+            Math.max(
+                0,
+                Math.min(
+                    7,
+                    Math.floor(
+                        (x - rect.left) /
+                        size
+                    )
+                )
+            );
+
+        const row =
+            Math.max(
+                0,
+                Math.min(
+                    7,
+                    Math.floor(
+                        (y - rect.top) /
+                        size
+                    )
+                )
+            );
+
+        return orderedSquareAt(
+            row,
+            column
+        );
+    }
+
+    function resolveDropSquare(
+        clientX,
+        clientY
+    ) {
+        const exact =
+            squareAtPoint(
+                clientX,
+                clientY,
+                24
+            );
+
+        if (
+            exact &&
+            touch.legalSet.has(exact)
+        ) {
+            return exact;
+        }
+
+        let nearest = "";
+        let nearestDistanceSquared =
+            Number.POSITIVE_INFINITY;
+
+        for (
+            const [square, center]
+            of touch.centers
+        ) {
+            const dx =
+                clientX - center.x;
+
+            const dy =
+                clientY - center.y;
+
+            const distanceSquared =
+                dx * dx + dy * dy;
+
+            if (
+                distanceSquared <
+                nearestDistanceSquared
+            ) {
+                nearestDistanceSquared =
+                    distanceSquared;
+                nearest = square;
+            }
+        }
+
+        const snapRadius =
+            Math.max(
+                30,
+                touch.squareSize * .68
+            );
+
+        return (
+            nearestDistanceSquared <=
+                snapRadius * snapRadius
+                ? nearest
+                : ""
+        );
     }
 
     function removeGhost() {
-        drag.ghost?.remove();
-        drag.ghost = null;
+        touch.ghost?.remove();
+        touch.ghost = null;
     }
 
-    function createGhost(piece, x, y) {
+    function createGhost(
+        piece,
+        clientX,
+        clientY
+    ) {
         removeGhost();
 
         const ghost =
@@ -10402,138 +10781,265 @@ window.addEventListener("DOMContentLoaded", () => {
         ghost.className =
             "nqz-touch-ghost";
 
-        ghost.innerHTML =
-            piece.outerHTML;
+        ghost.style.setProperty(
+            "--nqz-ghost-size",
+            `${
+                Math.max(
+                    50,
+                    Math.min(
+                        82,
+                        touch.squareSize * .94 ||
+                        62
+                    )
+                )
+            }px`
+        );
 
-        document.body.appendChild(ghost);
+        /*
+        Clone only the piece SVG once.
+        No board re-render and no layout measurement during pointermove.
+        */
+        ghost.appendChild(
+            piece.cloneNode(true)
+        );
 
-        drag.ghost = ghost;
+        document.body.appendChild(
+            ghost
+        );
 
-        moveGhost(x, y);
+        touch.ghost = ghost;
+
+        updateGhostTransform(
+            clientX,
+            clientY
+        );
     }
 
-    function moveGhost(x, y) {
-        if (!drag.ghost) return;
+    function updateGhostTransform(
+        clientX,
+        clientY
+    ) {
+        if (!touch.ghost) return;
 
-        drag.ghost.style.left =
-            `${x}px`;
+        touch.ghost.style.setProperty(
+            "--nqz-ghost-x",
+            `${clientX}px`
+        );
 
-        drag.ghost.style.top =
-            `${y}px`;
+        touch.ghost.style.setProperty(
+            "--nqz-ghost-y",
+            `${clientY}px`
+        );
     }
 
-    function updateTouchTarget(x, y) {
-        board
-            ?.querySelectorAll(
-                ".nqz-touch-target"
-            )
-            .forEach(element => {
-                element.classList.remove(
-                    "nqz-touch-target"
-                );
-            });
+    function updateTarget(
+        clientX,
+        clientY
+    ) {
+        const resolved =
+            resolveDropSquare(
+                clientX,
+                clientY
+            );
 
-        const target =
-            squareFromPoint(x, y);
+        const exact =
+            resolved ||
+            squareAtPoint(
+                clientX,
+                clientY,
+                12
+            );
 
-        if (!target) {
-            drag.current = "";
+        if (
+            exact ===
+            touch.lastHighlighted
+        ) {
+            touch.current =
+                resolved || exact || "";
             return;
         }
 
-        drag.current =
-            target.dataset.square || "";
+        clearTargetHighlight();
 
-        if (drag.current !== drag.from) {
-            target.classList.add(
-                "nqz-touch-target"
+        touch.current =
+            resolved || exact || "";
+
+        if (!exact) return;
+
+        const target =
+            board?.querySelector(
+                `[data-square="${exact}"]`
             );
-        }
+
+        if (!target) return;
+
+        target.classList.add(
+            resolved
+                ? "nqz-touch-target-valid"
+                : "nqz-touch-target-invalid"
+        );
+
+        touch.lastHighlighted =
+            exact;
     }
 
-    function dispatchSquareClick(square) {
-        const element =
-            board?.querySelector(
-                `[data-square="${square}"]`
+    function scheduleFrame(
+        clientX,
+        clientY
+    ) {
+        touch.latestX = clientX;
+        touch.latestY = clientY;
+
+        if (touch.frame) return;
+
+        touch.frame =
+            window.requestAnimationFrame(
+                () => {
+                    touch.frame = 0;
+
+                    updateGhostTransform(
+                        touch.latestX,
+                        touch.latestY
+                    );
+
+                    updateTarget(
+                        touch.latestX,
+                        touch.latestY
+                    );
+                }
             );
+    }
 
-        if (!element) return false;
+    function performMove(
+        from,
+        to
+    ) {
+        const currentApi = api();
 
-        syntheticClick = true;
-
-        try {
-            element.click();
-        } finally {
-            syntheticClick = false;
+        if (
+            !currentApi ||
+            !from ||
+            !to ||
+            !touch.legalSet.has(to)
+        ) {
+            return false;
         }
+
+        currentApi.state.selected =
+            from;
+
+        currentApi.selectSquare(to);
 
         return true;
     }
 
-    function executeTouchMove(from, to) {
-        if (!from) return;
+    function selectByTap(square) {
+        const currentApi = api();
 
-        suppressClickUntil =
-            performance.now() + 450;
-
-        if (!to || from === to) {
-            dispatchSquareClick(from);
-
-            window.setTimeout(
-                () => {
-                    const selected =
-                        window.NQZ_API?.state
-                            ?.selected;
-
-                    if (selected) {
-                        showMoveHints(
-                            selected
-                        );
-                    } else {
-                        clearMoveHints();
-                    }
-                },
-                0
+        if (
+            !currentApi ||
+            !canInteract()
+        ) {
+            showToast(
+                "Hãy chờ đến lượt của bạn."
             );
-
-            vibrate(7);
+            vibrate(16);
             return;
         }
 
         const selected =
-            window.NQZ_API?.state
-                ?.selected;
+            currentApi.state.selected;
 
-        if (selected === from) {
-            dispatchSquareClick(to);
-        } else {
-            dispatchSquareClick(from);
+        if (!selected) {
+            if (!canPick(square)) {
+                showToast(
+                    "Chạm vào một quân của bạn."
+                );
+                vibrate(12);
+                return;
+            }
 
-            window.setTimeout(
-                () => {
-                    dispatchSquareClick(to);
-                },
-                0
+            currentApi.selectSquare(
+                square
+            );
+
+            showHints(square);
+            vibrate(6);
+            return;
+        }
+
+        const moves =
+            legalMoves(selected);
+
+        const legal =
+            moves.some(
+                move =>
+                    move.to === square
+            );
+
+        if (legal) {
+            currentApi.selectSquare(
+                square
+            );
+
+            clearHints();
+            vibrate(7);
+            return;
+        }
+
+        if (canPick(square)) {
+            currentApi.state.selected =
+                square;
+
+            currentApi.state.suggestion =
+                null;
+
+            currentApi.render();
+
+            showHints(square);
+            vibrate(5);
+            return;
+        }
+
+        showToast(
+            "Ô này không đi được."
+        );
+
+        vibrate([16, 20, 16]);
+    }
+
+    function resetPointer(
+        keepHints = false
+    ) {
+        if (touch.frame) {
+            window.cancelAnimationFrame(
+                touch.frame
             );
         }
 
-        vibrate([8, 18, 8]);
+        touch.frame = 0;
 
-        window.setTimeout(
-            clearMoveHints,
-            40
-        );
-    }
-
-    function resetDrag() {
         removeGhost();
-        clearMoveHints();
+        clearTargetHighlight();
 
-        drag.active = false;
-        drag.moving = false;
-        drag.pointerId = null;
-        drag.from = "";
-        drag.current = "";
+        board?.classList.remove(
+            "nqz-dragging"
+        );
+
+        touch.active = false;
+        touch.dragging = false;
+        touch.pointerId = null;
+        touch.from = "";
+        touch.current = "";
+        touch.legal = [];
+        touch.legalSet.clear();
+        touch.centers.clear();
+        touch.boardRect = null;
+        touch.squareSize = 0;
+
+        if (!keepHints) {
+            clearHints();
+        }
     }
 
     function onPointerDown(event) {
@@ -10544,73 +11050,88 @@ window.addEventListener("DOMContentLoaded", () => {
                     "touch" &&
                 event.pointerType !==
                     "pen"
-            )
+            ) ||
+            touch.active
         ) {
             return;
         }
 
-        const square =
+        const squareElement =
             event.target.closest(
                 "#board .square"
             );
 
-        if (!square) return;
+        if (!squareElement) return;
 
         event.preventDefault();
 
-        drag.active = true;
-        drag.moving = false;
-        drag.pointerId =
+        const square =
+            squareElement.dataset.square ||
+            "";
+
+        touch.active = true;
+        touch.dragging = false;
+        touch.pointerId =
             event.pointerId;
-        drag.from =
-            square.dataset.square || "";
-        drag.current =
-            drag.from;
-        drag.startX =
+        touch.from = square;
+        touch.current = square;
+        touch.startX =
             event.clientX;
-        drag.startY =
+        touch.startY =
             event.clientY;
+        touch.latestX =
+            event.clientX;
+        touch.latestY =
+            event.clientY;
+
+        touch.legal =
+            canPick(square)
+                ? showHints(square)
+                : [];
+
+        touch.legalSet =
+            new Set(
+                touch.legal.map(
+                    move => move.to
+                )
+            );
+
+        cacheGeometry();
 
         board.setPointerCapture?.(
             event.pointerId
         );
-
-        const piece =
-            square.querySelector(
-                ".piece-image"
-            );
-
-        if (piece) {
-            showMoveHints(drag.from);
-        }
     }
 
     function onPointerMove(event) {
         if (
-            !drag.active ||
+            !touch.active ||
             event.pointerId !==
-                drag.pointerId
+                touch.pointerId
         ) {
             return;
         }
 
         event.preventDefault();
 
-        const distance =
-            Math.hypot(
-                event.clientX -
-                    drag.startX,
-                event.clientY -
-                    drag.startY
-            );
+        const dx =
+            event.clientX -
+            touch.startX;
+
+        const dy =
+            event.clientY -
+            touch.startY;
+
+        const distanceSquared =
+            dx * dx + dy * dy;
 
         if (
-            !drag.moving &&
-            distance >= 7
+            !touch.dragging &&
+            distanceSquared >= 9
         ) {
             const source =
                 board.querySelector(
-                    `[data-square="${drag.from}"]`
+                    `[data-square="${touch.from}"]`
                 );
 
             const piece =
@@ -10618,28 +11139,28 @@ window.addEventListener("DOMContentLoaded", () => {
                     ".piece-image"
                 );
 
-            if (!piece) {
+            if (
+                !piece ||
+                !canPick(touch.from)
+            ) {
                 return;
             }
 
-            drag.moving = true;
+            touch.dragging = true;
+
+            board.classList.add(
+                "nqz-dragging"
+            );
 
             createGhost(
                 piece,
                 event.clientX,
                 event.clientY
             );
-
-            vibrate(6);
         }
 
-        if (drag.moving) {
-            moveGhost(
-                event.clientX,
-                event.clientY
-            );
-
-            updateTouchTarget(
+        if (touch.dragging) {
+            scheduleFrame(
                 event.clientX,
                 event.clientY
             );
@@ -10648,134 +11169,100 @@ window.addEventListener("DOMContentLoaded", () => {
 
     function onPointerUp(event) {
         if (
-            !drag.active ||
+            !touch.active ||
             event.pointerId !==
-                drag.pointerId
+                touch.pointerId
         ) {
             return;
         }
 
         event.preventDefault();
 
-        const target =
-            drag.moving
-                ? squareFromPoint(
+        touch.suppressClickUntil =
+            performance.now() + 420;
+
+        const from =
+            touch.from;
+
+        const wasDragging =
+            touch.dragging;
+
+        const destination =
+            wasDragging
+                ? resolveDropSquare(
                     event.clientX,
                     event.clientY
                 )
-                : null;
+                : squareAtPoint(
+                    event.clientX,
+                    event.clientY,
+                    16
+                ) || from;
 
-        const to =
-            target?.dataset.square ||
-            (
-                drag.moving
-                    ? ""
-                    : drag.from
+        const moved =
+            wasDragging &&
+            performMove(
+                from,
+                destination
             );
 
-        const from =
-            drag.from;
+        if (wasDragging) {
+            resetPointer();
 
-        resetDrag();
+            if (moved) {
+                vibrate(6);
+            } else {
+                showToast(
+                    "Thả gần ô hợp lệ hơn."
+                );
 
-        executeTouchMove(
-            from,
-            to
-        );
+                vibrate([16, 20, 16]);
+            }
+
+            return;
+        }
+
+        resetPointer(true);
+        selectByTap(destination);
     }
 
     function onPointerCancel() {
-        if (!drag.active) return;
-        resetDrag();
+        if (!touch.active) return;
+        resetPointer();
     }
 
-    function syncSelectedHints() {
+    function syncHintsAfterRender() {
         if (!isPhone()) {
-            clearMoveHints();
+            clearHints();
             return;
         }
 
         const selected =
-            window.NQZ_API?.state
-                ?.selected;
+            api()?.state.selected;
 
         if (selected) {
-            showMoveHints(selected);
+            showHints(selected);
         } else {
-            clearMoveHints();
+            clearHints();
         }
     }
 
-    function syncLayout() {
-        installCloseButton();
-
+    function syncMode() {
         document.documentElement.dataset
-            .nqzMobileLayout =
+            .nqzTouchMode =
             isPhone()
-                ? "mobile-play"
+                ? "smooth-touch"
                 : "desktop";
 
+        board?.classList.toggle(
+            "nqz-touch-performance",
+            isPhone()
+        );
+
         if (!isPhone()) {
-            closeSheet();
-
-            coach?.classList.remove(
-                "nqz-phone-coach-open"
-            );
-
-            coachButton?.classList.remove(
-                "active"
-            );
-
-            coachButton?.setAttribute(
-                "aria-expanded",
-                "false"
-            );
-
-            clearMoveHints();
+            resetPointer();
         }
     }
-
-    menuButton?.addEventListener(
-        "click",
-        () => {
-            const open =
-                !controls?.classList.contains(
-                    "nqz-phone-sheet-visible"
-                );
-
-            setSheet(open);
-        }
-    );
-
-    coachButton?.addEventListener(
-        "click",
-        toggleCoach
-    );
-
-    overlay?.addEventListener(
-        "click",
-        closeSheet
-    );
-
-    $("nqzPhoneUndo")?.addEventListener(
-        "click",
-        () => {
-            clickExisting(
-                "nqzUndo",
-                "undoBtn"
-            );
-        }
-    );
-
-    $("nqzPhoneFlip")?.addEventListener(
-        "click",
-        () => {
-            clickExisting(
-                "nqzFlip",
-                "flipBtn"
-            );
-        }
-    );
 
     board?.addEventListener(
         "pointerdown",
@@ -10810,12 +11297,30 @@ window.addEventListener("DOMContentLoaded", () => {
     );
 
     board?.addEventListener(
+        "contextmenu",
+        event => {
+            if (isPhone()) {
+                event.preventDefault();
+            }
+        }
+    );
+
+    board?.addEventListener(
+        "dragstart",
+        event => {
+            if (isPhone()) {
+                event.preventDefault();
+            }
+        }
+    );
+
+    board?.addEventListener(
         "click",
         event => {
             if (
-                !syntheticClick &&
+                isPhone() &&
                 performance.now() <
-                    suppressClickUntil
+                    touch.suppressClickUntil
             ) {
                 event.preventDefault();
                 event.stopImmediatePropagation();
@@ -10828,23 +11333,21 @@ window.addEventListener("DOMContentLoaded", () => {
         "nqz-board-rendered",
         () => {
             window.setTimeout(
-                syncSelectedHints,
+                syncHintsAfterRender,
                 0
             );
         }
     );
 
-    document.addEventListener(
-        "keydown",
-        event => {
-            if (
-                event.key === "Escape" &&
-                controls?.classList.contains(
-                    "nqz-phone-sheet-visible"
-                )
-            ) {
-                closeSheet();
+    window.addEventListener(
+        "resize",
+        () => {
+            if (touch.active) {
+                resetPointer();
             }
+        },
+        {
+            passive: true,
         }
     );
 
@@ -10854,26 +11357,26 @@ window.addEventListener("DOMContentLoaded", () => {
     ) {
         media.addEventListener(
             "change",
-            syncLayout
+            syncMode
         );
     } else {
-        media.addListener(syncLayout);
+        media.addListener(syncMode);
     }
 
-    window.NQZ_MOBILE_V75 = {
+    window.NQZ_TOUCH_V77 = {
         build: BUILD,
         isPhone,
-        openOptions: openSheet,
-        closeOptions: closeSheet,
-        toggleCoach,
-        showMoveHints,
-        clearMoveHints,
+        cacheGeometry,
+        squareAtPoint,
+        resolveDropSquare,
+        showHints,
+        clearHints,
     };
 
-    syncLayout();
+    syncMode();
 })();
 </script>
-<!-- NQZ MOBILE PLAY V7.5 END -->
+<!-- NQZ SMOOTH TOUCH V7.7 END -->
 
 </body>
 </html>

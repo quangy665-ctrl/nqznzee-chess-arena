@@ -1,7 +1,7 @@
 {
   "name": "NqznZee Chess Arena",
   "short_name": "NqznZee Chess",
-  "description": "NqznZee Chess Arena V7.5 — Mobile Play Mode gọn, bàn cờ toàn chiều ngang, kéo-thả cảm ứng, nước hợp lệ và bảng tùy chọn trượt.",
+  "description": "NqznZee Chess Arena V7.7 — Smooth Touch sử dụng GPU translate3d, cache vị trí ô, giảm SVG filter và hạn chế cập nhật DOM khi kéo quân.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

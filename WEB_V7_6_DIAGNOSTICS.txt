@@ -1,0 +1,26 @@
+NQZNZEE WEB SHARE V7.6 — TOUCH PRO DIAGNOSTICS
+==================================================================================
+[OK] File: index.html
+[OK] File: 404.html
+[OK] File: nqznzee-pawn.png
+[OK] File: manifest.webmanifest
+[OK] File: _redirects
+[OK] File: _headers
+[OK] File: HUONG_DAN_UPDATE_V7_6.txt
+[OK] JavaScript syntax: 7 inline blocks
+[OK] selectSquare exposed through API
+[OK] Old synthetic click controller removed
+[OK] Direct human controller move path
+[OK] Snap-to-legal drop
+[OK] Both board orientations supported
+[OK] Low drag threshold
+[OK] Ghost above finger
+[OK] Own piece switches selection
+[OK] RAF throttling
+[OK] Long press blocked
+[OK] Desktop grid unchanged
+[OK] Build upgraded to V7.6
+[OK] Coordinate mapping for White and Black orientation
+[OK] HTML IDs unique: 169
+----------------------------------------------------------------------------------
+RESULT: PASS — READY TO UPLOAD TO GITHUB

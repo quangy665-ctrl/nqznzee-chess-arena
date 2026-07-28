@@ -1,0 +1,30 @@
+NQZNZEE WEB SHARE V7.7 — SMOOTH TOUCH
+
+TỐI ƯU HIỆU NĂNG CẢM ỨNG
+- Ghost quân di chuyển bằng translate3d thay cho left/top.
+- Trình duyệt đưa ghost lên lớp GPU riêng.
+- Cache vị trí bàn và các ô hợp lệ ngay khi bắt đầu kéo.
+- Không gọi getBoundingClientRect liên tục trong pointermove.
+- Chỉ đổi viền đích khi ngón tay chuyển sang ô khác.
+- Tính khoảng cách bằng bình phương, tránh Math.hypot trong vòng lặp.
+- Clone SVG đúng một lần cho mỗi lần kéo.
+- Ẩn gần hết quân gốc trong lúc kéo để giảm vẽ trùng.
+- Tắt SVG glow/drop-shadow nặng trên bàn khi dùng mobile.
+- Tắt transition và animation trong lúc kéo.
+- Pointermove vẫn được gom theo requestAnimationFrame.
+- Rung được giảm để tránh làm gián đoạn cảm giác kéo.
+- Resize/xoay màn hình sẽ hủy thao tác kéo an toàn.
+
+CẢM GIÁC CHƠI
+- Chạm để chọn vẫn giữ nguyên.
+- Kéo-thả và hút vào ô hợp lệ vẫn giữ nguyên.
+- PC không thay đổi giao diện hoặc thao tác chuột.
+
+CẬP NHẬT GITHUB
+1. Giải nén NqznZee_Web_Share_V7_7_Smooth_Touch.zip.
+2. Vào repository nqznzee-chess-arena.
+3. Add file > Upload files.
+4. Kéo toàn bộ file lên và ghi đè file cũ.
+5. Commit directly to the main branch.
+6. Mở:
+   https://quangy665-ctrl.github.io/nqznzee-chess-arena/?v=7.7

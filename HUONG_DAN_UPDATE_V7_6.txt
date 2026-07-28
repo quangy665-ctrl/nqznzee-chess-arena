@@ -1,0 +1,28 @@
+NQZNZEE WEB SHARE V7.6 — TOUCH PRO
+
+CẢM ỨNG ĐÃ TỐI ƯU
+- Nước đi gọi trực tiếp bộ điều khiển của game.
+- Chạm quân rồi chạm ô đích.
+- Chạm quân khác của mình sẽ đổi lựa chọn.
+- Bắt đầu kéo chỉ sau khoảng 4px.
+- Quân ghost nằm cao hơn ngón tay để dễ nhìn.
+- Thả gần ô hợp lệ sẽ tự hút vào đúng ô.
+- Có thể thả hơi ra ngoài mép bàn.
+- Chấm nước đi và vòng bắt quân lớn hơn.
+- Ô hợp lệ sáng xanh, ô sai sáng đỏ.
+- Pointer move được gom theo animation frame.
+- Chặn long-press và kéo ảnh mặc định.
+- Rung phản hồi khác nhau cho đi đúng và đi sai.
+
+PC
+- Giao diện và thao tác chuột trên PC giữ nguyên.
+
+CẬP NHẬT GITHUB
+1. Giải nén NqznZee_Web_Share_V7_6_Touch_Pro.zip.
+2. Vào repository nqznzee-chess-arena.
+3. Add file > Upload files.
+4. Kéo toàn bộ file lên và ghi đè file cũ.
+5. Chọn Commit directly to the main branch.
+6. Commit changes.
+7. Mở:
+   https://quangy665-ctrl.github.io/nqznzee-chess-arena/?v=7.6
