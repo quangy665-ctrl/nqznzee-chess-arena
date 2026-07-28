@@ -1,12 +1,13 @@
 {
   "name": "NqznZee Chess Arena",
   "short_name": "NqznZee Chess",
-  "description": "NqznZee Chess Arena V7.3 — 5 bộ quân nghệ thuật hoàn toàn riêng: Staunton, Khủng long, Tương lai, Phục Hưng và Pha lê.",
+  "description": "NqznZee Chess Arena V7.5 — Mobile Play Mode gọn, bàn cờ toàn chiều ngang, kéo-thả cảm ứng, nước hợp lệ và bảng tùy chọn trượt.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#080a10",
-  "theme_color": "#080a10",
+  "orientation": "any",
+  "background_color": "#17161b",
+  "theme_color": "#25242a",
   "icons": [
     {
       "src": "./nqznzee-pawn.png",

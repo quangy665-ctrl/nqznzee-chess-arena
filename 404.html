@@ -2,8 +2,8 @@
 <html lang="vi">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NqznZee Chess Arena — Ultimate V6</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>NqznZee Chess Arena — V7.5 Mobile Play</title>
 
 <!--
 NqznZee Chess Arena
@@ -1521,6 +1521,697 @@ body[data-nqz-theme="crystal"] .nqz-themed-piece {
     .coach-companion { align-items:flex-start; }
 }
 
+
+
+/* ============== NQZNZEE V7.5 MOBILE PLAY MODE ============== */
+
+.nqz-mobile-play-actions,
+.nqz-mobile-sheet-overlay,
+.nqz-mobile-sheet-close,
+.nqz-touch-ghost {
+    display: none;
+}
+
+@media (max-width: 767px), (max-width: 940px) and (max-height: 540px) {
+    :root {
+        --nqz-phone-side: 4px;
+        --nqz-phone-topbar: 38px;
+    }
+
+    html {
+        width: 100%;
+        min-height: 100%;
+        overflow-x: hidden;
+        background: #17161b;
+    }
+
+    body {
+        width: 100%;
+        min-height: 100dvh;
+        overflow-x: hidden;
+        padding:
+            env(safe-area-inset-top)
+            0
+            calc(10px + env(safe-area-inset-bottom));
+        background: #17161b;
+    }
+
+    body.nqz-phone-sheet-open {
+        overflow: hidden;
+    }
+
+    body::before {
+        display: none;
+    }
+
+    .arena-topbar {
+        position: relative;
+        z-index: 30;
+        height: var(--nqz-phone-topbar);
+        min-height: var(--nqz-phone-topbar);
+        padding: 0 7px;
+        border: 0;
+        border-radius: 0;
+        background: #25242a;
+        box-shadow: none;
+    }
+
+    .arena-brand {
+        min-width: 0;
+        gap: 7px;
+    }
+
+    .arena-mark {
+        width: 27px;
+        height: 27px;
+        border-radius: 7px;
+        font-size: 8px;
+    }
+
+    .arena-brand strong {
+        display: block;
+        max-width: 64vw;
+        overflow: hidden;
+        font-size: 12px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .arena-brand small,
+    #nqzBuildHealth,
+    #nqzFocusBtn {
+        display: none !important;
+    }
+
+    .arena-actions {
+        gap: 4px;
+    }
+
+    .arena-actions .icon-btn {
+        width: 31px;
+        min-width: 31px;
+        height: 31px;
+        padding: 0;
+        border-radius: 7px;
+    }
+
+    .app {
+        display: block;
+        width: 100%;
+        max-width: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .play-column {
+        width: 100%;
+        min-width: 0;
+        margin: 0;
+    }
+
+    .hero {
+        display: none !important;
+    }
+
+    .board-shell {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        border: 0;
+        border-radius: 0;
+        background: #242329;
+        box-shadow: none;
+    }
+
+    .player-strip {
+        min-height: 46px;
+        padding: 4px 8px;
+        gap: 7px;
+        border-radius: 0;
+        background: #242329;
+    }
+
+    .player-left {
+        min-width: 0;
+        gap: 0;
+    }
+
+    .player-avatar {
+        display: none !important;
+    }
+
+    .player-copy {
+        min-width: 0;
+        display: grid;
+        gap: 0;
+    }
+
+    .player-name-line {
+        min-height: 17px;
+        gap: 3px;
+    }
+
+    .player-name {
+        max-width: calc(100vw - 98px);
+        overflow: hidden;
+        font-size: 12px;
+        line-height: 1.15;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .player-meta,
+    .material-label,
+    .captured-empty {
+        display: none !important;
+    }
+
+    .material-bar {
+        width: min(100%, calc(100vw - 98px));
+        min-height: 15px;
+        margin: 0;
+        padding: 0;
+        gap: 3px;
+        overflow: hidden;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+    }
+
+    .captured-tray {
+        min-height: 15px;
+        align-items: center;
+    }
+
+    .captured-piece {
+        width: 12px;
+        height: 15px;
+        margin-left: -3px;
+        font-size: 14px;
+    }
+
+    .captured-piece:first-child {
+        margin-left: 0;
+    }
+
+    .material-lead {
+        min-width: 21px;
+        padding: 1px 3px;
+        border: 0;
+        border-radius: 4px;
+        background: transparent;
+        font-size: 9px;
+    }
+
+    .material-lead.is-even {
+        display: none;
+    }
+
+    .clock {
+        min-width: 76px;
+        padding: 6px 7px;
+        border-radius: 7px;
+        font-size: 18px;
+        line-height: 1;
+        letter-spacing: -.5px;
+        box-shadow:
+            inset 0 0 0 1px rgba(255, 255, 255, .055),
+            0 2px 8px rgba(0, 0, 0, .18);
+    }
+
+    .board-layout {
+        width: 100%;
+        grid-template-columns: 8px minmax(0, 1fr);
+        gap: 0;
+        align-items: stretch;
+    }
+
+    .eval-bar {
+        border-radius: 0;
+        box-shadow: inset -1px 0 rgba(255, 255, 255, .08);
+    }
+
+    .eval-label {
+        display: none;
+    }
+
+    .board-stage {
+        width: 100%;
+        max-width: none;
+        margin: 0;
+        overflow: hidden;
+        border-radius: 0;
+        box-shadow: none;
+        touch-action: none;
+        overscroll-behavior: contain;
+        -webkit-user-select: none;
+        user-select: none;
+    }
+
+    .board {
+        touch-action: none;
+        overscroll-behavior: contain;
+        -webkit-user-select: none;
+        user-select: none;
+    }
+
+    .square {
+        touch-action: none;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .piece-image {
+        width: 94%;
+        height: 94%;
+        pointer-events: none;
+    }
+
+    .square:hover .piece-image {
+        transform: none;
+        filter: none;
+    }
+
+    .square.selected .piece-image {
+        transform: scale(1.035);
+    }
+
+    .square.nqz-touch-source::before {
+        content: "";
+        position: absolute;
+        z-index: 4;
+        inset: 7%;
+        border: 3px solid rgba(255, 255, 255, .58);
+        border-radius: 9px;
+        pointer-events: none;
+    }
+
+    .square.nqz-legal-move::after {
+        content: "";
+        position: absolute;
+        z-index: 5;
+        width: 24%;
+        aspect-ratio: 1;
+        border-radius: 999px;
+        background: rgba(15, 18, 18, .28);
+        pointer-events: none;
+    }
+
+    .square.nqz-legal-capture::after {
+        content: "";
+        position: absolute;
+        z-index: 5;
+        inset: 6%;
+        border: clamp(3px, 1.15vw, 5px) solid rgba(18, 22, 22, .25);
+        border-radius: 999px;
+        pointer-events: none;
+    }
+
+    .square.nqz-touch-target {
+        box-shadow:
+            inset 0 0 0 4px rgba(255, 255, 255, .62);
+    }
+
+    .coord-file,
+    .coord-rank {
+        font-size: clamp(7px, 2.4vw, 10px);
+        font-weight: 900;
+    }
+
+    .coord-file {
+        right: 2px;
+        bottom: 1px;
+    }
+
+    .coord-rank {
+        left: 2px;
+        top: 1px;
+    }
+
+    .board-footer {
+        min-height: 25px;
+        padding: 4px 8px;
+        gap: 4px;
+        overflow: hidden;
+        border-radius: 0;
+        font-size: 9px;
+        white-space: nowrap;
+    }
+
+    #turnText {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    #engineText {
+        display: none;
+    }
+
+    .nqz-mobile-play-actions {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 1px;
+        width: 100%;
+        min-height: 48px;
+        border-top: 1px solid rgba(255, 255, 255, .055);
+        border-bottom: 1px solid rgba(0, 0, 0, .34);
+        background: #242329;
+    }
+
+    .nqz-mobile-play-actions button {
+        min-width: 0;
+        min-height: 48px;
+        border: 0;
+        border-radius: 0;
+        color: #c9c6d0;
+        background: transparent;
+        font: inherit;
+        cursor: pointer;
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .nqz-mobile-play-actions button + button {
+        border-left: 1px solid rgba(255, 255, 255, .055);
+    }
+
+    .nqz-mobile-play-actions button:active,
+    .nqz-mobile-play-actions button.active {
+        color: #ffffff;
+        background: rgba(124, 92, 255, .15);
+    }
+
+    .nqz-mobile-action-icon {
+        display: block;
+        height: 24px;
+        font-size: 20px;
+        font-weight: 900;
+        line-height: 24px;
+    }
+
+    .nqz-mobile-action-label {
+        display: block;
+        overflow: hidden;
+        font-size: 8px;
+        font-weight: 850;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    /*
+    Coach stays present, but becomes one small companion row.
+    It expands only when the Coach action is tapped.
+    */
+    .coach-card {
+        margin: 7px 6px 0;
+        padding: 7px;
+        border-radius: 10px;
+        box-shadow: none;
+    }
+
+    .coach-card:not(.nqz-phone-coach-open) .coach-headline,
+    .coach-card:not(.nqz-phone-coach-open) .coach-main > .coach-text,
+    .coach-card:not(.nqz-phone-coach-open) .coach-main > .coach-line,
+    .coach-card:not(.nqz-phone-coach-open) .coach-main > .coach-buttons,
+    .coach-card:not(.nqz-phone-coach-open) .coach-visual {
+        display: none !important;
+    }
+
+    .coach-card:not(.nqz-phone-coach-open) .coach-layout {
+        display: block;
+    }
+
+    .coach-card:not(.nqz-phone-coach-open) .coach-main {
+        min-width: 0;
+    }
+
+    .coach-card:not(.nqz-phone-coach-open) .coach-companion {
+        margin: 0;
+        padding: 4px 6px;
+        gap: 7px;
+        border: 0;
+        background: transparent;
+    }
+
+    .coach-card:not(.nqz-phone-coach-open) .coach-character {
+        width: 36px;
+        height: 42px;
+        margin: -5px -4px -5px -5px;
+        transform: scale(.74);
+        transform-origin: center;
+    }
+
+    .coach-card:not(.nqz-phone-coach-open)
+    .coach-companion-copy strong {
+        font-size: 9px;
+    }
+
+    .coach-card:not(.nqz-phone-coach-open)
+    .coach-companion-copy p {
+        display: -webkit-box;
+        margin-top: 1px;
+        overflow: hidden;
+        font-size: 9px;
+        line-height: 1.35;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+    }
+
+    .coach-card.nqz-phone-coach-open {
+        max-height: 62dvh;
+        overflow-y: auto;
+        padding: 10px;
+    }
+
+    .coach-card.nqz-phone-coach-open .coach-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .coach-card.nqz-phone-coach-open .coach-visual {
+        display: none;
+    }
+
+    .coach-card.nqz-phone-coach-open .coach-buttons {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 6px;
+    }
+
+    .coach-card.nqz-phone-coach-open .action {
+        min-height: 42px;
+    }
+
+    /*
+    All advanced controls live in one clean bottom sheet.
+    Nothing is permanently fixed over the board.
+    */
+    .controls {
+        position: fixed;
+        z-index: 220;
+        top: auto;
+        right: 0;
+        bottom: 0;
+        left: 0;
+
+        width: 100%;
+        max-width: none;
+        max-height: min(82dvh, 760px);
+        margin: 0;
+        padding:
+            10px
+            9px
+            calc(12px + env(safe-area-inset-bottom));
+
+        overflow-y: auto;
+        overscroll-behavior: contain;
+
+        border:
+            1px solid
+            rgba(255, 255, 255, .105);
+        border-width: 1px 0 0;
+        border-radius: 18px 18px 0 0;
+
+        background: rgba(28, 27, 33, .99);
+        box-shadow: 0 -22px 58px rgba(0, 0, 0, .58);
+
+        transform: translateY(104%);
+        visibility: hidden;
+        pointer-events: none;
+
+        transition:
+            transform .22s cubic-bezier(.22, .86, .28, 1),
+            visibility .22s;
+    }
+
+    .controls.nqz-phone-sheet-visible {
+        transform: translateY(0);
+        visibility: visible;
+        pointer-events: auto;
+    }
+
+    .controls::before {
+        content: "";
+        display: block;
+        width: 40px;
+        height: 4px;
+        margin: -3px auto 8px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, .22);
+    }
+
+    .nqz-mobile-sheet-close {
+        position: sticky;
+        z-index: 5;
+        top: 0;
+        display: grid;
+        place-items: center;
+        width: 35px;
+        height: 35px;
+        margin: 0 0 5px auto;
+        border: 1px solid rgba(255, 255, 255, .09);
+        border-radius: 9px;
+        color: #f5f3f8;
+        background: #36343c;
+        font-size: 18px;
+        cursor: pointer;
+    }
+
+    .controls .panel-title {
+        margin-top: -39px;
+        padding-right: 43px;
+    }
+
+    .controls .status {
+        min-height: 34px;
+        margin-bottom: 6px;
+        padding: 7px 8px;
+        font-size: 9px;
+    }
+
+    .nqz-tabs {
+        position: sticky;
+        z-index: 4;
+        top: 38px;
+        display: flex;
+        gap: 5px;
+        margin: 6px -1px 9px;
+        padding: 4px;
+        overflow-x: auto;
+        background: rgba(20, 19, 24, .97);
+        scrollbar-width: none;
+    }
+
+    .nqz-tabs::-webkit-scrollbar {
+        display: none;
+    }
+
+    .nqz-tab {
+        min-width: max-content;
+        min-height: 36px;
+        padding: 0 11px;
+        font-size: 9px;
+    }
+
+    .controls input,
+    .controls select,
+    .controls textarea {
+        min-height: 43px;
+        font-size: 16px;
+    }
+
+    .controls button {
+        min-height: 40px;
+        touch-action: manipulation;
+    }
+
+    .move-list {
+        max-height: 35dvh;
+    }
+
+    .nqz-mobile-sheet-overlay {
+        position: fixed;
+        z-index: 210;
+        inset: 0;
+        display: block;
+        border: 0;
+        padding: 0;
+        background: rgba(0, 0, 0, .58);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition:
+            opacity .18s ease,
+            visibility .18s ease;
+    }
+
+    .nqz-mobile-sheet-overlay.open {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+    }
+
+    .nqz-touch-ghost {
+        position: fixed;
+        z-index: 999999;
+        display: block;
+        width: clamp(46px, 15vw, 76px);
+        height: clamp(46px, 15vw, 76px);
+        pointer-events: none;
+        transform: translate(-50%, -58%) scale(1.08);
+        filter:
+            drop-shadow(0 10px 8px rgba(0, 0, 0, .42));
+        opacity: .96;
+    }
+
+    .nqz-touch-ghost .piece-image {
+        width: 100%;
+        height: 100%;
+    }
+
+    .nqz-v7-dialog {
+        width: min(94vw, 430px);
+        max-height: calc(100dvh - 24px);
+        padding: 18px;
+    }
+}
+
+/* Compact phone landscape without changing desktop. */
+@media (max-width: 940px) and (max-height: 540px) {
+    .play-column {
+        width: min(100%, calc(100dvh - 74px));
+        margin: 0 auto;
+    }
+
+    .player-strip {
+        min-height: 38px;
+        padding-block: 2px;
+    }
+
+    .clock {
+        min-width: 68px;
+        padding-block: 4px;
+        font-size: 16px;
+    }
+
+    .board-footer {
+        min-height: 21px;
+        padding-block: 2px;
+    }
+
+    .nqz-mobile-play-actions {
+        min-height: 40px;
+    }
+
+    .nqz-mobile-play-actions button {
+        min-height: 40px;
+    }
+
+    .coach-card {
+        display: none;
+    }
+}
+
 </style>
 
 <meta name="application-name" content="NqznZee Chess Arena">
@@ -1613,6 +2304,41 @@ body[data-nqz-theme="crystal"] .nqz-themed-piece {
                 <span id="engineText">Engine: chưa tải</span>
             </div>
         </div>
+
+
+        <nav
+            id="nqzMobilePlayActions"
+            class="nqz-mobile-play-actions"
+            aria-label="Thao tác khi chơi trên điện thoại"
+        >
+            <button id="nqzPhoneUndo" type="button">
+                <span class="nqz-mobile-action-icon">↶</span>
+                <span class="nqz-mobile-action-label">Lùi</span>
+            </button>
+
+            <button id="nqzPhoneFlip" type="button">
+                <span class="nqz-mobile-action-icon">⇅</span>
+                <span class="nqz-mobile-action-label">Đảo bàn</span>
+            </button>
+
+            <button
+                id="nqzPhoneCoach"
+                type="button"
+                aria-expanded="false"
+            >
+                <span class="nqz-mobile-action-icon">♙</span>
+                <span class="nqz-mobile-action-label">Coach</span>
+            </button>
+
+            <button
+                id="nqzPhoneMenu"
+                type="button"
+                aria-expanded="false"
+            >
+                <span class="nqz-mobile-action-icon">☰</span>
+                <span class="nqz-mobile-action-label">Tùy chọn</span>
+            </button>
+        </nav>
 
         <section class="card coach-card coach-under-board">
             <div class="coach-headline">
@@ -8286,7 +9012,7 @@ body[data-nqz-theme="crystal"] .nqz-themed-piece {
 
 <script id="nqz-web-share-build">
 window.addEventListener("DOMContentLoaded", () => {
-    document.documentElement.dataset.nqzBuild = "web-share-v7-3";
+    document.documentElement.dataset.nqzBuild = "web-share-v7-5";
     const badge = document.getElementById("nqzBuildHealth");
     if (badge && !badge.textContent.includes("WEB")) {
         badge.title = (badge.title ? badge.title + "\n" : "") +
@@ -8657,7 +9383,7 @@ window.addEventListener("DOMContentLoaded", () => {
 (() => {
     "use strict";
 
-    const BUILD = "WEB V7.3";
+    const BUILD = "WEB V7.5";
     const NAME_KEY = "nqz-player-name-v7";
 
     const $ = id =>
@@ -9365,6 +10091,789 @@ window.addEventListener("DOMContentLoaded", () => {
 })();
 </script>
 <!-- NQZ PLAYER IDENTITY V7 END -->
+
+
+
+
+<!-- NQZ MOBILE PLAY V7.5 START -->
+<button
+    id="nqzPhoneSheetOverlay"
+    class="nqz-mobile-sheet-overlay"
+    type="button"
+    aria-label="Đóng bảng tùy chọn"
+></button>
+
+<script id="nqz-mobile-play-v7-5">
+(() => {
+    "use strict";
+
+    const BUILD = "WEB V7.5 MOBILE PLAY";
+    const PHONE_QUERY =
+        "(max-width: 767px), " +
+        "(max-width: 940px) and (max-height: 540px)";
+
+    const media =
+        window.matchMedia(PHONE_QUERY);
+
+    const $ = id =>
+        document.getElementById(id);
+
+    const board =
+        $("board");
+
+    const controls =
+        document.querySelector(".controls");
+
+    const coach =
+        document.querySelector(".coach-card");
+
+    const overlay =
+        $("nqzPhoneSheetOverlay");
+
+    const menuButton =
+        $("nqzPhoneMenu");
+
+    const coachButton =
+        $("nqzPhoneCoach");
+
+    let closeButton = null;
+    let syntheticClick = false;
+    let suppressClickUntil = 0;
+
+    const drag = {
+        active: false,
+        moving: false,
+        pointerId: null,
+        from: "",
+        current: "",
+        startX: 0,
+        startY: 0,
+        ghost: null,
+    };
+
+    function isPhone() {
+        return media.matches;
+    }
+
+    function vibrate(pattern = 8) {
+        if (
+            isPhone() &&
+            typeof navigator.vibrate ===
+                "function"
+        ) {
+            navigator.vibrate(pattern);
+        }
+    }
+
+    function installCloseButton() {
+        if (!controls) return;
+
+        closeButton =
+            controls.querySelector(
+                ".nqz-mobile-sheet-close"
+            );
+
+        if (closeButton) return;
+
+        closeButton =
+            document.createElement("button");
+
+        closeButton.type = "button";
+        closeButton.className =
+            "nqz-mobile-sheet-close";
+        closeButton.setAttribute(
+            "aria-label",
+            "Đóng bảng tùy chọn"
+        );
+        closeButton.textContent = "×";
+
+        controls.prepend(closeButton);
+
+        closeButton.addEventListener(
+            "click",
+            closeSheet
+        );
+    }
+
+    function setSheet(open) {
+        if (
+            !controls ||
+            !overlay ||
+            !menuButton
+        ) {
+            return;
+        }
+
+        const visible =
+            Boolean(open) && isPhone();
+
+        controls.classList.toggle(
+            "nqz-phone-sheet-visible",
+            visible
+        );
+
+        overlay.classList.toggle(
+            "open",
+            visible
+        );
+
+        menuButton.classList.toggle(
+            "active",
+            visible
+        );
+
+        menuButton.setAttribute(
+            "aria-expanded",
+            String(visible)
+        );
+
+        document.body.classList.toggle(
+            "nqz-phone-sheet-open",
+            visible
+        );
+
+        if (visible) {
+            window.setTimeout(
+                () => {
+                    closeButton?.focus({
+                        preventScroll: true,
+                    });
+                },
+                0
+            );
+        }
+    }
+
+    function openSheet() {
+        setSheet(true);
+    }
+
+    function closeSheet() {
+        setSheet(false);
+    }
+
+    function toggleCoach() {
+        if (!coach || !coachButton) {
+            return;
+        }
+
+        const open =
+            !coach.classList.contains(
+                "nqz-phone-coach-open"
+            );
+
+        coach.classList.toggle(
+            "nqz-phone-coach-open",
+            open
+        );
+
+        coachButton.classList.toggle(
+            "active",
+            open
+        );
+
+        coachButton.setAttribute(
+            "aria-expanded",
+            String(open)
+        );
+
+        if (open) {
+            closeSheet();
+
+            window.setTimeout(
+                () => {
+                    coach.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start",
+                    });
+                },
+                30
+            );
+        }
+    }
+
+    function clickExisting(
+        primaryId,
+        fallbackId = null
+    ) {
+        const target =
+            $(primaryId) ||
+            (
+                fallbackId
+                    ? $(fallbackId)
+                    : null
+            );
+
+        if (!target) return false;
+
+        target.click();
+        vibrate(12);
+        return true;
+    }
+
+    function clearMoveHints() {
+        board
+            ?.querySelectorAll(
+                ".nqz-legal-move, " +
+                ".nqz-legal-capture, " +
+                ".nqz-touch-source, " +
+                ".nqz-touch-target"
+            )
+            .forEach(element => {
+                element.classList.remove(
+                    "nqz-legal-move",
+                    "nqz-legal-capture",
+                    "nqz-touch-source",
+                    "nqz-touch-target"
+                );
+            });
+    }
+
+    function legalMoves(square) {
+        const game =
+            window.NQZ_API?.game;
+
+        if (
+            !game ||
+            typeof game.moves !==
+                "function"
+        ) {
+            return [];
+        }
+
+        try {
+            return game.moves({
+                square,
+                verbose: true,
+            }) || [];
+        } catch (_) {
+            return [];
+        }
+    }
+
+    function showMoveHints(square) {
+        clearMoveHints();
+
+        const source =
+            board?.querySelector(
+                `[data-square="${square}"]`
+            );
+
+        source?.classList.add(
+            "nqz-touch-source"
+        );
+
+        for (const move of legalMoves(square)) {
+            const target =
+                board?.querySelector(
+                    `[data-square="${move.to}"]`
+                );
+
+            if (!target) continue;
+
+            target.classList.add(
+                move.captured
+                    ? "nqz-legal-capture"
+                    : "nqz-legal-move"
+            );
+        }
+    }
+
+    function squareFromPoint(x, y) {
+        const element =
+            document.elementFromPoint(x, y);
+
+        return element?.closest(
+            "#board .square"
+        ) || null;
+    }
+
+    function removeGhost() {
+        drag.ghost?.remove();
+        drag.ghost = null;
+    }
+
+    function createGhost(piece, x, y) {
+        removeGhost();
+
+        const ghost =
+            document.createElement("div");
+
+        ghost.className =
+            "nqz-touch-ghost";
+
+        ghost.innerHTML =
+            piece.outerHTML;
+
+        document.body.appendChild(ghost);
+
+        drag.ghost = ghost;
+
+        moveGhost(x, y);
+    }
+
+    function moveGhost(x, y) {
+        if (!drag.ghost) return;
+
+        drag.ghost.style.left =
+            `${x}px`;
+
+        drag.ghost.style.top =
+            `${y}px`;
+    }
+
+    function updateTouchTarget(x, y) {
+        board
+            ?.querySelectorAll(
+                ".nqz-touch-target"
+            )
+            .forEach(element => {
+                element.classList.remove(
+                    "nqz-touch-target"
+                );
+            });
+
+        const target =
+            squareFromPoint(x, y);
+
+        if (!target) {
+            drag.current = "";
+            return;
+        }
+
+        drag.current =
+            target.dataset.square || "";
+
+        if (drag.current !== drag.from) {
+            target.classList.add(
+                "nqz-touch-target"
+            );
+        }
+    }
+
+    function dispatchSquareClick(square) {
+        const element =
+            board?.querySelector(
+                `[data-square="${square}"]`
+            );
+
+        if (!element) return false;
+
+        syntheticClick = true;
+
+        try {
+            element.click();
+        } finally {
+            syntheticClick = false;
+        }
+
+        return true;
+    }
+
+    function executeTouchMove(from, to) {
+        if (!from) return;
+
+        suppressClickUntil =
+            performance.now() + 450;
+
+        if (!to || from === to) {
+            dispatchSquareClick(from);
+
+            window.setTimeout(
+                () => {
+                    const selected =
+                        window.NQZ_API?.state
+                            ?.selected;
+
+                    if (selected) {
+                        showMoveHints(
+                            selected
+                        );
+                    } else {
+                        clearMoveHints();
+                    }
+                },
+                0
+            );
+
+            vibrate(7);
+            return;
+        }
+
+        const selected =
+            window.NQZ_API?.state
+                ?.selected;
+
+        if (selected === from) {
+            dispatchSquareClick(to);
+        } else {
+            dispatchSquareClick(from);
+
+            window.setTimeout(
+                () => {
+                    dispatchSquareClick(to);
+                },
+                0
+            );
+        }
+
+        vibrate([8, 18, 8]);
+
+        window.setTimeout(
+            clearMoveHints,
+            40
+        );
+    }
+
+    function resetDrag() {
+        removeGhost();
+        clearMoveHints();
+
+        drag.active = false;
+        drag.moving = false;
+        drag.pointerId = null;
+        drag.from = "";
+        drag.current = "";
+    }
+
+    function onPointerDown(event) {
+        if (
+            !isPhone() ||
+            (
+                event.pointerType !==
+                    "touch" &&
+                event.pointerType !==
+                    "pen"
+            )
+        ) {
+            return;
+        }
+
+        const square =
+            event.target.closest(
+                "#board .square"
+            );
+
+        if (!square) return;
+
+        event.preventDefault();
+
+        drag.active = true;
+        drag.moving = false;
+        drag.pointerId =
+            event.pointerId;
+        drag.from =
+            square.dataset.square || "";
+        drag.current =
+            drag.from;
+        drag.startX =
+            event.clientX;
+        drag.startY =
+            event.clientY;
+
+        board.setPointerCapture?.(
+            event.pointerId
+        );
+
+        const piece =
+            square.querySelector(
+                ".piece-image"
+            );
+
+        if (piece) {
+            showMoveHints(drag.from);
+        }
+    }
+
+    function onPointerMove(event) {
+        if (
+            !drag.active ||
+            event.pointerId !==
+                drag.pointerId
+        ) {
+            return;
+        }
+
+        event.preventDefault();
+
+        const distance =
+            Math.hypot(
+                event.clientX -
+                    drag.startX,
+                event.clientY -
+                    drag.startY
+            );
+
+        if (
+            !drag.moving &&
+            distance >= 7
+        ) {
+            const source =
+                board.querySelector(
+                    `[data-square="${drag.from}"]`
+                );
+
+            const piece =
+                source?.querySelector(
+                    ".piece-image"
+                );
+
+            if (!piece) {
+                return;
+            }
+
+            drag.moving = true;
+
+            createGhost(
+                piece,
+                event.clientX,
+                event.clientY
+            );
+
+            vibrate(6);
+        }
+
+        if (drag.moving) {
+            moveGhost(
+                event.clientX,
+                event.clientY
+            );
+
+            updateTouchTarget(
+                event.clientX,
+                event.clientY
+            );
+        }
+    }
+
+    function onPointerUp(event) {
+        if (
+            !drag.active ||
+            event.pointerId !==
+                drag.pointerId
+        ) {
+            return;
+        }
+
+        event.preventDefault();
+
+        const target =
+            drag.moving
+                ? squareFromPoint(
+                    event.clientX,
+                    event.clientY
+                )
+                : null;
+
+        const to =
+            target?.dataset.square ||
+            (
+                drag.moving
+                    ? ""
+                    : drag.from
+            );
+
+        const from =
+            drag.from;
+
+        resetDrag();
+
+        executeTouchMove(
+            from,
+            to
+        );
+    }
+
+    function onPointerCancel() {
+        if (!drag.active) return;
+        resetDrag();
+    }
+
+    function syncSelectedHints() {
+        if (!isPhone()) {
+            clearMoveHints();
+            return;
+        }
+
+        const selected =
+            window.NQZ_API?.state
+                ?.selected;
+
+        if (selected) {
+            showMoveHints(selected);
+        } else {
+            clearMoveHints();
+        }
+    }
+
+    function syncLayout() {
+        installCloseButton();
+
+        document.documentElement.dataset
+            .nqzMobileLayout =
+            isPhone()
+                ? "mobile-play"
+                : "desktop";
+
+        if (!isPhone()) {
+            closeSheet();
+
+            coach?.classList.remove(
+                "nqz-phone-coach-open"
+            );
+
+            coachButton?.classList.remove(
+                "active"
+            );
+
+            coachButton?.setAttribute(
+                "aria-expanded",
+                "false"
+            );
+
+            clearMoveHints();
+        }
+    }
+
+    menuButton?.addEventListener(
+        "click",
+        () => {
+            const open =
+                !controls?.classList.contains(
+                    "nqz-phone-sheet-visible"
+                );
+
+            setSheet(open);
+        }
+    );
+
+    coachButton?.addEventListener(
+        "click",
+        toggleCoach
+    );
+
+    overlay?.addEventListener(
+        "click",
+        closeSheet
+    );
+
+    $("nqzPhoneUndo")?.addEventListener(
+        "click",
+        () => {
+            clickExisting(
+                "nqzUndo",
+                "undoBtn"
+            );
+        }
+    );
+
+    $("nqzPhoneFlip")?.addEventListener(
+        "click",
+        () => {
+            clickExisting(
+                "nqzFlip",
+                "flipBtn"
+            );
+        }
+    );
+
+    board?.addEventListener(
+        "pointerdown",
+        onPointerDown,
+        {
+            passive: false,
+        }
+    );
+
+    board?.addEventListener(
+        "pointermove",
+        onPointerMove,
+        {
+            passive: false,
+        }
+    );
+
+    board?.addEventListener(
+        "pointerup",
+        onPointerUp,
+        {
+            passive: false,
+        }
+    );
+
+    board?.addEventListener(
+        "pointercancel",
+        onPointerCancel,
+        {
+            passive: false,
+        }
+    );
+
+    board?.addEventListener(
+        "click",
+        event => {
+            if (
+                !syntheticClick &&
+                performance.now() <
+                    suppressClickUntil
+            ) {
+                event.preventDefault();
+                event.stopImmediatePropagation();
+            }
+        },
+        true
+    );
+
+    window.addEventListener(
+        "nqz-board-rendered",
+        () => {
+            window.setTimeout(
+                syncSelectedHints,
+                0
+            );
+        }
+    );
+
+    document.addEventListener(
+        "keydown",
+        event => {
+            if (
+                event.key === "Escape" &&
+                controls?.classList.contains(
+                    "nqz-phone-sheet-visible"
+                )
+            ) {
+                closeSheet();
+            }
+        }
+    );
+
+    if (
+        typeof media.addEventListener ===
+        "function"
+    ) {
+        media.addEventListener(
+            "change",
+            syncLayout
+        );
+    } else {
+        media.addListener(syncLayout);
+    }
+
+    window.NQZ_MOBILE_V75 = {
+        build: BUILD,
+        isPhone,
+        openOptions: openSheet,
+        closeOptions: closeSheet,
+        toggleCoach,
+        showMoveHints,
+        clearMoveHints,
+    };
+
+    syncLayout();
+})();
+</script>
+<!-- NQZ MOBILE PLAY V7.5 END -->
 
 </body>
 </html>

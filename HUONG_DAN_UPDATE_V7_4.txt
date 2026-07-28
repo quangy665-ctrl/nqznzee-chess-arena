@@ -1,0 +1,27 @@
+NQZNZEE WEB SHARE V7.4 — MOBILE LAYOUT
+
+TRÊN ĐIỆN THOẠI
+- Bàn cờ rộng gần toàn bộ màn hình.
+- Thanh tên, quân đã ăn và đồng hồ được thu gọn.
+- Thanh đánh giá chỉ rộng 10px.
+- Coach mặc định thành thẻ đồng hành nhỏ.
+- Bấm Coach ở thanh dưới để mở đầy đủ.
+- Panel điều khiển chuyển thành bottom sheet.
+- Thanh thao tác cố định: Menu, Coach, Lùi, Đảo bàn, Ván mới.
+- Hỗ trợ vùng an toàn tai thỏ và thanh điều hướng.
+- Có bố cục riêng cho điện thoại nằm ngang.
+
+TRÊN PC
+- Giữ nguyên kích thước bàn cờ.
+- Giữ nguyên hai cột bàn cờ và bảng điều khiển.
+- Không thay đổi bố cục desktop.
+
+CẬP NHẬT GITHUB
+1. Giải nén NqznZee_Web_Share_V7_4_Mobile.zip.
+2. Vào repository nqznzee-chess-arena.
+3. Chọn Add file > Upload files.
+4. Kéo toàn bộ file trong thư mục V7.4 lên.
+5. Chọn Commit directly to the main branch.
+6. Commit changes.
+7. Mở:
+   https://quangy665-ctrl.github.io/nqznzee-chess-arena/?v=7.4

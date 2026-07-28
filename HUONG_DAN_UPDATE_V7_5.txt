@@ -1,0 +1,33 @@
+NQZNZEE WEB SHARE V7.5 — MOBILE PLAY MODE
+
+GIAO DIỆN MOBILE MỚI
+- Bỏ thanh năm nút cố định gây rối.
+- Chỉ giữ một hàng bốn thao tác dưới bàn:
+  Lùi, Đảo bàn, Coach, Tùy chọn.
+- Bàn cờ rộng gần toàn màn hình.
+- Tên, quân đã ăn và đồng hồ được nén gọn.
+- Coach là một thẻ nhỏ, chỉ mở đầy đủ khi bấm Coach.
+- Toàn bộ cài đặt nằm trong một bottom sheet duy nhất.
+- Không có bảng điều khiển che hoặc thu hẹp bàn cờ.
+
+CẢM ỨNG
+- Chạm để chọn và chạm để đi.
+- Kéo quân bằng một ngón tay.
+- Có quân “ghost” đi theo ngón tay.
+- Hiện chấm nước hợp lệ và vòng bắt quân.
+- Rung nhẹ khi chọn hoặc thả quân.
+- Khóa cuộn trang khi thao tác trực tiếp trên bàn.
+- Nút điều khiển đạt kích thước chạm tối thiểu khoảng 44px.
+
+PC
+- Bố cục, kích thước bàn và bảng điều khiển desktop giữ nguyên.
+
+CẬP NHẬT GITHUB
+1. Giải nén NqznZee_Web_Share_V7_5_Mobile_Play.zip.
+2. Vào repository nqznzee-chess-arena.
+3. Add file > Upload files.
+4. Kéo toàn bộ file vào và ghi đè file cũ.
+5. Chọn Commit directly to the main branch.
+6. Commit changes.
+7. Mở:
+   https://quangy665-ctrl.github.io/nqznzee-chess-arena/?v=7.5
