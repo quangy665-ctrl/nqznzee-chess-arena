@@ -304,6 +304,61 @@
         }
     }
 </style>
+<style>
+html, body { background:#090b0c !important; }
+body {
+    padding-bottom: calc(82px + env(safe-area-inset-bottom)) !important;
+    background:
+        radial-gradient(circle at 90% 0%, rgba(75,125,71,.10), transparent 28%),
+        #090b0c !important;
+}
+.shell, .card, .profile-card {
+    border-color: rgba(255,255,255,.10) !important;
+}
+.card, .profile-card {
+    background:#171918 !important;
+    border-radius:18px !important;
+}
+.back, button.primary {
+    background:linear-gradient(180deg,#91c653,#659d3e) !important;
+    border-color:rgba(145,198,83,.42) !important;
+}
+.v9-profile-nav {
+    position:fixed;
+    left:10px;
+    right:10px;
+    bottom:max(7px, env(safe-area-inset-bottom));
+    z-index:50;
+    height:62px;
+    padding:5px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:4px;
+    border:1px solid rgba(255,255,255,.10);
+    border-radius:17px;
+    background:rgba(18,20,19,.96);
+    box-shadow:0 15px 45px rgba(0,0,0,.42);
+    backdrop-filter:blur(16px);
+}
+.v9-profile-nav a {
+    display:grid;
+    place-items:center;
+    align-content:center;
+    gap:2px;
+    border-radius:11px;
+    color:#929790;
+    text-decoration:none;
+}
+.v9-profile-nav a span { font-size:21px; }
+.v9-profile-nav a small { font-size:8px; font-weight:850; }
+.v9-profile-nav a.active {
+    color:#a3dc61;
+    background:rgba(129,182,76,.12);
+}
+@media (min-width:760px) {
+    .v9-profile-nav { display:none; }
+}
+</style>
 </head>
 
 <body>
@@ -710,5 +765,11 @@
     boot();
 })();
 </script>
+<nav class="v9-profile-nav" aria-label="Điều hướng NqznZee">
+    <a href="./index.html"><span>⌂</span><small>Trang chủ</small></a>
+    <a href="./play.html"><span>♞</span><small>Chơi</small></a>
+    <a href="./play.html?panel=puzzle"><span>✦</span><small>Câu đố</small></a>
+    <a class="active" href="./profile.html"><span>♙</span><small>Hồ sơ</small></a>
+</nav>
 </body>
 </html>

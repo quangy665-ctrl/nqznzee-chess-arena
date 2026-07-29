@@ -746,7 +746,7 @@
             () => {
                 if (!currentAccount) {
                     location.href =
-                        "./login.html?return=index.html";
+                        "./login.html?return=play.html";
                     return;
                 }
 

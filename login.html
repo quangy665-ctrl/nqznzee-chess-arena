@@ -9,408 +9,251 @@
 <link rel="apple-touch-icon" href="./nqznzee-pawn.png">
 <link rel="stylesheet" href="./account.css">
 <style>
-    * {
-        box-sizing: border-box;
-    }
-
-    html {
-        min-height: 100%;
-        background: #070910;
-    }
-
-    body {
-        min-height: 100vh;
-        margin: 0;
-        padding:
-            max(22px, env(safe-area-inset-top))
-            18px
-            max(24px, env(safe-area-inset-bottom));
-        display: grid;
-        place-items: center;
-        color: #f7f8fc;
-        background:
-            radial-gradient(
-                circle at 18% 18%,
-                rgba(124, 92, 255, .18),
-                transparent 34%
-            ),
-            radial-gradient(
-                circle at 82% 72%,
-                rgba(34, 211, 238, .12),
-                transparent 32%
-            ),
-            #070910;
-        font-family:
-            Inter,
-            ui-sans-serif,
-            system-ui,
-            -apple-system,
-            BlinkMacSystemFont,
-            "Segoe UI",
-            sans-serif;
-    }
-
-    .shell {
-        width: min(960px, 100%);
-        display: grid;
-        grid-template-columns:
-            minmax(0, .92fr)
-            minmax(350px, 1.08fr);
-        overflow: hidden;
-        border: 1px solid rgba(255, 255, 255, .11);
-        border-radius: 26px;
-        background: rgba(10, 12, 20, .9);
-        box-shadow:
-            0 32px 100px rgba(0, 0, 0, .48),
-            0 0 50px rgba(124, 92, 255, .08);
-        backdrop-filter: blur(22px);
-    }
-
-    .brand-panel {
-        position: relative;
-        min-height: 640px;
-        padding: 42px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        overflow: hidden;
-        background:
-            linear-gradient(
-                150deg,
-                rgba(124, 92, 255, .19),
-                rgba(34, 211, 238, .06)
-            );
-    }
-
-    .brand-panel::after {
-        content: "♞";
-        position: absolute;
-        right: -20px;
-        bottom: -74px;
-        color: rgba(255, 255, 255, .045);
-        font-size: 310px;
-        line-height: 1;
-        transform: rotate(-8deg);
-        pointer-events: none;
-    }
-
-    .mark {
-        width: 56px;
-        height: 56px;
-        display: grid;
-        place-items: center;
-        border-radius: 17px;
-        color: #ffffff;
-        font-weight: 950;
-        letter-spacing: .04em;
-        background:
-            linear-gradient(
-                135deg,
-                #7c5cff,
-                #22d3ee
-            );
-        box-shadow:
-            0 0 34px rgba(124, 92, 255, .32);
-    }
-
-    .brand-copy {
-        position: relative;
-        z-index: 1;
-    }
-
-    .eyebrow {
-        margin-top: 28px;
-        color: #78e7f5;
-        font-size: 12px;
-        font-weight: 900;
-        letter-spacing: .18em;
-        text-transform: uppercase;
-    }
-
-    h1 {
-        margin: 12px 0 14px;
-        font-size: clamp(34px, 5vw, 58px);
-        line-height: .98;
-        letter-spacing: -.055em;
-    }
-
-    .lead {
-        max-width: 430px;
-        margin: 0;
-        color: #a8afc0;
-        font-size: 15px;
-        line-height: 1.7;
-    }
-
-    .benefits {
-        position: relative;
-        z-index: 1;
-        display: grid;
-        gap: 12px;
-        color: #dfe3ec;
-        font-size: 14px;
-    }
-
-    .benefit {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
-
-    .dot {
-        width: 8px;
-        height: 8px;
-        flex: 0 0 auto;
-        border-radius: 999px;
-        background: #22d3ee;
-        box-shadow: 0 0 14px rgba(34, 211, 238, .58);
-    }
-
-    .form-panel {
-        padding: 34px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    .tabs {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 6px;
-        padding: 5px;
-        border: 1px solid rgba(255, 255, 255, .1);
-        border-radius: 14px;
-        background: rgba(255, 255, 255, .035);
-    }
-
-    .tab {
-        min-height: 44px;
-        border: 0;
-        border-radius: 10px;
-        color: #9ca3b6;
-        background: transparent;
-        font: inherit;
-        font-weight: 850;
-        cursor: pointer;
-        touch-action: manipulation;
-    }
-
-    .tab.active {
-        color: #ffffff;
-        background:
-            linear-gradient(
-                135deg,
-                rgba(124, 92, 255, .78),
-                rgba(93, 75, 205, .88)
-            );
-        box-shadow: 0 8px 28px rgba(124, 92, 255, .2);
-    }
-
-    .panel {
-        display: none;
-        padding-top: 24px;
-    }
-
-    .panel.active {
-        display: block;
-    }
-
-    .panel h2 {
-        margin: 0 0 7px;
-        font-size: 25px;
-    }
-
-    .panel-note {
-        margin: 0 0 22px;
-        color: #9299ac;
-        font-size: 13px;
-        line-height: 1.55;
-    }
-
-    .field {
-        display: grid;
-        gap: 7px;
-        margin-bottom: 15px;
-    }
-
-    label {
-        color: #dfe3ec;
-        font-size: 13px;
-        font-weight: 800;
-    }
-
-    input {
-        width: 100%;
-        min-height: 49px;
-        padding: 0 14px;
-        border: 1px solid rgba(255, 255, 255, .12);
-        border-radius: 12px;
-        outline: none;
-        color: #ffffff;
-        background: rgba(255, 255, 255, .045);
-        font: inherit;
-        font-size: 15px;
-    }
-
-    input:focus {
-        border-color: rgba(124, 92, 255, .75);
-        box-shadow: 0 0 0 4px rgba(124, 92, 255, .12);
-    }
-
-    .hint {
-        color: #787f91;
-        font-size: 11px;
-        line-height: 1.5;
-    }
-
-    .submit {
-        width: 100%;
-        min-height: 50px;
-        margin-top: 4px;
-        border: 0;
-        border-radius: 13px;
-        color: #ffffff;
-        background:
-            linear-gradient(
-                135deg,
-                #7c5cff,
-                #5f4fd2
-            );
-        box-shadow: 0 14px 34px rgba(124, 92, 255, .25);
-        font: inherit;
-        font-weight: 900;
-        cursor: pointer;
-        touch-action: manipulation;
-    }
-
-    .submit:disabled {
-        cursor: wait;
-        opacity: .58;
-    }
-
-    .status {
-        min-height: 22px;
-        margin-top: 14px;
-        color: #a8afc0;
-        font-size: 13px;
-        line-height: 1.5;
-    }
-
-    .status.error {
-        color: #ff8ca0;
-    }
-
-    .status.success {
-        color: #76e39c;
-    }
-
-    .guest {
-        display: grid;
-        place-items: center;
-        min-height: 44px;
-        margin-top: 12px;
-        border: 1px solid rgba(255, 255, 255, .1);
-        border-radius: 12px;
-        color: #dfe3ec;
-        text-decoration: none;
-        font-size: 13px;
-        font-weight: 800;
-        background: rgba(255, 255, 255, .035);
-    }
-
-    .recovery-warning {
-        margin-top: 16px;
-        padding: 11px 12px;
-        border: 1px solid rgba(255, 193, 91, .2);
-        border-radius: 11px;
-        color: #d9c9a7;
-        background: rgba(255, 193, 91, .055);
-        font-size: 11px;
-        line-height: 1.55;
-    }
-
-    .signed-card {
-        display: none;
-        padding: 22px;
-        border: 1px solid rgba(124, 92, 255, .28);
-        border-radius: 17px;
-        background: rgba(124, 92, 255, .08);
-    }
-
-    .signed-card.open {
-        display: block;
-    }
-
-    .signed-name {
-        font-size: 23px;
-        font-weight: 950;
-    }
-
-    .signed-meta {
-        margin-top: 5px;
-        color: #9fa6b8;
-    }
-
-    .signed-actions {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 9px;
-        margin-top: 18px;
-    }
-
-    .signed-actions a,
-    .signed-actions button {
-        min-height: 44px;
-        display: grid;
-        place-items: center;
-        border: 1px solid rgba(255, 255, 255, .11);
-        border-radius: 11px;
-        color: #ffffff;
-        background: rgba(255, 255, 255, .045);
-        text-decoration: none;
-        font: inherit;
-        font-weight: 850;
-        cursor: pointer;
-    }
-
-    @media (max-width: 760px) {
-        body {
-            display: block;
-            padding-inline: 12px;
-        }
-
-        .shell {
-            display: block;
-            border-radius: 20px;
-        }
-
-        .brand-panel {
-            min-height: auto;
-            padding: 26px 22px;
-        }
-
-        .brand-panel::after,
-        .benefits {
-            display: none;
-        }
-
-        .eyebrow {
-            margin-top: 18px;
-        }
-
-        h1 {
-            margin-bottom: 10px;
-            font-size: 38px;
-        }
-
-        .lead {
-            font-size: 13px;
-        }
-
-        .form-panel {
-            padding: 23px 18px 28px;
-        }
-    }
+:root {
+    color-scheme: dark;
+    --bg: #090b0c;
+    --panel: #171918;
+    --panel2: #202220;
+    --line: rgba(255,255,255,.11);
+    --text: #f5f5f3;
+    --muted: #9ea39c;
+    --green: #81b64c;
+    --green2: #9dd95a;
+    --green3: #60983d;
+}
+* { box-sizing: border-box; }
+html { min-height: 100%; background: var(--bg); }
+body {
+    min-height: 100vh;
+    margin: 0;
+    padding:
+        max(20px, env(safe-area-inset-top))
+        14px
+        max(22px, env(safe-area-inset-bottom));
+    display: grid;
+    place-items: center;
+    color: var(--text);
+    background:
+        radial-gradient(circle at 50% 0%, rgba(129,182,76,.09), transparent 28%),
+        radial-gradient(circle at 0% 75%, rgba(52,90,66,.08), transparent 32%),
+        #090b0c;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+.shell {
+    width: min(520px, 100%);
+    display: block;
+}
+.brand-panel {
+    min-height: auto;
+    padding: 0 8px 20px;
+    display: block;
+    background: transparent;
+}
+.brand-panel::after { display: none; }
+.brand-copy { text-align: center; }
+.mark {
+    width: 66px;
+    height: 66px;
+    margin: 0 auto;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    color: #11170f;
+    background: radial-gradient(circle at 35% 25%, #b7e76e, #78b846 55%, #4d7b32);
+    box-shadow: 0 0 0 4px rgba(129,182,76,.10), 0 12px 35px rgba(0,0,0,.3);
+    font-size: 0;
+}
+.mark::before {
+    content: "♟";
+    font-size: 37px;
+}
+.eyebrow {
+    margin-top: 16px;
+    color: #9ad35c;
+    font-size: 10px;
+    font-weight: 950;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+}
+h1 {
+    margin: 8px auto 8px;
+    max-width: 420px;
+    font-size: clamp(27px, 9vw, 40px);
+    line-height: 1.02;
+    letter-spacing: -.045em;
+}
+.lead {
+    max-width: 420px;
+    margin: 0 auto;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.55;
+}
+.benefits { display: none; }
+.form-panel {
+    padding: 18px;
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    background:
+        linear-gradient(145deg, rgba(255,255,255,.03), transparent 42%),
+        var(--panel);
+    box-shadow: 0 26px 80px rgba(0,0,0,.38);
+}
+.tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+    padding: 5px;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 13px;
+    background: rgba(255,255,255,.025);
+}
+.tab {
+    min-height: 43px;
+    border: 0;
+    border-radius: 10px;
+    color: #999e97;
+    background: transparent;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 900;
+    cursor: pointer;
+}
+.tab.active {
+    color: white;
+    background: linear-gradient(180deg, #90c552, #659d3e);
+    box-shadow: 0 8px 22px rgba(88,139,49,.20);
+}
+.panel {
+    display: none;
+    padding-top: 20px;
+}
+.panel.active { display: block; }
+.panel h2 {
+    margin: 0 0 5px;
+    font-size: 22px;
+}
+.panel-note {
+    margin: 0 0 18px;
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.55;
+}
+.field {
+    display: grid;
+    gap: 6px;
+    margin-bottom: 13px;
+}
+label {
+    color: #e6e8e3;
+    font-size: 11px;
+    font-weight: 850;
+}
+input {
+    width: 100%;
+    min-height: 54px;
+    padding: 0 15px;
+    border: 1px solid rgba(255,255,255,.11);
+    border-radius: 12px;
+    outline: none;
+    color: white;
+    background: #202320;
+    font: inherit;
+    font-size: 15px;
+}
+input:focus {
+    border-color: rgba(140,199,78,.72);
+    box-shadow: 0 0 0 4px rgba(129,182,76,.10);
+}
+.hint {
+    color: #828881;
+    font-size: 9px;
+    line-height: 1.45;
+}
+.submit {
+    width: 100%;
+    min-height: 56px;
+    margin-top: 4px;
+    border: 1px solid rgba(155,216,88,.48);
+    border-radius: 13px;
+    color: white;
+    background: linear-gradient(180deg, #99cf58, #629a3b);
+    box-shadow: 0 12px 28px rgba(91,145,51,.22);
+    font: inherit;
+    font-size: 16px;
+    font-weight: 950;
+    cursor: pointer;
+}
+.submit:disabled { opacity: .5; cursor: wait; }
+.status {
+    min-height: 20px;
+    margin-top: 9px;
+    font-size: 10px;
+    line-height: 1.45;
+}
+.status.error { color: #ff8a99; }
+.status.success { color: #9fe3aa; }
+.guest {
+    min-height: 44px;
+    margin-top: 13px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 11px;
+    color: #d9dcd6;
+    background: rgba(255,255,255,.025);
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 850;
+}
+.recovery-warning {
+    margin-top: 12px;
+    padding: 10px;
+    border: 1px solid rgba(255,202,98,.14);
+    border-radius: 10px;
+    color: #cfc1a0;
+    background: rgba(255,202,98,.04);
+    font-size: 9px;
+    line-height: 1.5;
+}
+.signed-card {
+    display: none;
+    padding: 18px;
+    border: 1px solid rgba(129,182,76,.20);
+    border-radius: 15px;
+    background: rgba(129,182,76,.055);
+}
+.signed-card.active { display: block; }
+.signed-name { font-size: 19px; font-weight: 950; }
+.signed-meta { margin-top: 5px; color: var(--muted); font-size: 11px; }
+.signed-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 14px;
+}
+.signed-actions a,
+.signed-actions button {
+    min-height: 44px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--line);
+    border-radius: 11px;
+    color: white;
+    background: #252825;
+    text-decoration: none;
+    font: inherit;
+    font-size: 11px;
+    font-weight: 900;
+}
+.signed-actions a {
+    background: linear-gradient(180deg, #91c653, #659d3e);
+}
+@media (min-width: 760px) {
+    .shell { width: min(900px, 100%); }
+    .brand-panel { padding-bottom: 24px; }
+    .form-panel { width: min(520px, 100%); margin: 0 auto; }
+}
 </style>
 </head>
 
@@ -419,12 +262,12 @@
     <section class="brand-panel">
         <div class="brand-copy">
             <div class="mark">NQZ</div>
-            <div class="eyebrow">Account Cloud V8.0</div>
-            <h1>Vào bàn cờ bằng tài khoản của bạn.</h1>
+            <div class="eyebrow">NqznZee Account · V9.0</div>
+            <h1>Đăng nhập NqznZee Arena.</h1>
             <p class="lead">
-                Tạo tài khoản bằng tên đăng nhập và mật khẩu.
-                Không bắt buộc email. Tiến trình tài khoản sẽ sẵn sàng
-                cho các bản Cloud Save, Elo và huy hiệu tiếp theo.
+                Giữ nguyên username + mật khẩu như trước.
+                Không cần Google, Facebook, Apple hay email thật.
+                Elo và danh hiệu được đồng bộ theo tài khoản.
             </p>
         </div>
 
@@ -441,7 +284,7 @@
             <div class="signed-meta" id="signedMeta"></div>
 
             <div class="signed-actions">
-                <a id="signedContinue" href="./index.html">Vào game</a>
+                <a id="signedContinue" href="./index.html">Tiếp tục</a>
                 <button id="signedLogout" type="button">Đăng xuất</button>
             </div>
         </div>

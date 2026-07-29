@@ -1,0 +1,62 @@
+NQZNZEE WEB SHARE V9.0 — MOBILE REDESIGN
+========================================
+
+MỤC TIÊU
+- Big update giao diện theo phong cách app cờ vua mobile hiện đại.
+- Trang chủ, bàn cờ và đăng nhập dễ sử dụng bằng một tay trên điện thoại.
+- Không thêm Google / Facebook / Apple.
+- Giữ nguyên tài khoản username + mật khẩu NqznZee.
+- Giữ Supabase, Elo, GM / IM / FM, profile, Game Review, Puzzle, Bot Ladder.
+
+CẤU TRÚC
+index.html
+  Trang chủ / menu ứng dụng.
+
+play.html
+  Game thật, toàn bộ engine và chức năng V8 được giữ lại.
+
+login.html
+  Đăng nhập và tạo tài khoản NqznZee với giao diện mới.
+
+profile.html
+  Hồ sơ, Elo và huy hiệu.
+
+THAY ĐỔI MOBILE
+- Thanh đầu app gọn.
+- Card người chơi và đồng hồ lớn hơn.
+- Bàn cờ tận dụng gần toàn bộ chiều ngang.
+- Thanh thao tác 4 nút nằm ngay dưới bàn.
+- Control Panel vẫn dùng bottom sheet như trước.
+- Thanh điều hướng cố định:
+  Trang chủ / Chơi / Câu đố / Hồ sơ.
+
+ĐĂNG NHẬP
+- Vẫn có hai tab:
+  Đăng nhập
+  Tạo tài khoản
+- Không có đăng nhập nền tảng thứ ba.
+- Vẫn có chơi khách.
+- Backend và Publishable key giữ nguyên.
+
+UPLOAD
+1. Upload toàn bộ file của gói vào nhánh v8-account để thử.
+2. Ghi đè file cũ.
+3. Commit:
+   Add V9.0 mobile-first redesign
+4. Giữ GitHub Pages trỏ vào nhánh thử cho tới khi kiểm tra xong.
+
+LINK
+Trang chủ:
+https://quangy665-ctrl.github.io/nqznzee-chess-arena/
+
+Bàn cờ:
+https://quangy665-ctrl.github.io/nqznzee-chess-arena/play.html
+
+Đăng nhập:
+https://quangy665-ctrl.github.io/nqznzee-chess-arena/login.html
+
+LƯU Ý
+- Các mục "Đấu với Bot", "Câu đố", "Phân tích ván", "Sự nghiệp"
+  đều mở đúng panel có sẵn trong game.
+- Chưa thêm matchmaking online với người khác vì backend game hiện tại
+  chưa có hệ thống phòng / realtime match.
