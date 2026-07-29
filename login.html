@@ -223,7 +223,8 @@ input:focus {
     border-radius: 15px;
     background: rgba(129,182,76,.055);
 }
-.signed-card.active { display: block; }
+.signed-card.active,
+.signed-card.open { display: block; }
 .signed-name { font-size: 19px; font-weight: 950; }
 .signed-meta { margin-top: 5px; color: var(--muted); font-size: 11px; }
 .signed-actions {
@@ -262,6 +263,32 @@ input:focus {
 .brand-copy h1 {
     margin-bottom: 0 !important;
 }
+
+/* V9.8 — signed-session screen fix */
+.signed-actions-v98 {
+    grid-template-columns: 1fr 1fr !important;
+}
+
+.signed-actions-v98 #signedContinue {
+    grid-column: 1 / -1;
+}
+
+.signed-actions-v98 #signedSwitchAccount {
+    color: #dbe8d2;
+    border-color: rgba(129,182,76,.24);
+    background: rgba(129,182,76,.07);
+}
+
+@media (max-width: 520px) {
+    .signed-actions-v98 {
+        grid-template-columns: 1fr !important;
+    }
+
+    .signed-actions-v98 #signedContinue {
+        grid-column: auto;
+    }
+}
+
 </style>
 </head>
 
@@ -287,9 +314,22 @@ input:focus {
             <div class="signed-name" id="signedName">Đã đăng nhập</div>
             <div class="signed-meta" id="signedMeta"></div>
 
-            <div class="signed-actions">
+            <div class="signed-actions signed-actions-v98">
                 <a id="signedContinue" href="./index.html">Tiếp tục</a>
-                <button id="signedLogout" type="button">Đăng xuất</button>
+
+                <button
+                    id="signedSwitchAccount"
+                    type="button"
+                >
+                    Đăng nhập tài khoản khác
+                </button>
+
+                <button
+                    id="signedLogout"
+                    type="button"
+                >
+                    Đăng xuất
+                </button>
             </div>
         </div>
 
@@ -445,7 +485,7 @@ input:focus {
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="./supabase-config.js"></script>
-<script src="./account-v9-7.js"></script>
+<script src="./account-v9-8.js"></script>
 <script>
 (() => {
     "use strict";
@@ -594,6 +634,17 @@ input:focus {
     }
 
     async function showSession() {
+        /*
+         * Never hide both the session card and the auth forms.
+         * Forms remain available until a valid signed-in account
+         * has been loaded successfully.
+         */
+        authForms.hidden =
+            false;
+
+        signedCard.classList
+            .remove("active");
+
         if (
             !window.NQZ_ACCOUNT
                 ?.configReady()
@@ -618,7 +669,7 @@ input:focus {
 
             if (!account) {
                 signedCard.classList
-                    .remove("open");
+                    .remove("active");
 
                 authForms.hidden =
                     false;
@@ -640,9 +691,12 @@ input:focus {
                 true;
 
             signedCard.classList
-                .add("open");
+                .add("active");
         } catch (error) {
             console.error(error);
+
+            signedCard.classList
+                .remove("active");
 
             authForms.hidden =
                 false;
@@ -863,6 +917,40 @@ input:focus {
             }
         }
     );
+
+    $("signedSwitchAccount")
+        .addEventListener(
+            "click",
+            async () => {
+                try {
+                    await window
+                        .NQZ_ACCOUNT
+                        .signOut();
+                } catch (error) {
+                    console.error(error);
+                }
+
+                localStorage.removeItem(
+                    "nqz-player-name-v7"
+                );
+
+                signedCard.classList
+                    .remove("active");
+
+                authForms.hidden =
+                    false;
+
+                setMode("login");
+
+                window.setTimeout(
+                    () => {
+                        $("loginUsername")
+                            .focus();
+                    },
+                    60
+                );
+            }
+        );
 
     $("signedLogout")
         .addEventListener(
