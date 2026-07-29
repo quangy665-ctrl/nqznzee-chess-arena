@@ -12,7 +12,21 @@ NqznZee Chess Arena
 - Cần Internet để tải chess.js và Stockfish.js từ CDN. Chỉ chạy trên localhost.
 -->
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chess.js@0.10.3/chess.min.js"></script>
+<script>
+if (typeof window.Chess === "undefined") {
+    document.write(
+        '<script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"><\/script>'
+    );
+}
+</script>
+<script>
+if (typeof window.Chess === "undefined") {
+    document.write(
+        '<script src="https://unpkg.com/chess.js@0.10.3/chess.js"><\/script>'
+    );
+}
+</script>
 
 <style>
 :root {
@@ -2693,6 +2707,21 @@ body[data-nqz-theme="crystal"] .nqz-themed-piece {
 </head>
 
 <body data-nqz-theme="standard" data-nqz-default-theme="standard">
+<div id="nqzBoardFatal" class="nqz-board-fatal" hidden>
+    <strong>Không tải được bộ luật cờ vua.</strong>
+    <span>Hãy tải lại trang. Game sẽ tự thử nhiều nguồn dự phòng.</span>
+    <button type="button" onclick="location.reload()">Tải lại bàn cờ</button>
+</div>
+
+<script>
+if (typeof window.Chess === "undefined") {
+    window.addEventListener("DOMContentLoaded", () => {
+        const fatal = document.getElementById("nqzBoardFatal");
+        if (fatal) fatal.hidden = false;
+    });
+}
+</script>
+
 
 <div class="arena-topbar">
     <div class="arena-brand">
@@ -2700,7 +2729,7 @@ body[data-nqz-theme="crystal"] .nqz-themed-piece {
         <div class="arena-mark">♟</div>
         <div>
             <strong>NqznZee <span class="v9-brand-soft">Arena</span></strong>
-            <small>Mobile Arena · V9.0</small>
+            <small>Mobile Arena · V9.1</small>
         </div>
     </div>
     <div class="arena-actions">
@@ -2717,7 +2746,7 @@ body[data-nqz-theme="crystal"] .nqz-themed-piece {
             <div>
                 <h1>NqznZee Chess Arena</h1>
                 <div class="subtitle">
-                    V9.0 · Mobile First · GM / IM / FM · Elo · Game Review
+                    V9.1 · Board Hotfix · GM / IM / FM · Elo · Game Review
                 </div>
             </div>
         </div>
@@ -9856,7 +9885,7 @@ body[data-nqz-theme="crystal"] .nqz-themed-piece {
 
 <script id="nqz-web-share-build">
 window.addEventListener("DOMContentLoaded", () => {
-    document.documentElement.dataset.nqzBuild = "web-share-v9-mobile";
+    document.documentElement.dataset.nqzBuild = "web-share-v9-1-board-hotfix";
     const badge = document.getElementById("nqzBuildHealth");
     if (badge && !badge.textContent.includes("WEB")) {
         badge.title = (badge.title ? badge.title + "\n" : "") +
@@ -10227,7 +10256,7 @@ window.addEventListener("DOMContentLoaded", () => {
 (() => {
     "use strict";
 
-    const BUILD = "WEB V9.0 MOBILE";
+    const BUILD = "WEB V9.1 BOARD HOTFIX";
     const NAME_KEY = "nqz-player-name-v7";
 
     const $ = id =>
@@ -13001,11 +13030,11 @@ window.addEventListener(
         <span>⌂</span>
         <small>Trang chủ</small>
     </a>
-    <a class="active" href="./play.html">
+    <a class="active" href="./play.html?v=9.1">
         <span>♞</span>
         <small>Chơi</small>
     </a>
-    <a href="./play.html?panel=puzzle">
+    <a href="./play.html?v=9.1&panel=puzzle">
         <span>✦</span>
         <small>Câu đố</small>
     </a>
@@ -13041,6 +13070,90 @@ window.addEventListener("DOMContentLoaded", () => {
         }, 120);
     }
 });
+</script>
+
+
+<script id="nqz-v9-board-hotfix">
+(() => {
+    "use strict";
+
+    function boardReady() {
+        const board = document.getElementById("board");
+        return !!(
+            board &&
+            board.querySelectorAll(".square").length === 64
+        );
+    }
+
+    function showBoardError(message) {
+        const stage = document.querySelector(".board-stage");
+        if (!stage) return;
+
+        let box = document.getElementById("nqzBoardRepairError");
+
+        if (!box) {
+            box = document.createElement("div");
+            box.id = "nqzBoardRepairError";
+            box.className = "nqz-board-repair-error";
+            stage.appendChild(box);
+        }
+
+        box.innerHTML = "";
+
+        const title = document.createElement("strong");
+        title.textContent = "Bàn cờ chưa khởi tạo";
+
+        const note = document.createElement("span");
+        note.textContent = message;
+
+        const button = document.createElement("button");
+        button.type = "button";
+        button.textContent = "Tải lại bàn cờ";
+        button.addEventListener("click", () => location.reload());
+
+        box.append(title, note, button);
+    }
+
+    function repairBoard() {
+        if (boardReady()) {
+            document.documentElement.dataset.nqzBoardReady = "true";
+            return true;
+        }
+
+        try {
+            window.NQZ_API?.render?.();
+        } catch (error) {
+            console.error("NQZ board repair render failed:", error);
+        }
+
+        if (boardReady()) {
+            document.documentElement.dataset.nqzBoardReady = "true";
+            return true;
+        }
+
+        return false;
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+        const attempts = [80, 250, 650, 1300, 2400];
+
+        attempts.forEach((delay, index) => {
+            setTimeout(() => {
+                if (repairBoard()) return;
+
+                if (index === attempts.length - 1) {
+                    const reason =
+                        typeof window.Chess === "undefined"
+                            ? "Thư viện chess.js chưa tải được."
+                            : "Game đã tải nhưng hàm render bàn cờ chưa hoàn tất.";
+
+                    showBoardError(reason);
+                    document.documentElement.dataset.nqzBoardReady = "false";
+                }
+            }, delay);
+        });
+    });
+})();
 </script>
 
 </body>

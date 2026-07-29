@@ -1,0 +1,36 @@
+NQZNZEE V9.1 — BOARD HOTFIX
+============================
+
+SỬA LỖI
+- Vào play.html nhưng bàn cờ không xuất hiện.
+- Bàn cờ bị co chiều cao về 0 trên một số trình duyệt mobile.
+- chess.js tải lỗi từ một CDN làm toàn bộ game không khởi tạo.
+
+THAY ĐỔI
+1. chess.js có 3 nguồn dự phòng:
+   jsDelivr -> cdnjs -> unpkg.
+2. Bàn cờ mobile được ép tỷ lệ 1:1 và không thể co về 0px.
+3. Sau khi trang tải, game kiểm tra đủ 64 ô.
+4. Nếu render chưa chạy, V9.1 tự gọi NQZ_API.render() lại nhiều lần.
+5. Nếu vẫn lỗi, màn hình hiển thị lỗi rõ ràng + nút Tải lại bàn cờ.
+6. Link play.html dùng ?v=9.1 để tránh cache V9.0 cũ.
+
+CÁCH UPLOAD
+- Upload toàn bộ gói V9.1 vào đúng nhánh đang test.
+- Ghi đè các file cũ.
+- Đặc biệt phải có:
+  play.html
+  v9-mobile.css
+  index.html
+
+Commit:
+Fix V9.1 mobile board rendering
+
+SAU KHI GITHUB PAGES DEPLOY
+Mở trực tiếp:
+https://quangy665-ctrl.github.io/nqznzee-chess-arena/play.html?v=9.1
+
+Trên điện thoại:
+- đóng tab cũ,
+- mở link trên,
+- hoặc xóa cache trang nếu trình duyệt vẫn giữ V9.0.
