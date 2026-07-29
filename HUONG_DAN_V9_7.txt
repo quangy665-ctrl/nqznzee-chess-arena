@@ -1,0 +1,36 @@
+NQZNZEE V9.7 — AUTH CACHE + UI FIX
+==================================
+
+LỖI registerButton is not defined
+- Code V9.6 trong ZIP đã sửa, nhưng trình duyệt có thể vẫn cache account.js cũ.
+- V9.7 đổi tên hẳn script thành:
+  account-v9-7.js
+- File account.js cũ không còn trong gói.
+- Vì tên file mới, Chrome bắt buộc tải JavaScript mới.
+
+ĐÃ XÓA
+- Đoạn mô tả dưới "Trận nhanh".
+- Đoạn mô tả dưới tiêu đề "Đăng nhập NqznZee Arena".
+
+GIỮ NGUYÊN
+- Thumbnail bàn cờ tĩnh liền mạch.
+- Đăng nhập / Đăng ký.
+- Flow chơi với tư cách khách.
+- Supabase account, Elo, danh hiệu.
+
+UPLOAD
+Upload toàn bộ V9.7 vào repository và ghi đè file cũ.
+Quan trọng: phải thấy file account-v9-7.js trong repo.
+
+Commit:
+Fix V9.7 auth cache and remove marked text
+
+TEST
+Trang chủ:
+https://quangy665-ctrl.github.io/nqznzee-chess-arena/?v=9.7
+
+Đăng nhập:
+https://quangy665-ctrl.github.io/nqznzee-chess-arena/login.html?v=9.7
+
+Game:
+https://quangy665-ctrl.github.io/nqznzee-chess-arena/play.html?v=9.7

@@ -1,0 +1,33 @@
+NQZNZEE V9.7 — AUTH CACHE + UI FIX DIAGNOSTICS
+======================================================================================
+[OK] File: index.html
+[OK] File: play.html
+[OK] File: login.html
+[OK] File: profile.html
+[OK] File: account-v9-7.js
+[OK] File: account.css
+[OK] File: v9-mobile.css
+[OK] File: supabase-config.js
+[OK] File: nqznzee-game-board-seamless.png
+[OK] Old account.js removed
+[OK] JS syntax: account-v9-7.js
+[OK] JS syntax: supabase-config.js
+[OK] Inline JS checked: index.html (1 blocks)
+[OK] Inline JS checked: play.html (14 blocks)
+[OK] Inline JS checked: login.html (1 blocks)
+[OK] Inline JS checked: profile.html (1 blocks)
+[OK] No registerButton inside enrichAccount
+[OK] renderWidget has local registerButton
+[OK] Guest shows Register
+[OK] Signed-in hides Register
+[OK] All pages load account-v9-7.js
+[OK] No page loads old account.js
+[OK] Supabase sign-in remains
+[OK] Register Edge Function remains
+[OK] Homepage marked paragraph removed
+[OK] Login marked paragraph removed
+[OK] Static seamless thumbnail remains
+[OK] Guest entry flow remains
+[OK] Home/play cache bumped to 9.7
+--------------------------------------------------------------------------------------
+RESULT: PASS — V9.7 READY

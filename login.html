@@ -254,6 +254,14 @@ input:focus {
     .brand-panel { padding-bottom: 24px; }
     .form-panel { width: min(520px, 100%); margin: 0 auto; }
 }
+
+/* V9.7 compact login masthead */
+.brand-panel {
+    padding-bottom: 12px !important;
+}
+.brand-copy h1 {
+    margin-bottom: 0 !important;
+}
 </style>
 </head>
 
@@ -264,11 +272,7 @@ input:focus {
             <div class="mark">NQZ</div>
             <div class="eyebrow">NqznZee Account · V9.0</div>
             <h1>Đăng nhập NqznZee Arena.</h1>
-            <p class="lead">
-                Giữ nguyên username + mật khẩu như trước.
-                Không cần Google, Facebook, Apple hay email thật.
-                Elo và danh hiệu được đồng bộ theo tài khoản.
-            </p>
+            
         </div>
 
         <div class="benefits">
@@ -441,7 +445,7 @@ input:focus {
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="./supabase-config.js"></script>
-<script src="./account.js"></script>
+<script src="./account-v9-7.js"></script>
 <script>
 (() => {
     "use strict";
