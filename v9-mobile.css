@@ -623,3 +623,198 @@ wc-chess-board,
         grid-template-rows: repeat(8, minmax(0, 1fr)) !important;
     }
 }
+
+
+/* ================================================================
+   V9.3 MOBILE UI POLISH
+   - seamless board
+   - compact Chess.com-style login button
+   - no duplicate profile/name chip in mobile top bar
+   ================================================================ */
+
+@media (max-width: 820px) {
+    /* ----- Seamless chessboard ----- */
+    .board-layout,
+    .board-stage,
+    wc-chess-board#labBoard,
+    #board.board {
+        padding: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        gap: 0 !important;
+        border-spacing: 0 !important;
+    }
+
+    .board-stage {
+        overflow: hidden !important;
+        background: #78925d !important;
+        border-radius: 10px !important;
+    }
+
+    wc-chess-board#labBoard {
+        overflow: hidden !important;
+        background: transparent !important;
+    }
+
+    #board.board {
+        display: grid !important;
+        grid-template-columns: repeat(8, 12.5%) !important;
+        grid-template-rows: repeat(8, 12.5%) !important;
+        gap: 0 !important;
+        column-gap: 0 !important;
+        row-gap: 0 !important;
+        overflow: hidden !important;
+        background: #78925d !important;
+        contain: layout paint !important;
+    }
+
+    #board.board > .square {
+        width: 100.25% !important;
+        height: 100.25% !important;
+        min-width: 0 !important;
+        min-height: 0 !important;
+        margin: -0.125% !important;
+        padding: 0 !important;
+        border: 0 !important;
+        outline: 0 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        appearance: none !important;
+        -webkit-appearance: none !important;
+        background-clip: border-box !important;
+        transform: translateZ(0);
+    }
+
+    /* Remove decorative texture on mobile: flat colors join perfectly. */
+    body[data-nqz-theme="standard"] #board .square.light {
+        background: #ebe3cf !important;
+        background-image: none !important;
+    }
+
+    body[data-nqz-theme="standard"] #board .square.dark {
+        background: #78925d !important;
+        background-image: none !important;
+    }
+
+    /* ----- Mobile header ----- */
+    .arena-topbar {
+        position: sticky !important;
+        top: max(4px, env(safe-area-inset-top)) !important;
+        height: 68px !important;
+        min-height: 68px !important;
+        padding: 16px 82px 7px 8px !important;
+        overflow: visible !important;
+    }
+
+    .arena-brand {
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+        gap: 8px !important;
+        transform: translateY(3px);
+    }
+
+    .arena-brand > div:last-child {
+        min-width: 0 !important;
+        overflow: hidden !important;
+    }
+
+    .arena-brand strong {
+        max-width: calc(100vw - 190px) !important;
+        display: block !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
+        font-size: 15px !important;
+    }
+
+    .arena-mark {
+        width: 36px !important;
+        height: 36px !important;
+        flex: 0 0 36px !important;
+    }
+
+    .v9-menu-button {
+        min-width: 34px !important;
+        min-height: 34px !important;
+        width: 34px !important;
+        height: 34px !important;
+        font-size: 19px !important;
+    }
+
+    .arena-actions {
+        position: absolute !important;
+        z-index: 120 !important;
+        top: 6px !important;
+        right: 7px !important;
+        width: auto !important;
+        max-width: 76px !important;
+        display: block !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* Account widget is the only item visible in the top-right corner. */
+    .arena-actions > :not(.nqz-account-widget) {
+        display: none !important;
+    }
+
+    .nqz-account-widget {
+        position: relative !important;
+        z-index: 125 !important;
+        width: auto !important;
+        max-width: 76px !important;
+    }
+
+    .nqz-account-button {
+        width: auto !important;
+        min-width: 66px !important;
+        max-width: 76px !important;
+        height: 34px !important;
+        min-height: 34px !important;
+        padding: 0 9px !important;
+        display: flex !important;
+        justify-content: center !important;
+        gap: 0 !important;
+        border: 1px solid rgba(255,255,255,.12) !important;
+        border-radius: 8px !important;
+        color: #f3f4f1 !important;
+        background:
+            linear-gradient(
+                180deg,
+                rgba(65,67,64,.96),
+                rgba(39,41,39,.96)
+            ) !important;
+        box-shadow:
+            0 5px 14px rgba(0,0,0,.24),
+            inset 0 1px rgba(255,255,255,.04) !important;
+    }
+
+    .nqz-account-avatar,
+    .nqz-account-rating {
+        display: none !important;
+    }
+
+    .nqz-account-label {
+        max-width: 58px !important;
+        overflow: hidden !important;
+        color: #f5f5f2 !important;
+        font-size: 11px !important;
+        font-weight: 900 !important;
+        line-height: 1 !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
+    }
+
+    .nqz-account-menu {
+        top: 40px !important;
+        right: 0 !important;
+    }
+
+    /* Old V7 name chip duplicates the account name in this header. */
+    #nqzPlayerNameChipV7,
+    .nqz-v7-name-chip,
+    .v9-profile-button {
+        display: none !important;
+    }
+}

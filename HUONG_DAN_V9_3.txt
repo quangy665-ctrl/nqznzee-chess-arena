@@ -1,0 +1,38 @@
+NQZNZEE V9.3 — MOBILE UI POLISH
+===============================
+
+SỬA THEO 3 ẢNH PHẢN HỒI
+
+1. THUMBNAIL TRANG CHỦ
+- Bỏ bàn cờ Unicode minh họa.
+- Dùng ảnh cắt trực tiếp từ bàn cờ thật của game.
+- File:
+  nqznzee-game-board-thumb.jpg
+
+2. BÀN CỜ BỊ KHE / CỘT ĐEN
+- Mobile dùng 8 cột x 12.5%.
+- gap = 0.
+- Tắt appearance mặc định của button.
+- Ô cờ chồng mép rất nhẹ để xóa seam do subpixel rendering.
+- Standard theme dùng màu phẳng trên mobile, bỏ texture gây đường viền giả.
+- Kết quả: bàn cờ phải liền mạch.
+
+3. ĐĂNG NHẬP BỊ CHỒNG TRÊN HEADER
+- Đăng nhập nằm ở góc cao nhất bên phải.
+- Nút nhỏ kiểu Chess.com.
+- Ẩn avatar NQ trong nút khi ở mobile.
+- Ẩn nút profile phụ.
+- Ẩn chip tên nqzn cũ.
+- Logo/menu được hạ nhẹ xuống và dành khoảng trống bên phải.
+
+UPLOAD
+- Upload toàn bộ V9.3, ghi đè V9.2.
+- Commit:
+  Fix V9.3 mobile board and header polish
+
+TEST
+Trang chủ:
+https://quangy665-ctrl.github.io/nqznzee-chess-arena/?v=9.3
+
+Bàn cờ:
+https://quangy665-ctrl.github.io/nqznzee-chess-arena/play.html?v=9.3
