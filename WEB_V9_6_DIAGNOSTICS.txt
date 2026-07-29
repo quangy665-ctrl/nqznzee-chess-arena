@@ -1,0 +1,33 @@
+NQZNZEE V9.6 — AUTH FIX DIAGNOSTICS
+==================================================================================
+[OK] File: index.html
+[OK] File: play.html
+[OK] File: login.html
+[OK] File: profile.html
+[OK] File: account.js
+[OK] File: account.css
+[OK] File: v9-mobile.css
+[OK] File: supabase-config.js
+[OK] File: nqznzee-game-board-seamless.png
+[OK] File: HUONG_DAN_V9_6.txt
+[OK] JS syntax: account.js
+[OK] JS syntax: supabase-config.js
+[OK] Inline JS checked: index.html (1 blocks)
+[OK] Inline JS checked: play.html (14 blocks)
+[OK] Inline JS checked: login.html (1 blocks)
+[OK] Inline JS checked: profile.html (1 blocks)
+[OK] No registerButton in enrichAccount
+[OK] renderWidget declares registerButton
+[OK] Guest shows Register
+[OK] Signed-in hides Register
+[OK] No out-of-scope registerButton.hidden before renderWidget
+[OK] Supabase password login retained
+[OK] Username registration Edge Function retained
+[OK] Register auto-login retained
+[OK] Login success checks profile
+[OK] Static seamless thumbnail retained
+[OK] Guest entry flow retained
+[OK] Direct register mode retained
+[OK] V9.6 marker
+----------------------------------------------------------------------------------
+RESULT: PASS — V9.6 AUTH FIX READY

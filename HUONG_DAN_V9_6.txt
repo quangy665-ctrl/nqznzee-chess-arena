@@ -1,0 +1,46 @@
+NQZNZEE V9.6 — AUTH FIX
+=======================
+
+LỖI ĐÃ SỬA
+V9.4/V9.5 có thể báo:
+registerButton is not defined
+
+Nguyên nhân:
+- registerButton.hidden bị đặt nhầm trong enrichAccount().
+- renderWidget() sử dụng registerButton nhưng không khai báo biến trong scope.
+
+V9.6:
+- Bỏ registerButton khỏi enrichAccount().
+- renderWidget() lấy đúng #nqzRegisterButton.
+- Guest: nút Đăng ký hiện.
+- Đã đăng nhập: nút Đăng ký ẩn.
+- Đăng nhập và đăng ký kiểm tra account profile trước khi chuyển trang.
+
+THUMBNAIL
+- Không dùng video.
+- Dùng ảnh bàn cờ tĩnh liền mạch:
+  nqznzee-game-board-seamless.png
+
+LUỒNG VÀO GAME
+- Đã đăng nhập -> vào bàn cờ ngay.
+- Chưa đăng nhập -> Đăng nhập / Đăng ký / Chơi với tư cách khách.
+- Khách -> sau đó mới hỏi tên.
+
+UPLOAD
+Upload toàn bộ V9.6 ghi đè V9.5.
+
+Commit:
+Fix V9.6 login registration and account widget
+
+TEST
+Trang chủ:
+https://quangy665-ctrl.github.io/nqznzee-chess-arena/?v=9.6
+
+Đăng nhập:
+https://quangy665-ctrl.github.io/nqznzee-chess-arena/login.html?v=9.6
+
+Đăng ký:
+https://quangy665-ctrl.github.io/nqznzee-chess-arena/login.html?mode=register&return=play.html&v=9.6
+
+Game:
+https://quangy665-ctrl.github.io/nqznzee-chess-arena/play.html?v=9.6

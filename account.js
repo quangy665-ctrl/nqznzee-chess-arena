@@ -231,8 +231,6 @@
             return null;
         }
 
-        registerButton.hidden = true;
-
         const identity =
             getAccountIdentity(
                 account
@@ -867,6 +865,11 @@
                 "nqzAccountMenu"
             );
 
+        const registerButton =
+            document.getElementById(
+                "nqzRegisterButton"
+            );
+
         if (
             !button ||
             !avatar ||
@@ -898,6 +901,8 @@
 
             return;
         }
+
+        registerButton.hidden = true;
 
         const identity =
             getAccountIdentity(

@@ -688,6 +688,12 @@ input:focus {
                             password
                         );
 
+                if (!result?.account) {
+                    throw new Error(
+                        "Xác thực thành công nhưng không tải được hồ sơ người chơi."
+                    );
+                }
+
                 localStorage.setItem(
                     "nqz-player-name-v7",
                     result.account
@@ -815,6 +821,12 @@ input:focus {
                             username,
                             password
                         );
+
+                if (!result?.account) {
+                    throw new Error(
+                        "Xác thực thành công nhưng không tải được hồ sơ người chơi."
+                    );
+                }
 
                 localStorage.setItem(
                     "nqz-player-name-v7",
