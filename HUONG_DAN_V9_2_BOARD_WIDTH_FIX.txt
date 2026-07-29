@@ -1,0 +1,28 @@
+NQZNZEE V9.2 — MOBILE BOARD WIDTH FIX
+=====================================
+
+LỖI ĐÃ XÁC ĐỊNH
+Trên mobile:
+- .board-layout vẫn có 2 cột: 8px + phần còn lại.
+- .eval-bar bị ẩn bằng display:none.
+- CSS Grid tự đặt .board-stage vào cột đầu tiên 8px.
+- Kết quả: bàn cờ biến thành một sọc dọc rất hẹp bên trái.
+
+SỬA
+- Mobile .board-layout chỉ còn 1 cột full width.
+- .board-stage luôn grid-column: 1 / -1.
+- wc-chess-board và #board luôn width:100%.
+- Bàn cờ giữ grid 8 x 8.
+- Link dùng ?v=9.2 để tránh cache bản lỗi.
+
+UPLOAD
+Upload toàn bộ gói V9.2 và ghi đè V9.1.
+
+Commit:
+Fix V9.2 mobile board full width
+
+TEST
+Mở trực tiếp:
+https://quangy665-ctrl.github.io/nqznzee-chess-arena/play.html?v=9.2
+
+Bàn cờ phải chiếm gần toàn bộ chiều ngang điện thoại, không còn sọc 8px.

@@ -1,0 +1,26 @@
+NQZNZEE V9.2 — MOBILE BOARD WIDTH FIX DIAGNOSTICS
+======================================================================================
+[OK] File: index.html
+[OK] File: play.html
+[OK] File: login.html
+[OK] File: profile.html
+[OK] File: account.js
+[OK] File: supabase-config.js
+[OK] File: v9-mobile.css
+[OK] File: HUONG_DAN_V9_2_BOARD_WIDTH_FIX.txt
+[OK] JS syntax: account.js
+[OK] JS syntax: supabase-config.js
+[OK] Inline JS checked: play.html (14 blocks)
+[OK] Inline JS checked: index.html (1 blocks)
+[OK] Inline JS checked: login.html (1 blocks)
+[OK] Inline JS checked: profile.html (1 blocks)
+[OK] Mobile layout is single-column
+[OK] Board stage spans full grid
+[OK] Eval bar hidden on mobile
+[OK] Board stage forced full width
+[OK] Board grid still 8 by 8
+[OK] Board element retained
+[OK] Game move logic retained
+[OK] V9.2 cache marker
+--------------------------------------------------------------------------------------
+RESULT: PASS — V9.2 MOBILE BOARD WIDTH FIX READY

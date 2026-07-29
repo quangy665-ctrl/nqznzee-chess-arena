@@ -584,3 +584,42 @@ wc-chess-board,
         max-height: calc(100vw - 26px) !important;
     }
 }
+
+
+/* V9.2 MOBILE BOARD WIDTH FIX
+   When the eval bar is hidden, the board must occupy the full grid width. */
+@media (max-width: 820px) {
+    .board-layout {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) !important;
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    .board-layout > .eval-bar {
+        display: none !important;
+    }
+
+    .board-layout > .board-stage {
+        grid-column: 1 / -1 !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+        justify-self: stretch !important;
+    }
+
+    .board-stage > wc-chess-board,
+    wc-chess-board#labBoard,
+    #board.board {
+        display: block !important;
+        width: 100% !important;
+        min-width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    #board.board {
+        display: grid !important;
+        grid-template-columns: repeat(8, minmax(0, 1fr)) !important;
+        grid-template-rows: repeat(8, minmax(0, 1fr)) !important;
+    }
+}
