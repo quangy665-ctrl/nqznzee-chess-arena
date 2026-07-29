@@ -1,0 +1,9 @@
+NQZNZEE V9.3.1 — CLEAN THUMBNAIL
+
+Đã sửa:
+- Cắt bỏ viền tối nằm trong ảnh thumbnail.
+- Thumbnail không còn border CSS.
+- Giữ bo góc nhẹ nhưng không tạo đường viền đen.
+- Dọn cache URL sang v9.3.1.
+
+Upload toàn bộ gói này ghi đè V9.3.

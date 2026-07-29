@@ -882,6 +882,15 @@ input:focus {
             }
         );
 
+    const initialMode =
+        new URLSearchParams(
+            location.search
+        ).get("mode") === "register"
+            ? "register"
+            : "login";
+
+    setMode(initialMode);
+
     showSession();
 })();
 </script>

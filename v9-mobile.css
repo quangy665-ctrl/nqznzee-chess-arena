@@ -818,3 +818,66 @@ wc-chess-board,
         display: none !important;
     }
 }
+
+
+/* V9.4 — guest Login + Register at top-right */
+.nqz-account-register-button {
+    min-height: 34px;
+    display: inline-grid;
+    place-items: center;
+    padding: 0 8px;
+    border: 1px solid rgba(157,216,90,.44);
+    border-radius: 8px;
+    color: #172012;
+    background: linear-gradient(180deg, #a0d85f, #75aa47);
+    text-decoration: none;
+    font-size: 10px;
+    font-weight: 950;
+    white-space: nowrap;
+}
+
+@media (max-width: 820px) {
+    .arena-topbar {
+        padding-right: 150px !important;
+    }
+
+    .arena-actions {
+        top: 6px !important;
+        right: 7px !important;
+        max-width: 142px !important;
+    }
+
+    .nqz-account-widget {
+        width: auto !important;
+        max-width: 142px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: flex-end !important;
+        gap: 4px !important;
+    }
+
+    .nqz-account-button {
+        min-width: 63px !important;
+        max-width: 68px !important;
+        height: 32px !important;
+        min-height: 32px !important;
+        padding: 0 7px !important;
+    }
+
+    .nqz-account-register-button {
+        min-width: 57px !important;
+        height: 32px !important;
+        min-height: 32px !important;
+        padding: 0 7px !important;
+        font-size: 9px !important;
+    }
+
+    .nqz-account-label {
+        max-width: 55px !important;
+        font-size: 9px !important;
+    }
+
+    .arena-brand strong {
+        max-width: calc(100vw - 250px) !important;
+    }
+}

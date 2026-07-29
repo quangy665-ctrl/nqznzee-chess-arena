@@ -1,0 +1,31 @@
+NQZNZEE V9.4 — HOME VIDEO + AUTH DIAGNOSTICS
+====================================================================================
+[OK] File: index.html
+[OK] File: play.html
+[OK] File: login.html
+[OK] File: profile.html
+[OK] File: account.js
+[OK] File: v9-mobile.css
+[OK] File: supabase-config.js
+[OK] File: nqznzee-game-board-thumb.jpg
+[OK] File: nqznzee-board-loop-v9.mp4
+[OK] File: HUONG_DAN_V9_4.txt
+[OK] MP4 video: 720x404 H.264
+[OK] JS syntax: account.js
+[OK] JS syntax: supabase-config.js
+[OK] Inline JS checked: index.html (1 blocks)
+[OK] Inline JS checked: play.html (14 blocks)
+[OK] Inline JS checked: login.html (1 blocks)
+[OK] Inline JS checked: profile.html (1 blocks)
+[OK] Home video autoplay/muted/loop/playsinline
+[OK] Home video is compact
+[OK] Home Login + Register
+[OK] Register direct mode link
+[OK] Play guest Register
+[OK] Register guest visibility
+[OK] Register hidden after login
+[OK] Login page handles mode=register
+[OK] Mobile auth width reserved
+[OK] Supabase auth retained
+------------------------------------------------------------------------------------
+RESULT: PASS — V9.4 READY

@@ -95,6 +95,65 @@ button, a { -webkit-tap-highlight-color: transparent; }
     color: var(--muted);
     font-size: 10px;
 }
+
+.top-auth-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 5px;
+    flex: 0 0 auto;
+}
+
+.top-auth-button {
+    min-height: 34px;
+    display: inline-grid;
+    place-items: center;
+    padding: 0 9px;
+    border: 1px solid rgba(255,255,255,.105);
+    border-radius: 8px;
+    color: #f4f5f1;
+    background: rgba(255,255,255,.035);
+    text-decoration: none;
+    font-size: 10px;
+    font-weight: 900;
+    white-space: nowrap;
+}
+
+.top-auth-button.login {
+    background: linear-gradient(180deg, #414440, #292b29);
+}
+
+.top-auth-button.register {
+    color: #162010;
+    border-color: rgba(157,216,90,.45);
+    background: linear-gradient(180deg, #a2dc61, #77ae48);
+}
+
+.top-auth-button.profile {
+    color: #f6fff0;
+    background: rgba(129,182,76,.16);
+}
+
+@media (max-width: 430px) {
+    .brand strong {
+        font-size: 15px;
+    }
+
+    .brand small {
+        display: none;
+    }
+
+    .top-auth-actions {
+        gap: 4px;
+    }
+
+    .top-auth-button {
+        min-height: 31px;
+        padding: 0 7px;
+        font-size: 9px;
+    }
+}
+
 .account-button {
     min-width: 42px;
     height: 42px;
@@ -140,6 +199,66 @@ button, a { -webkit-tap-highlight-color: transparent; }
 }
 .sq.l { background: #ebecd0; color: #242522; }
 .sq.d { background: #779556; color: #20221e; }
+
+.board-preview-frame {
+    width: min(100%, 390px);
+    aspect-ratio: 1;
+    margin: 0 auto;
+    overflow: hidden;
+    border: 0;
+    border-radius: 12px;
+    background: transparent;
+    box-shadow: 0 10px 28px rgba(0,0,0,.20);
+}
+.board-preview-image {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    border: 0;
+    outline: 0;
+}
+
+
+.board-video-frame {
+    width: 100%;
+    max-width: 520px;
+    aspect-ratio: 16 / 9;
+    margin: 0 auto;
+    overflow: hidden;
+    border: 0;
+    border-radius: 13px;
+    background: #101210;
+    box-shadow: 0 12px 34px rgba(0,0,0,.27);
+}
+
+.board-preview-video {
+    width: 100%;
+    height: 100%;
+    display: block;
+    border: 0;
+    object-fit: cover;
+    background: #101210;
+}
+
+@media (max-width: 759px) {
+    .hero {
+        padding: 13px;
+        gap: 11px;
+    }
+
+    .board-video-frame {
+        max-width: none;
+        max-height: 200px;
+        border-radius: 11px;
+    }
+
+    .hero h1 {
+        margin-top: 5px;
+        font-size: 29px;
+    }
+}
+
 .hero-copy {
     display: grid;
     align-content: center;
@@ -284,23 +403,50 @@ button, a { -webkit-tap-highlight-color: transparent; }
             <div class="logo">♟</div>
             <div>
                 <strong>NqznZee <span>Arena</span></strong>
-                <small>Mobile Chess · V9.3</small>
+                <small>Mobile Chess · V9.4</small>
             </div>
         </div>
 
-        <a id="accountButton" class="account-button" href="./login.html">♙</a>
+        <div class="top-auth-actions">
+            <a
+                id="loginTopButton"
+                class="top-auth-button login"
+                href="./login.html?return=index.html"
+            >Đăng nhập</a>
+
+            <a
+                id="registerTopButton"
+                class="top-auth-button register"
+                href="./login.html?mode=register&return=index.html"
+            >Đăng ký</a>
+
+            <a
+                id="profileTopButton"
+                class="top-auth-button profile"
+                href="./profile.html"
+                hidden
+            >Hồ sơ</a>
+        </div>
     </header>
 
     <section class="hero">
-        <figure class="board-preview-frame">
-            <img
+        <figure class="board-video-frame">
+            <video
                 id="boardPreview"
-                class="board-preview-image"
-                src="./nqznzee-game-board-thumb.jpg?v=9.3"
-                alt="Bàn cờ thật của NqznZee Arena"
-                loading="eager"
-                decoding="async"
+                class="board-preview-video"
+                autoplay
+                muted
+                loop
+                playsinline
+                preload="metadata"
+                poster="./nqznzee-game-board-thumb.jpg?v=9.4"
+                aria-label="Video bàn cờ NqznZee Arena"
             >
+                <source
+                    src="./nqznzee-board-loop-v9.mp4?v=9.4"
+                    type="video/mp4"
+                >
+            </video>
         </figure>
 
         <div class="hero-copy">
@@ -311,7 +457,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
                 Elo và danh hiệu GM / IM / FM được giữ nguyên theo tài khoản.
             </p>
 
-            <a class="play-now" href="./play.html?v=9.3&v=9.2&v=9.1">⚡ Chơi ngay</a>
+            <a class="play-now" href="./play.html?v=9.4">⚡ Chơi ngay</a>
 
             <div id="identityBox" class="identity">
                 Bạn có thể chơi khách hoặc đăng nhập tài khoản NqznZee.
@@ -320,7 +466,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
     </section>
 
     <section id="menu" class="menu-list">
-        <a class="menu-card" href="./play.html?v=9.3&v=9.2&v=9.1">
+        <a class="menu-card" href="./play.html?v=9.4">
             <span class="menu-icon">⏱</span>
             <span class="menu-copy">
                 <strong>Chơi nhanh 10 phút</strong>
@@ -329,7 +475,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
             <span class="chev">›</span>
         </a>
 
-        <a class="menu-card" href="./play.html?v=9.3&v=9.2&panel=engine">
+        <a class="menu-card" href="./play.html?v=9.4&panel=engine">
             <span class="menu-icon">♞</span>
             <span class="menu-copy">
                 <strong>Đấu với Bot</strong>
@@ -338,7 +484,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
             <span class="chev">›</span>
         </a>
 
-        <a class="menu-card" href="./play.html?v=9.3&v=9.2&panel=puzzle">
+        <a class="menu-card" href="./play.html?v=9.4&panel=puzzle">
             <span class="menu-icon">✦</span>
             <span class="menu-copy">
                 <strong>Câu đố</strong>
@@ -347,7 +493,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
             <span class="chev">›</span>
         </a>
 
-        <a class="menu-card" href="./play.html?v=9.3&v=9.2&panel=review">
+        <a class="menu-card" href="./play.html?v=9.4&panel=review">
             <span class="menu-icon">⌁</span>
             <span class="menu-copy">
                 <strong>Phân tích ván</strong>
@@ -356,7 +502,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
             <span class="chev">›</span>
         </a>
 
-        <a class="menu-card" href="./play.html?v=9.3&v=9.2&panel=career">
+        <a class="menu-card" href="./play.html?v=9.4&panel=career">
             <span class="menu-icon">♜</span>
             <span class="menu-copy">
                 <strong>Sự nghiệp</strong>
@@ -378,8 +524,8 @@ button, a { -webkit-tap-highlight-color: transparent; }
 
 <nav class="bottom-nav" aria-label="Điều hướng NqznZee">
     <a class="active" href="./index.html"><span>⌂</span><small>Trang chủ</small></a>
-    <a href="./play.html?v=9.3&v=9.2&v=9.1"><span>♞</span><small>Chơi</small></a>
-    <a href="./play.html?v=9.3&v=9.2&panel=puzzle"><span>✦</span><small>Câu đố</small></a>
+    <a href="./play.html?v=9.4"><span>♞</span><small>Chơi</small></a>
+    <a href="./play.html?v=9.4&panel=puzzle"><span>✦</span><small>Câu đố</small></a>
     <a href="./profile.html"><span>♙</span><small>Hồ sơ</small></a>
 </nav>
 
@@ -390,15 +536,18 @@ button, a { -webkit-tap-highlight-color: transparent; }
 (() => {
     async function renderAccount() {
         const box = document.getElementById("identityBox");
-        const button = document.getElementById("accountButton");
+        const loginButton = document.getElementById("loginTopButton");
+        const registerButton = document.getElementById("registerTopButton");
+        const profileButton = document.getElementById("profileTopButton");
 
         try {
             const account = await window.NQZ_ACCOUNT?.refreshAccount?.();
 
             if (!account) {
                 box.textContent = "Bạn đang chơi khách · đăng nhập để dùng Elo và danh hiệu.";
-                button.href = "./login.html?return=index.html";
-                button.textContent = "♙";
+                loginButton.hidden = false;
+                registerButton.hidden = false;
+                profileButton.hidden = true;
                 return;
             }
 
@@ -406,8 +555,13 @@ button, a { -webkit-tap-highlight-color: transparent; }
                 window.NQZ_ACCOUNT.getAccountIdentity(account);
 
             box.textContent = "Đã đăng nhập · " + identity.label;
-            button.href = "./profile.html";
-            button.textContent = identity.title?.label || "♙";
+            loginButton.hidden = true;
+            registerButton.hidden = true;
+            profileButton.hidden = false;
+            profileButton.textContent =
+                identity.title?.label
+                    ? `${identity.title.label} ${identity.displayName}`
+                    : "Hồ sơ";
         } catch {
             box.textContent = "Không thể tải hồ sơ lúc này. Bạn vẫn có thể vào bàn cờ.";
         }

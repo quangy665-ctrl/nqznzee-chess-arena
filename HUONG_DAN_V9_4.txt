@@ -1,0 +1,20 @@
+NQZNZEE V9.4 — HOME VIDEO + AUTH
+================================
+
+- Thumbnail vuông đã đổi thành video loop 16:9.
+- Video dùng chính hình bàn cờ NqznZee.
+- Mobile cao tối đa khoảng 200px.
+- Video autoplay, muted, loop, playsinline.
+
+Khi chưa đăng nhập:
+[Đăng nhập] [Đăng ký]
+
+Nút Đăng ký mở trực tiếp tab Tạo tài khoản.
+Khi đăng nhập xong, các nút guest được thay bằng nút Hồ sơ/tài khoản.
+
+Upload toàn bộ V9.4 ghi đè V9.3.1.
+
+Test:
+https://quangy665-ctrl.github.io/nqznzee-chess-arena/?v=9.4
+https://quangy665-ctrl.github.io/nqznzee-chess-arena/play.html?v=9.4
+https://quangy665-ctrl.github.io/nqznzee-chess-arena/login.html?mode=register

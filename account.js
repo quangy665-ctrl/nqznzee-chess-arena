@@ -231,6 +231,8 @@
             return null;
         }
 
+        registerButton.hidden = true;
+
         const identity =
             getAccountIdentity(
                 account
@@ -721,6 +723,14 @@
                 ></span>
             </button>
 
+            <a
+                id="nqzRegisterButton"
+                class="nqz-account-register-button"
+                href="./login.html?mode=register&return=play.html"
+            >
+                Đăng ký
+            </a>
+
             <div
                 id="nqzAccountMenu"
                 class="nqz-account-menu"
@@ -739,6 +749,11 @@
         const menu =
             document.getElementById(
                 "nqzAccountMenu"
+            );
+
+        const registerButton =
+            document.getElementById(
+                "nqzRegisterButton"
             );
 
         button.addEventListener(
@@ -857,7 +872,8 @@
             !avatar ||
             !label ||
             !rating ||
-            !menu
+            !menu ||
+            !registerButton
         ) {
             return;
         }
@@ -873,6 +889,7 @@
                 "";
 
             menu.hidden = true;
+            registerButton.hidden = false;
 
             button.setAttribute(
                 "aria-expanded",
