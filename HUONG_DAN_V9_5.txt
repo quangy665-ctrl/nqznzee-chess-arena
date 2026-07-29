@@ -1,0 +1,47 @@
+NQZNZEE V9.5 — GUEST ENTRY FLOW
+===============================
+
+KHI ĐÃ ĐĂNG NHẬP
+- Vào play.html -> vào bàn cờ ngay.
+- Không hiện bảng lựa chọn.
+- Dùng tên, Elo và GM / IM / FM của tài khoản.
+
+KHI CHƯA ĐĂNG NHẬP
+Bảng đầu tiên hiện:
+- Đăng nhập
+- Đăng ký
+- Chơi với tư cách khách
+
+ĐĂNG NHẬP
+- Mở trang đăng nhập.
+- Sau khi thành công quay lại play.html.
+- Không hiện bảng guest nữa.
+
+ĐĂNG KÝ
+- Mở thẳng tab Tạo tài khoản.
+- Sau khi tạo tài khoản có thể vào game bằng account cloud.
+
+CHƠI VỚI TƯ CÁCH KHÁCH
+- Sau khi bấm, game mới hiện bảng hỏi tên.
+- Nhập tên -> Bắt đầu chơi.
+- Có nút Quay lại.
+- Khách không có Elo/danh hiệu.
+
+GIAO DIỆN
+- Cả bảng lựa chọn và bảng nhập tên đổi sang đen + xanh lá.
+- Phù hợp giao diện NqznZee mobile.
+
+THUMBNAIL
+- Bỏ video V9.4.
+- Quay lại ảnh bàn cờ tĩnh liền mạch dạng PNG.
+- Giảm còn tối đa khoảng 292px trên mobile.
+
+UPLOAD
+Upload toàn bộ V9.5 ghi đè V9.4.
+
+Commit:
+Add V9.5 guest entry and seamless board thumbnail
+
+TEST
+https://quangy665-ctrl.github.io/nqznzee-chess-arena/?v=9.5
+https://quangy665-ctrl.github.io/nqznzee-chess-arena/play.html?v=9.5

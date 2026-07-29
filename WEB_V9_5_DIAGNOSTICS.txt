@@ -1,0 +1,36 @@
+NQZNZEE V9.5 — GUEST ENTRY FLOW DIAGNOSTICS
+======================================================================================
+[OK] File: index.html
+[OK] File: play.html
+[OK] File: login.html
+[OK] File: profile.html
+[OK] File: account.js
+[OK] File: v9-mobile.css
+[OK] File: supabase-config.js
+[OK] File: nqznzee-game-board-seamless.png
+[OK] File: HUONG_DAN_V9_5.txt
+[OK] V9.4 video removed
+[OK] Static board PNG: 720x720
+[OK] JS syntax: account.js
+[OK] JS syntax: supabase-config.js
+[OK] Inline JS checked: index.html (1 blocks)
+[OK] Inline JS checked: play.html (14 blocks)
+[OK] Inline JS checked: login.html (1 blocks)
+[OK] Inline JS checked: profile.html (1 blocks)
+[OK] Homepage uses static PNG, not video
+[OK] Thumbnail compact mobile size
+[OK] Unauthenticated entry gate exists
+[OK] Entry Login exists
+[OK] Entry Register exists
+[OK] Guest button exists
+[OK] Guest name screen exists
+[OK] Guest back button exists
+[OK] Signed-in account bypass implemented
+[OK] Old immediate name prompt removed
+[OK] Account event resolves entry flow
+[OK] Green black modal theme
+[OK] Direct register tab retained
+[OK] Supabase auth retained
+[OK] Board gameplay retained
+--------------------------------------------------------------------------------------
+RESULT: PASS — V9.5 GUEST ENTRY FLOW READY

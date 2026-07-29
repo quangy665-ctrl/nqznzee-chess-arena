@@ -2729,7 +2729,7 @@ if (typeof window.Chess === "undefined") {
         <div class="arena-mark">♟</div>
         <div>
             <strong>NqznZee <span class="v9-brand-soft">Arena</span></strong>
-            <small>Mobile Arena · V9.4</small>
+            <small>Mobile Arena · V9.5</small>
         </div>
     </div>
     <div class="arena-actions">
@@ -2746,7 +2746,7 @@ if (typeof window.Chess === "undefined") {
             <div>
                 <h1>NqznZee Chess Arena</h1>
                 <div class="subtitle">
-                    V9.4 · Home Video + Auth · GM / IM / FM · Elo · Game Review
+                    V9.5 · Guest Entry Flow · GM / IM / FM · Elo · Game Review
                 </div>
             </div>
         </div>
@@ -9885,7 +9885,7 @@ if (typeof window.Chess === "undefined") {
 
 <script id="nqz-web-share-build">
 window.addEventListener("DOMContentLoaded", () => {
-    document.documentElement.dataset.nqzBuild = "web-share-v9-4-home-video-auth";
+    document.documentElement.dataset.nqzBuild = "web-share-v9-5-guest-entry-flow";
     const badge = document.getElementById("nqzBuildHealth");
     if (badge && !badge.textContent.includes("WEB")) {
         badge.title = (badge.title ? badge.title + "\n" : "") +
@@ -10175,6 +10175,274 @@ window.addEventListener("DOMContentLoaded", () => {
     }
 </style>
 
+
+<style id="nqz-v9-5-entry-style">
+/* ================================================================
+   V9.5 ENTRY + GUEST NAME FLOW
+   ================================================================ */
+
+.nqz-v7-backdrop {
+    background:
+        radial-gradient(
+            circle at 50% 22%,
+            rgba(129, 182, 76, .14),
+            transparent 38%
+        ),
+        rgba(5, 7, 6, .91) !important;
+}
+
+.nqz-v7-dialog {
+    border: 1px solid rgba(255,255,255,.10) !important;
+    border-radius: 20px !important;
+    background:
+        linear-gradient(
+            155deg,
+            rgba(255,255,255,.025),
+            transparent 38%
+        ),
+        #171918 !important;
+    box-shadow:
+        0 26px 90px rgba(0,0,0,.62),
+        0 0 48px rgba(129,182,76,.07) !important;
+}
+
+.nqz-v7-logo {
+    border-color: rgba(129,182,76,.35) !important;
+    color: #11170f !important;
+    background:
+        radial-gradient(
+            circle at 35% 25%,
+            #b7e76e,
+            #78b846 55%,
+            #4d7b32
+        ) !important;
+    box-shadow:
+        0 0 0 3px rgba(129,182,76,.08),
+        0 8px 24px rgba(0,0,0,.28) !important;
+}
+
+.nqz-v7-dialog h2 {
+    color: #f5f6f2 !important;
+    letter-spacing: -.025em;
+}
+
+.nqz-v7-dialog p {
+    color: #a5aaa3 !important;
+}
+
+.nqz-v7-field label {
+    color: #e5e8e1 !important;
+}
+
+.nqz-v7-field input {
+    border-color: rgba(255,255,255,.10) !important;
+    color: #f6f7f3 !important;
+    background: #202320 !important;
+}
+
+.nqz-v7-field input:focus {
+    border-color: rgba(151,207,86,.68) !important;
+    box-shadow: 0 0 0 4px rgba(129,182,76,.11) !important;
+}
+
+.nqz-v7-button {
+    border-color: rgba(255,255,255,.09) !important;
+    color: #f4f5f1 !important;
+    background: #252825 !important;
+}
+
+.nqz-v7-button.primary {
+    border-color: rgba(151,207,86,.48) !important;
+    color: #fff !important;
+    background:
+        linear-gradient(
+            180deg,
+            #97cd57,
+            #679d3f
+        ) !important;
+    box-shadow: 0 10px 28px rgba(83,137,45,.22) !important;
+}
+
+.nqz-entry-dialog {
+    width: min(430px, 100%) !important;
+}
+
+.nqz-entry-brand {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+}
+
+.nqz-entry-brand .nqz-v7-logo {
+    flex: 0 0 auto;
+    margin: 0 !important;
+}
+
+.nqz-entry-kicker {
+    margin-bottom: 5px;
+    color: #9bd55d;
+    font-size: 9px;
+    font-weight: 950;
+    letter-spacing: .12em;
+}
+
+.nqz-entry-copy {
+    margin-top: 16px !important;
+}
+
+.nqz-entry-main-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.nqz-entry-main-actions .nqz-v7-button {
+    min-height: 50px;
+    display: grid;
+    place-items: center;
+    text-decoration: none;
+}
+
+.nqz-entry-register {
+    border-color: rgba(129,182,76,.23) !important;
+    color: #bfe891 !important;
+    background: rgba(129,182,76,.07) !important;
+}
+
+.nqz-entry-divider {
+    position: relative;
+    margin: 18px 0 13px;
+    color: #747a72;
+    text-align: center;
+    font-size: 9px;
+    font-weight: 900;
+}
+
+.nqz-entry-divider::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: rgba(255,255,255,.075);
+}
+
+.nqz-entry-divider span {
+    position: relative;
+    padding: 0 10px;
+    background: #171918;
+}
+
+.nqz-entry-guest {
+    width: 100%;
+    min-height: 48px;
+    color: #e7eae3 !important;
+    background:
+        linear-gradient(
+            180deg,
+            #303330,
+            #252825
+        ) !important;
+}
+
+.nqz-entry-note {
+    margin-top: 10px;
+    color: #858b83;
+    font-size: 9px;
+    line-height: 1.5;
+    text-align: center;
+}
+
+.nqz-guest-back {
+    background: transparent !important;
+}
+
+@media (max-width: 560px) {
+    .nqz-v7-backdrop {
+        padding:
+            max(12px, env(safe-area-inset-top))
+            12px
+            max(12px, env(safe-area-inset-bottom))
+            12px !important;
+    }
+
+    .nqz-v7-dialog {
+        width: min(390px, 100%) !important;
+        padding: 18px !important;
+    }
+
+    .nqz-entry-main-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .nqz-entry-main-actions .nqz-v7-button {
+        min-height: 48px;
+    }
+
+    .nqz-v7-actions {
+        gap: 7px !important;
+    }
+}
+</style>
+
+<div
+    id="nqzEntryGateV95"
+    class="nqz-v7-backdrop nqz-entry-backdrop"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="nqzEntryTitleV95"
+>
+    <div class="nqz-v7-dialog nqz-entry-dialog">
+        <div class="nqz-entry-brand">
+            <div class="nqz-v7-logo nqz-entry-logo" aria-hidden="true">♟</div>
+
+            <div>
+                <div class="nqz-entry-kicker">NQZNZEE ARENA</div>
+                <h2 id="nqzEntryTitleV95">Sẵn sàng vào bàn cờ?</h2>
+            </div>
+        </div>
+
+        <p class="nqz-entry-copy">
+            Đăng nhập để dùng Elo, danh hiệu GM / IM / FM và hồ sơ của bạn.
+            Bạn cũng có thể vào nhanh với tư cách khách.
+        </p>
+
+        <div class="nqz-entry-main-actions">
+            <a
+                class="nqz-v7-button primary nqz-entry-login"
+                href="./login.html?return=play.html"
+            >
+                Đăng nhập
+            </a>
+
+            <a
+                class="nqz-v7-button nqz-entry-register"
+                href="./login.html?mode=register&return=play.html"
+            >
+                Đăng ký
+            </a>
+        </div>
+
+        <div class="nqz-entry-divider">
+            <span>HOẶC</span>
+        </div>
+
+        <button
+            id="nqzGuestPlayV95"
+            class="nqz-v7-button nqz-entry-guest"
+            type="button"
+        >
+            Chơi với tư cách khách
+        </button>
+
+        <div class="nqz-entry-note">
+            Khách không có Elo hoặc danh hiệu. Bạn sẽ chọn tên hiển thị ở bước kế tiếp.
+        </div>
+    </div>
+</div>
+
 <div
     id="nqzNameGateV7"
     class="nqz-v7-backdrop"
@@ -10185,11 +10453,12 @@ window.addEventListener("DOMContentLoaded", () => {
     <form id="nqzNameFormV7" class="nqz-v7-dialog" novalidate>
         <div class="nqz-v7-logo" aria-hidden="true">♟</div>
 
-        <h2 id="nqzNameTitleV7">Nhập tên của bạn</h2>
+        <div class="nqz-entry-kicker">CHƠI VỚI TƯ CÁCH KHÁCH</div>
+        <h2 id="nqzNameTitleV7">Tên người chơi</h2>
 
         <p>
-            Hãy nhập tên hoặc biệt danh từ 1 đến 100 ký tự.
-            Tên này sẽ xuất hiện trên bàn cờ và trong thông báo cuối ván.
+            Chọn tên hoặc biệt danh để hiển thị trên bàn cờ.
+            Tên khách chỉ được lưu trên thiết bị này.
         </p>
 
         <div class="nqz-v7-field">
@@ -10213,6 +10482,14 @@ window.addEventListener("DOMContentLoaded", () => {
         <div class="nqz-v7-actions">
             <button class="nqz-v7-button primary" type="submit">
                 Bắt đầu chơi
+            </button>
+
+            <button
+                id="nqzGuestBackV95"
+                class="nqz-v7-button nqz-guest-back"
+                type="button"
+            >
+                Quay lại
             </button>
         </div>
     </form>
@@ -10256,7 +10533,7 @@ window.addEventListener("DOMContentLoaded", () => {
 (() => {
     "use strict";
 
-    const BUILD = "WEB V9.4 HOME VIDEO AUTH";
+    const BUILD = "WEB V9.5 GUEST ENTRY FLOW";
     const NAME_KEY = "nqz-player-name-v7";
 
     const $ = id =>
@@ -10264,6 +10541,15 @@ window.addEventListener("DOMContentLoaded", () => {
 
     const api = () =>
         window.NQZ_API || null;
+
+    const entryGate =
+        $("nqzEntryGateV95");
+
+    const guestPlayButton =
+        $("nqzGuestPlayV95");
+
+    const guestBackButton =
+        $("nqzGuestBackV95");
 
     const nameGate =
         $("nqzNameGateV7");
@@ -10303,6 +10589,9 @@ window.addEventListener("DOMContentLoaded", () => {
     };
 
     let nameConfirmed = false;
+    let guestMode = false;
+    let entryGateOpened = false;
+    let entryGateTimer = null;
     let assistanceUsed = false;
     let assistanceSources = new Set();
     let lastResultSignature = "";
@@ -10756,12 +11045,7 @@ window.addEventListener("DOMContentLoaded", () => {
         clockWasPaused = null;
     }
 
-    function openNameGate() {
-        /*
-        V8.0: a signed-in account stores a small public profile cache.
-        Read it synchronously so the old local-name gate does not flash
-        before Supabase finishes restoring the session.
-        */
+    function cachedAccountIdentity() {
         try {
             const accountCache =
                 JSON.parse(
@@ -10770,56 +11054,55 @@ window.addEventListener("DOMContentLoaded", () => {
                     ) || "null"
                 );
 
-            const identity =
-                identityFromAccount(
-                    accountCache
-                );
-
-            if (identity) {
-                playerName =
-                    identity.displayName;
-
-                playerIdentity =
-                    identity;
-
-                nameConfirmed =
-                    true;
-
-                localStorage.setItem(
-                    NAME_KEY,
-                    playerName
-                );
-
-                nameInput.value =
-                    playerName;
-
-                applyPlayerName();
-
-                window.dispatchEvent(
-                    new CustomEvent(
-                        "nqz-player-name-ready",
-                        {
-                            detail: {
-                                name:
-                                    playerName,
-
-                                identity:
-                                    identity.label,
-
-                                source:
-                                    "account-cloud",
-                            },
-                        }
-                    )
-                );
-
-                return;
-            }
+            return identityFromAccount(
+                accountCache
+            );
         } catch {
             localStorage.removeItem(
                 "nqz-account-profile-cache-v8"
             );
+
+            return null;
         }
+    }
+
+    function openEntryGate() {
+        if (
+            nameConfirmed ||
+            guestMode ||
+            entryGateOpened
+        ) {
+            return;
+        }
+
+        entryGateOpened = true;
+
+        entryGate.classList.add("open");
+
+        document.body.classList.add(
+            "nqz-name-gate-open"
+        );
+
+        pauseForNameGate();
+    }
+
+    function closeEntryGate({
+        resume = true,
+    } = {}) {
+        entryGate.classList.remove("open");
+        entryGateOpened = false;
+
+        if (resume) {
+            document.body.classList.remove(
+                "nqz-name-gate-open"
+            );
+
+            resumeAfterNameGate();
+        }
+    }
+
+    function openNameGate() {
+        guestMode = true;
 
         const saved =
             localStorage.getItem(NAME_KEY) || "";
@@ -10831,6 +11114,7 @@ window.addEventListener("DOMContentLoaded", () => {
         nameInput.classList.remove("invalid");
 
         nameGate.classList.add("open");
+
         document.body.classList.add(
             "nqz-name-gate-open"
         );
@@ -10842,8 +11126,174 @@ window.addEventListener("DOMContentLoaded", () => {
                 nameInput.focus();
                 nameInput.select();
             },
-            80
+            90
         );
+    }
+
+    function beginGuestFlow() {
+        closeEntryGate({
+            resume: false,
+        });
+
+        openNameGate();
+    }
+
+    function backToEntryGate() {
+        nameGate.classList.remove("open");
+        guestMode = false;
+        entryGateOpened = false;
+
+        document.body.classList.add(
+            "nqz-name-gate-open"
+        );
+
+        openEntryGate();
+    }
+
+    function acceptSignedInAccount(
+        account
+    ) {
+        const identity =
+            identityFromAccount(
+                account
+            );
+
+        if (!identity) {
+            return false;
+        }
+
+        if (entryGateTimer) {
+            clearTimeout(
+                entryGateTimer
+            );
+
+            entryGateTimer = null;
+        }
+
+        guestMode = false;
+
+        useAccountIdentity(
+            account
+        );
+
+        nameGate.classList.remove("open");
+        entryGate.classList.remove("open");
+        entryGateOpened = false;
+
+        document.body.classList.remove(
+            "nqz-name-gate-open"
+        );
+
+        resumeAfterNameGate();
+
+        return true;
+    }
+
+    function initializeEntryFlow() {
+        /*
+         * A valid cached account lets signed-in users enter immediately.
+         * account.js refreshes it again in the background.
+         */
+        try {
+            const cachedAccount =
+                JSON.parse(
+                    localStorage.getItem(
+                        "nqz-account-profile-cache-v8"
+                    ) || "null"
+                );
+
+            if (
+                cachedAccount &&
+                acceptSignedInAccount(
+                    cachedAccount
+                )
+            ) {
+                return;
+            }
+        } catch {
+            localStorage.removeItem(
+                "nqz-account-profile-cache-v8"
+            );
+        }
+
+        /*
+         * Give Supabase a short grace period to restore a persisted
+         * session. Guests see the entry choices only after that.
+         */
+        entryGateTimer =
+            window.setTimeout(
+                () => {
+                    if (!nameConfirmed) {
+                        openEntryGate();
+                    }
+                },
+                420
+            );
+
+        let attempts = 0;
+
+        const refreshWatcher =
+            window.setInterval(
+                () => {
+                    attempts += 1;
+
+                    const accountApi =
+                        window.NQZ_ACCOUNT;
+
+                    if (
+                        accountApi
+                            ?.refreshAccount
+                    ) {
+                        window.clearInterval(
+                            refreshWatcher
+                        );
+
+                        accountApi
+                            .refreshAccount()
+                            .then(account => {
+                                if (
+                                    account &&
+                                    acceptSignedInAccount(
+                                        account
+                                    )
+                                ) {
+                                    return;
+                                }
+
+                                if (
+                                    !nameConfirmed &&
+                                    !guestMode
+                                ) {
+                                    openEntryGate();
+                                }
+                            })
+                            .catch(() => {
+                                if (
+                                    !nameConfirmed &&
+                                    !guestMode
+                                ) {
+                                    openEntryGate();
+                                }
+                            });
+
+                        return;
+                    }
+
+                    if (attempts >= 20) {
+                        window.clearInterval(
+                            refreshWatcher
+                        );
+
+                        if (
+                            !nameConfirmed &&
+                            !guestMode
+                        ) {
+                            openEntryGate();
+                        }
+                    }
+                },
+                50
+            );
     }
 
     function closeNameGate() {
@@ -11349,6 +11799,16 @@ window.addEventListener("DOMContentLoaded", () => {
         );
     }
 
+    guestPlayButton.addEventListener(
+        "click",
+        beginGuestFlow
+    );
+
+    guestBackButton.addEventListener(
+        "click",
+        backToEntryGate
+    );
+
     nameInput.addEventListener(
         "input",
         () => {
@@ -11384,10 +11844,36 @@ window.addEventListener("DOMContentLoaded", () => {
     window.addEventListener(
         "nqz-account-updated",
         event => {
-            useAccountIdentity(
+            const account =
                 event.detail?.account ||
-                null
-            );
+                null;
+
+            if (account) {
+                acceptSignedInAccount(
+                    account
+                );
+
+                return;
+            }
+
+            if (
+                !guestMode &&
+                playerIdentity.source ===
+                    "account-cloud"
+            ) {
+                nameConfirmed = false;
+                playerName = "";
+
+                playerIdentity = {
+                    displayName: "",
+                    rating: null,
+                    title: null,
+                    label: "",
+                    source: "local",
+                };
+
+                openEntryGate();
+            }
         }
     );
 
@@ -11424,13 +11910,15 @@ window.addEventListener("DOMContentLoaded", () => {
         markAssistance,
         evaluateFinishedGame,
         resetGameSession,
+        openEntryGate,
+        beginGuestFlow,
         diagnostics: {
             build: BUILD,
             validateName,
         },
     };
 
-    openNameGate();
+    initializeEntryFlow();
     bootWhenReady();
 })();
 </script>
@@ -13030,11 +13518,11 @@ window.addEventListener(
         <span>⌂</span>
         <small>Trang chủ</small>
     </a>
-    <a class="active" href="./play.html?v=9.4">
+    <a class="active" href="./play.html?v=9.5">
         <span>♞</span>
         <small>Chơi</small>
     </a>
-    <a href="./play.html?v=9.4&panel=puzzle">
+    <a href="./play.html?v=9.5&panel=puzzle">
         <span>✦</span>
         <small>Câu đố</small>
     </a>
