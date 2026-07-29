@@ -1,0 +1,16 @@
+NQCHESS V9.9 — BRAND + THUMBNAIL
+
+Đã đổi:
+- Thumbnail trang chủ dùng chính ảnh bàn cờ bạn vừa gửi.
+- NqznZee Arena -> NQChess.
+- NQZNZEE CONTROL -> CONTROL.
+- Cache link -> v9.9.
+
+Upload toàn bộ gói này ghi đè V9.8.
+
+Commit:
+Update V9.9 NQChess branding and thumbnail
+
+Test:
+https://quangy665-ctrl.github.io/nqznzee-chess-arena/?v=9.9
+https://quangy665-ctrl.github.io/nqznzee-chess-arena/play.html?v=9.9

@@ -1,0 +1,23 @@
+NQCHESS V9.9 — BRAND + THUMBNAIL DIAGNOSTICS
+================================================================================
+[OK] File: index.html
+[OK] File: play.html
+[OK] File: login.html
+[OK] File: profile.html
+[OK] File: account-v9-8.js
+[OK] File: supabase-config.js
+[OK] File: nqchess-board-thumbnail.png
+[OK] JS syntax: account-v9-8.js
+[OK] JS syntax: supabase-config.js
+[OK] Inline JS checked: index.html (1 blocks)
+[OK] Inline JS checked: play.html (14 blocks)
+[OK] Inline JS checked: login.html (1 blocks)
+[OK] Inline JS checked: profile.html (1 blocks)
+[OK] Uploaded board image is used as thumbnail
+[OK] Homepage brand changed to NQChess
+[OK] Play header brand changed to NQChess
+[OK] Old NqznZee Arena header removed
+[OK] Control title shortened
+[OK] V9.9 cache marker
+--------------------------------------------------------------------------------
+RESULT: PASS — V9.9 READY
