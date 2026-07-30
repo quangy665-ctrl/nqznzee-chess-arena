@@ -1,0 +1,26 @@
+NQCHESS V9.10 — ENGINE + CAPTURED MODELS DIAGNOSTICS
+========================================================================================
+[OK] File: index.html
+[OK] File: play.html
+[OK] File: login.html
+[OK] File: profile.html
+[OK] File: account-v9-8.js
+[OK] File: supabase-config.js
+[OK] File: nqchess-board-thumbnail.png
+[OK] JS syntax: account-v9-8.js
+[OK] JS syntax: supabase-config.js
+[OK] Inline JS checked: index.html (1 blocks)
+[OK] Inline JS checked: play.html (14 blocks)
+[OK] Inline JS checked: login.html (1 blocks)
+[OK] Inline JS checked: profile.html (1 blocks)
+[OK] Engine ready brand is Nguyenengine1.2
+[OK] Engine chip uses Nguyenengine1.2
+[OK] Board renderer exposed for captured pieces
+[OK] First captured renderer uses board model
+[OK] Reliability captured renderer uses board model
+[OK] Theme-change event installed
+[OK] Captured model CSS installed
+[OK] Game board renderer retained
+[OK] V9.10 cache marker
+----------------------------------------------------------------------------------------
+RESULT: PASS — V9.10 READY

@@ -1,0 +1,28 @@
+NQZNZEE V9.1 — BOARD HOTFIX DIAGNOSTICS
+====================================================================================
+[OK] File: index.html
+[OK] File: play.html
+[OK] File: login.html
+[OK] File: profile.html
+[OK] File: account.js
+[OK] File: supabase-config.js
+[OK] File: v9-mobile.css
+[OK] File: HUONG_DAN_V9_1_BOARD_FIX.txt
+[OK] JS syntax: account.js
+[OK] JS syntax: supabase-config.js
+[OK] Inline JS checked: play.html (14 blocks)
+[OK] Inline JS checked: index.html (1 blocks)
+[OK] Inline JS checked: login.html (1 blocks)
+[OK] Inline JS checked: profile.html (1 blocks)
+[OK] Board element exists
+[OK] Lab board wrapper exists
+[OK] Game render retained
+[OK] Chess CDN fallback chain
+[OK] Board auto repair installed
+[OK] Mobile board has forced 1:1 geometry
+[OK] Board grid force-enabled
+[OK] Cache bust v9.1
+[OK] Engine code retained
+[OK] Move handling retained
+------------------------------------------------------------------------------------
+RESULT: PASS — V9.1 BOARD HOTFIX READY

@@ -1,0 +1,31 @@
+NQZNZEE V9.8 — LOGIN SESSION FIX DIAGNOSTICS
+====================================================================================
+[OK] File: index.html
+[OK] File: play.html
+[OK] File: login.html
+[OK] File: profile.html
+[OK] File: account-v9-8.js
+[OK] File: account.css
+[OK] File: v9-mobile.css
+[OK] File: supabase-config.js
+[OK] File: nqznzee-game-board-seamless.png
+[OK] Stale auth scripts removed
+[OK] JS syntax: account-v9-8.js
+[OK] JS syntax: supabase-config.js
+[OK] Inline JS checked: index.html (1 blocks)
+[OK] Inline JS checked: play.html (14 blocks)
+[OK] Inline JS checked: login.html (1 blocks)
+[OK] Inline JS checked: profile.html (1 blocks)
+[OK] Session card adds active class
+[OK] Session card removes active class
+[OK] Session-card CSS accepts active/open
+[OK] showSession starts in safe form-visible state
+[OK] Switch-account control exists
+[OK] Switch-account signs out
+[OK] Login and register forms remain
+[OK] All pages use account-v9-8.js
+[OK] No page uses stale account scripts
+[OK] V9.8 cache marker
+[OK] Static board thumbnail retained
+------------------------------------------------------------------------------------
+RESULT: PASS — V9.8 LOGIN SESSION FIX READY

@@ -1,0 +1,58 @@
+NQZNZEE WEB SHARE V8.0 — ACCOUNT LOGIN
+======================================
+
+ĐÃ CÓ
+- Tạo tài khoản bằng username + mật khẩu, không yêu cầu email thật.
+- Đăng nhập bằng username + mật khẩu.
+- Giữ phiên đăng nhập trong trình duyệt.
+- Tự tải bảng profiles và ratings.
+- Hiện tài khoản và NQZ Rating trên thanh đầu game.
+- Hồ sơ tài khoản tại profile.html.
+- Đổi tên hiển thị.
+- Đăng xuất.
+- Khi đã đăng nhập, game bỏ qua màn hình nhập tên cục bộ.
+- Chơi khách vẫn được hỗ trợ.
+- Backend register-username và SQL được lưu trong thư mục supabase để dự phòng.
+
+VIỆC DUY NHẤT PHẢI ĐIỀN
+1. Mở file supabase-config.js bằng Notepad.
+2. Tìm:
+   PASTE_YOUR_SB_PUBLISHABLE_KEY_HERE
+3. Thay bằng TOÀN BỘ Publishable key bắt đầu bằng sb_publishable_.
+4. Không xóa dấu ngoặc kép.
+5. Không dán sb_secret_ hoặc service_role.
+
+Ví dụ:
+publishableKey:
+    "sb_publishable_xxxxxxxxxxxxxxxxxxxxxxxxx",
+
+UPLOAD LÊN NHÁNH THỬ NGHIỆM
+1. Giải nén ZIP.
+2. Vào repository nqznzee-chess-arena.
+3. Chuyển nhánh từ main sang v8-account.
+4. Add file > Upload files.
+5. Upload toàn bộ file và thư mục trong gói.
+6. Commit trực tiếp vào v8-account.
+7. Không upload lên main ở bước này.
+
+LƯU Ý VỀ GITHUB PAGES
+GitHub Pages hiện vẫn chạy main, nên nhánh v8-account không tự có URL Pages riêng.
+Để thử mà không ảnh hưởng main, có thể:
+- mở file bằng local server; hoặc
+- sau khi đã kiểm tra kỹ, merge v8-account vào main.
+
+KIỂM TRA V8.0
+1. Mở login.html.
+2. Tạo tài khoản mới.
+3. Kiểm tra Authentication > Users.
+4. Kiểm tra profiles và ratings.
+5. Đăng xuất.
+6. Đăng nhập lại bằng username + mật khẩu.
+7. Vào game, tên tài khoản phải hiện trên bàn.
+8. Đóng tab, mở lại; phiên vẫn phải được giữ.
+9. Mở profile.html và thử đổi tên hiển thị.
+
+TÀI KHOẢN KHÔNG EMAIL
+- Có thể đăng nhập lại trên thiết bị khác bằng username + mật khẩu.
+- Hiện chưa có tự khôi phục khi quên mật khẩu.
+- Không dùng địa chỉ email nội bộ để đăng nhập; người chơi chỉ nhập username.

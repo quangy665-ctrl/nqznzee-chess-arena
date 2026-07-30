@@ -1,0 +1,33 @@
+NQCHESS V9.10 — ENGINE + CAPTURED MODELS
+========================================
+
+ENGINE
+Dòng trạng thái khi engine sẵn sàng:
+Nguyenengine1.2 đã sẵn sàng.
+
+Cả engine chính và engine dự phòng đều hiển thị cùng tên
+Nguyenengine1.2 cho người chơi.
+
+QUÂN ĐÃ ĂN
+- Không dùng ký tự Unicode ♟ ♞ ♝... làm icon nữa.
+- Dùng chính renderer/model quân đang dùng trên bàn.
+- Thu nhỏ quân rồi xếp ngang dưới tên người chơi.
+- Mỗi quân vẫn giữ đúng màu Trắng/Đen.
+- Khi đổi phong cách quân, tray ĐÃ ĂN đổi theo ngay.
+- Có fallback Unicode nếu renderer chưa sẵn sàng.
+
+UPLOAD
+Upload toàn bộ V9.10 ghi đè V9.9.
+
+Commit:
+Add V9.10 Nguyenengine and captured piece models
+
+TEST
+https://quangy665-ctrl.github.io/nqznzee-chess-arena/play.html?v=9.10
+
+Test phần quân đã ăn:
+1. Vào ván.
+2. Ăn một Tốt/Mã/Tượng.
+3. Quân bị ăn phải hiện dưới tên bằng model thu nhỏ.
+4. Đổi phong cách quân.
+5. Model trong ĐÃ ĂN phải đổi cùng phong cách bàn cờ.

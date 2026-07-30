@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+  <meta name="theme-color" content="#1c1b20">
+  <title>NqznZee Arena — Caro Điểm</title>
+  <link rel="stylesheet" href="styles.css?v=0.6.5-online-1.3">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <a class="mark arena-home-link" href="../index.html" aria-label="Về NqznZee Arena">×○</a>
+      <div class="brand-copy">
+        <strong>NQCaro</strong>
+        <small>Mobile Arena · Caro Điểm</small>
+      </div>
+    </div>
+
+    <div class="top-score" aria-label="Điểm số">
+      <div class="top-score-item x"><span>×</span><strong id="scoreX">0</strong></div>
+      <div class="top-score-divider">:</div>
+      <div class="top-score-item o"><span>○</span><strong id="scoreO">0</strong></div>
+    </div>
+
+    <button class="icon-btn" id="menuBtn" type="button" aria-label="Mở menu">☰</button>
+  </header>
+
+  <main class="game-shell">
+    <div class="caro-player-strip opponent" id="topPlayerStrip">
+      <div class="caro-player-left">
+        <div class="caro-player-avatar opponent" id="topPlayerAvatar">○</div>
+        <div class="caro-player-copy">
+          <div class="caro-player-name" id="topPlayerName">Đối thủ</div>
+          <div class="caro-player-meta" id="topPlayerMeta">Caro Elo 1000</div>
+        </div>
+      </div>
+      <div class="caro-score-box"><span>ĐIỂM</span><strong id="topStripScore">0</strong></div>
+    </div>
+
+    <section class="board-wrap" id="boardWrap">
+      <canvas id="board" aria-label="Bàn cờ Caro vô hạn"></canvas>
+      <div class="toast" id="toast" role="status" aria-live="polite"></div>
+      <div class="board-hud">
+        <span class="hud-dot"></span>
+        <span id="hudText">Kéo để di chuyển · chạm để đánh</span>
+      </div>
+    </section>
+
+    <div class="caro-player-strip self" id="bottomPlayerStrip">
+      <div class="caro-player-left">
+        <div class="caro-player-avatar self" id="bottomPlayerAvatar">×</div>
+        <div class="caro-player-copy">
+          <div class="caro-player-name" id="bottomPlayerName">Bạn</div>
+          <div class="caro-player-meta" id="bottomPlayerMeta">Caro Elo 1000</div>
+        </div>
+      </div>
+      <div class="caro-score-box"><span>ĐIỂM</span><strong id="bottomStripScore">0</strong></div>
+    </div>
+
+    <nav class="control-dock" aria-label="Điều khiển bàn cờ">
+      <button class="dock-btn" id="zoomOutBtn" type="button" aria-label="Thu nhỏ">
+        <span class="dock-icon">−</span>
+        <span class="dock-label">Thu nhỏ</span>
+      </button>
+      <button class="dock-btn center-control" id="centerBtn" type="button" aria-label="Trở về tâm bàn cờ">
+        <span class="center-target" aria-hidden="true"><i></i></span>
+        <span class="dock-label">Về tâm</span>
+      </button>
+      <button class="dock-btn" id="zoomInBtn" type="button" aria-label="Phóng to">
+        <span class="dock-icon">＋</span>
+        <span class="dock-label">Phóng to</span>
+      </button>
+    </nav>
+
+    <section class="status-strip">
+      <div class="turn" id="turnText">Lượt: <strong>X</strong></div>
+      <div class="status-pill"><span>Nước</span><strong id="moveCount">0</strong></div>
+      <div class="status-pill"><span>Điểm đã ghi</span><strong id="cycleCount">0</strong></div>
+      <div class="status-pill compact-hide"><span>Chunk</span><strong id="chunkCount">0</strong></div>
+      <div class="status-pill compact-hide"><span>Zoom</span><strong id="zoomValue">100%</strong></div>
+    </section>
+  </main>
+
+  <section class="lobby show" id="lobby" aria-label="Sảnh Caro Điểm">
+    <div class="lobby-shell">
+      <div class="lobby-hero">
+        <div class="lobby-mark">NQZ</div>
+        <div>
+          <span class="lobby-kicker">NQZNZEE ARENA · CARO ĐIỂM</span>
+          <h1>Caro Điểm</h1>
+          <p>Bàn vô hạn · tự chọn luật điểm · ghi điểm được thưởng thêm 1 lượt.</p>
+          <div class="lobby-account-line" id="lobbyAccountLine">Bạn · Caro Elo 1000</div>
+        </div>
+      </div>
+
+      <div class="lobby-actions nqz-menu-list">
+        <button class="lobby-action primary" id="continueBtn" type="button">
+          <span class="action-icon">▶</span>
+          <span class="action-copy"><strong>Chơi tiếp</strong><small id="continueMeta">Đang kiểm tra ván đã lưu…</small></span>
+          <span class="action-chev">›</span>
+        </button>
+        <button class="lobby-action" id="newLocalBtn" type="button">
+          <span class="action-icon">×○</span>
+          <span class="action-copy"><strong>Ván mới · 2 người</strong><small>Hai người thay phiên · mỗi người mặc định Caro Elo 1000.</small></span>
+          <span class="action-chev">›</span>
+        </button>
+        <button class="lobby-action bot-action" id="newBotBtn" type="button">
+          <span class="action-icon">BOT</span>
+          <span class="action-copy"><strong>Chơi với Bot</strong><small>Chọn độ khó Bot, sau đó tự đặt luật điểm cho trận.</small></span>
+          <span class="action-chev">›</span>
+        </button>
+        <a class="lobby-action online-action" href="./online/">
+          <span class="action-icon">⌁</span>
+          <span class="action-copy"><strong>Chơi Online</strong><small>Tạo phòng hoặc nhập mã 4 số để đấu người chơi khác.</small></span>
+          <span class="action-chev">›</span>
+        </a>
+      </div>
+
+      <section class="lobby-theme">
+        <div class="lobby-section-head">
+          <div><span>PHONG CÁCH</span><h2>Chọn model trước khi vào ván</h2></div>
+          <strong class="theme-current">Mặc Định</strong>
+        </div>
+        <div class="theme-gallery lobby-theme-gallery" id="lobbyThemeGallery"></div>
+      </section>
+      <div class="lobby-foot">Ván đang chơi được tự động lưu trên thiết bị này. · build ONLINE V1.3</div>
+    </div>
+  </section>
+
+  <section class="bot-picker" id="botPicker" aria-hidden="true" aria-label="Chọn độ khó Bot">
+    <div class="bot-picker-card" role="dialog" aria-modal="true" aria-labelledby="botPickerTitle">
+      <div class="bot-picker-head">
+        <div>
+          <span class="eyebrow">ĐẤU VỚI BOT</span>
+          <h2 id="botPickerTitle">Chọn độ khó</h2>
+          <p>Bạn cầm X và đi trước. Có thể đổi cấp độ bằng cách về sảnh và tạo ván Bot mới.</p>
+        </div>
+        <button class="icon-btn" id="closeBotPickerBtn" type="button" aria-label="Đóng chọn Bot">×</button>
+      </div>
+
+      <div class="bot-level-grid" id="botLevelGrid">
+        <button class="bot-level-card easy" type="button" data-bot-level="easy">
+          <span class="bot-level-badge">DỄ · 700 ELO</span>
+          <strong>Tập sự</strong>
+          <small>Phản ứng cơ bản, đôi lúc bỏ lỡ thế chặn. Hợp để làm quen.</small>
+        </button>
+        <button class="bot-level-card normal" type="button" data-bot-level="normal">
+          <span class="bot-level-badge">THƯỜNG · 1000 ELO</span>
+          <strong>Chiến thuật</strong>
+          <small>Biết ghi điểm, chặn điểm và phát triển chuỗi có mục tiêu.</small>
+        </button>
+        <button class="bot-level-card hard" type="button" data-bot-level="hard">
+          <span class="bot-level-badge">KHÓ · 1400 ELO</span>
+          <strong>Thợ săn điểm</strong>
+          <small>Ưu tiên thế ép hai hướng, phản công và phòng thủ chủ động hơn.</small>
+        </button>
+        <button class="bot-level-card extreme" type="button" data-bot-level="extreme">
+          <span class="bot-level-badge">CỰC KHÓ · 2200 ELO</span>
+          <strong>NguyenEngine Caro</strong>
+          <small>Tìm kiếm nhiều lớp trong nhóm nước ứng viên, đánh giá phản đòn và fork chiến thuật.</small>
+        </button>
+      </div>
+      <div class="bot-picker-note">LAB: ưu tiên độ ổn định gameplay trước khi tích hợp vào NqznZee Arena.</div>
+    </div>
+  </section>
+
+  <section class="match-setup" id="matchSetup" aria-hidden="true" aria-label="Thiết lập trận">
+    <div class="match-setup-card" role="dialog" aria-modal="true" aria-labelledby="matchSetupTitle">
+      <div class="bot-picker-head">
+        <div>
+          <span class="eyebrow">THIẾT LẬP TRẬN</span>
+          <h2 id="matchSetupTitle">Chọn luật điểm</h2>
+          <p id="matchSetupMode">2 người cùng thiết bị</p>
+        </div>
+        <button class="icon-btn" id="closeMatchSetupBtn" type="button" aria-label="Đóng thiết lập trận">×</button>
+      </div>
+      <div class="setup-grid">
+        <label class="setup-field">
+          <span>Điểm để thắng</span>
+          <input id="targetPointsInput" inputmode="numeric" type="number" min="1" max="99" step="1" value="5">
+          <small>Người đầu tiên đạt số điểm này sẽ thắng.</small>
+        </label>
+        <label class="setup-field">
+          <span>Số quân cho 1 điểm</span>
+          <input id="groupSizeInput" inputmode="numeric" type="number" min="3" max="25" step="1" value="5">
+          <small>Chỉ nhận số nguyên từ 3 trở lên. 1 và 2 không hợp lệ.</small>
+        </label>
+      </div>
+      <div class="setup-preview" id="setupPreview">5 quân liên tiếp = 1 điểm · 5 điểm = thắng · ghi điểm = thêm 1 lượt</div>
+      <div class="setup-error" id="setupError" role="alert"></div>
+      <button class="setup-start" id="startConfiguredGameBtn" type="button">Bắt đầu trận</button>
+    </div>
+  </section>
+
+  <section class="result-modal" id="resultModal" aria-hidden="true" aria-label="Kết quả trận">
+    <div class="result-card" role="dialog" aria-modal="true" aria-labelledby="resultTitle">
+      <span class="eyebrow">KẾT THÚC TRẬN</span>
+      <h2 id="resultTitle">X thắng!</h2>
+      <p id="resultSummary">Đạt đủ điểm mục tiêu.</p>
+      <div class="result-actions">
+        <button class="secondary-action" id="resultLobbyBtn" type="button">Về sảnh</button>
+        <button class="setup-start" id="resultNewBtn" type="button">Tạo ván mới</button>
+      </div>
+    </div>
+  </section>
+
+  <aside class="side" id="sidePanel" aria-hidden="true">
+    <div class="side-head">
+      <div>
+        <strong>Menu Caro</strong>
+        <small>Thông tin & điều khiển ván</small>
+      </div>
+      <button class="icon-btn" id="closeMenuBtn" type="button" aria-label="Đóng menu">×</button>
+    </div>
+
+    <div class="mode-row"><span>Chế độ</span><strong id="sideModeLabel">2 người cùng thiết bị</strong></div>
+    <a class="secondary-action arena-return-action" href="../index.html">← NqznZee Arena</a>
+    <button class="secondary-action" id="backLobbyBtn" type="button">← Về sảnh chính</button>
+
+    <section class="card score-card-panel">
+      <h2 class="card-title">Điểm số</h2>
+      <div class="scoreboard">
+        <div class="player-score active" id="scoreCardX">
+          <div class="piece-mini x">×</div>
+          <div class="score score-mirror-x">0</div>
+          <div class="score-label">ĐIỂM X</div>
+        </div>
+        <div class="vs">VS</div>
+        <div class="player-score" id="scoreCardO">
+          <div class="piece-mini o">○</div>
+          <div class="score score-mirror-o">0</div>
+          <div class="score-label">ĐIỂM O</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card theme-workshop">
+      <div class="theme-head">
+        <div>
+          <span class="eyebrow">PHONG CÁCH</span>
+          <h2 class="card-title">Model bàn & quân Caro</h2>
+        </div>
+        <span class="theme-current" id="themeCurrent">Mặc Định</span>
+      </div>
+      <p class="theme-note">Dùng chung 5 phong cách hình ảnh của NqznZee Chess. Chọn một bộ để đổi cả bàn vô hạn và model X/O.</p>
+      <div class="theme-gallery" id="themeGallery"></div>
+    </section>
+
+    <section class="card">
+      <h2 class="card-title">Luật điểm</h2>
+      <ul class="rules">
+        <li><strong id="ruleGroupSize">5</strong> quân liên tiếp theo ngang, dọc hoặc 2 đường chéo = 1 điểm.</li>
+        <li>Trận kết thúc khi một bên đạt <strong id="ruleTargetPoints">5</strong> điểm.</li>
+        <li><strong>Ghi được ít nhất 1 điểm sẽ được thưởng thêm 1 lượt đi.</strong></li>
+        <li>Nhóm quân đã tính điểm không được chồng lặp để ăn điểm lại trên cùng chuỗi.</li>
+        <li>Nối dài thêm 1 quân không tự động tạo điểm mới; phải có một nhóm mới chưa từng được tính.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2 class="card-title">Nhật ký điểm</h2>
+      <div class="log" id="cycleLog"><div class="log-empty">Chưa có điểm nào.</div></div>
+    </section>
+
+    <button class="danger-action" id="resetBtn" type="button">Tạo ván mới / đổi đối thủ</button>
+  </aside>
+  <button class="menu-backdrop" id="menuBackdrop" type="button" aria-label="Đóng menu"></button>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../supabase-config.js"></script>
+  <script src="../account-v9-8.js"></script>
+  <script src="cycle-engine.js?v=0.6.5-online-1.3"></script>
+  <script src="caro.js?v=0.6.5-online-1.3"></script>
+</body>
+</html>

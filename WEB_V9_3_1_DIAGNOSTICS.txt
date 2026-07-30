@@ -1,0 +1,9 @@
+NQZNZEE V9.3.1 — CLEAN THUMBNAIL DIAGNOSTICS
+========================================================================
+[OK] Thumbnail is 720x720
+[OK] Thumbnail file exists
+[OK] Borderless frame CSS
+[OK] Thumbnail cache v9.3.1
+[OK] No old duplicated play cache chain
+------------------------------------------------------------------------
+RESULT: PASS — CLEAN THUMBNAIL READY

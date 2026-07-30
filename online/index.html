@@ -1,0 +1,6 @@
+<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>NqznZee Online</title></head><body><script>
+const q=new URLSearchParams(location.search);const g=q.get('game');
+if(g==='caro') location.replace('../caro/online/'+(q.get('room')?'?room='+encodeURIComponent(q.get('room')):''));
+else if(g==='chess') location.replace('./chess/'+(q.get('room')?'?room='+encodeURIComponent(q.get('room')):''));
+else location.replace('../index.html');
+</script></body></html>

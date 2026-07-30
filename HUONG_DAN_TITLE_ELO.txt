@@ -1,0 +1,57 @@
+NQZNZEE V8.0 — TITLES & ELO
+============================
+
+KẾT QUẢ HIỂN THỊ
+- Có GM:
+  [GM] Tên người chơi (1800)
+
+- Có IM:
+  [IM] Tên người chơi (1800)
+
+- Có FM:
+  [FM] Tên người chơi (1800)
+
+- Chưa có danh hiệu:
+  Tên người chơi (1800)
+
+Trên bàn cờ, GM / IM / FM được vẽ thành nhãn màu giống kiểu hiển thị
+của các nền tảng cờ vua. Tên và Elo nằm cùng một dòng.
+
+QUY TẮC DANH HIỆU
+- Game đọc dữ liệu từ public.user_badges và public.badges.
+- Ưu tiên: GM > IM > FM.
+- Nếu người chơi được trao cả FM và GM, game chỉ hiện GM cạnh tên.
+- Danh hiệu khác vẫn xuất hiện trong trang hồ sơ nhưng không thay thế
+  danh hiệu cờ vua trên tên.
+- Mã cũ NQZ_GM vẫn được game nhận dạng là GM để tương thích.
+
+CÀI ĐẶT SUPABASE
+1. Mở SQL Editor.
+2. Chạy file:
+   supabase/database/03_standard_chess_titles.sql
+3. Kết quả phải hiện ba dòng GM, IM, FM.
+
+TẶNG THỬ DANH HIỆU
+1. Mở:
+   supabase/database/04_grant_title_example.sql
+2. Thay YOUR_USERNAME_HERE bằng username người chơi.
+3. Chọn mã GM, IM hoặc FM.
+4. Bấm Run.
+5. Người chơi tải lại trang hoặc đăng nhập lại.
+
+ELO
+- Game đọc Elo từ:
+  public.ratings.bot_rating
+- Khi Elo được đổi bằng SQL hoặc web quản trị riêng, người chơi tải lại
+  game sẽ thấy số mới cạnh tên.
+
+UPLOAD
+- Upload toàn bộ gói này vào nhánh v8-account.
+- Ghi đè file V8.0 cũ.
+- Commit gợi ý:
+  Add GM IM FM titles and Elo name display
+
+LƯU Ý
+- Publishable key đã được giữ nguyên trong gói.
+- Không có secret key hoặc service_role trong mã website.
+- Bản này không sử dụng V8.1 Admin Panel.

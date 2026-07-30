@@ -1,0 +1,1002 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#080a10">
+<title>NqznZee Account — Đăng nhập</title>
+<link rel="icon" type="image/png" href="./nqznzee-pawn.png">
+<link rel="apple-touch-icon" href="./nqznzee-pawn.png">
+<link rel="stylesheet" href="./account.css">
+<style>
+:root {
+    color-scheme: dark;
+    --bg: #090b0c;
+    --panel: #171918;
+    --panel2: #202220;
+    --line: rgba(255,255,255,.11);
+    --text: #f5f5f3;
+    --muted: #9ea39c;
+    --green: #81b64c;
+    --green2: #9dd95a;
+    --green3: #60983d;
+}
+* { box-sizing: border-box; }
+html { min-height: 100%; background: var(--bg); }
+body {
+    min-height: 100vh;
+    margin: 0;
+    padding:
+        max(20px, env(safe-area-inset-top))
+        14px
+        max(22px, env(safe-area-inset-bottom));
+    display: grid;
+    place-items: center;
+    color: var(--text);
+    background:
+        radial-gradient(circle at 50% 0%, rgba(129,182,76,.09), transparent 28%),
+        radial-gradient(circle at 0% 75%, rgba(52,90,66,.08), transparent 32%),
+        #090b0c;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+.shell {
+    width: min(520px, 100%);
+    display: block;
+}
+.brand-panel {
+    min-height: auto;
+    padding: 0 8px 20px;
+    display: block;
+    background: transparent;
+}
+.brand-panel::after { display: none; }
+.brand-copy { text-align: center; }
+.mark {
+    width: 66px;
+    height: 66px;
+    margin: 0 auto;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    color: #11170f;
+    background: radial-gradient(circle at 35% 25%, #b7e76e, #78b846 55%, #4d7b32);
+    box-shadow: 0 0 0 4px rgba(129,182,76,.10), 0 12px 35px rgba(0,0,0,.3);
+    font-size: 0;
+}
+.mark::before {
+    content: "♟";
+    font-size: 37px;
+}
+.eyebrow {
+    margin-top: 16px;
+    color: #9ad35c;
+    font-size: 10px;
+    font-weight: 950;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+}
+h1 {
+    margin: 8px auto 8px;
+    max-width: 420px;
+    font-size: clamp(27px, 9vw, 40px);
+    line-height: 1.02;
+    letter-spacing: -.045em;
+}
+.lead {
+    max-width: 420px;
+    margin: 0 auto;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.55;
+}
+.benefits { display: none; }
+.form-panel {
+    padding: 18px;
+    border: 1px solid var(--line);
+    border-radius: 22px;
+    background:
+        linear-gradient(145deg, rgba(255,255,255,.03), transparent 42%),
+        var(--panel);
+    box-shadow: 0 26px 80px rgba(0,0,0,.38);
+}
+.tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+    padding: 5px;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 13px;
+    background: rgba(255,255,255,.025);
+}
+.tab {
+    min-height: 43px;
+    border: 0;
+    border-radius: 10px;
+    color: #999e97;
+    background: transparent;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 900;
+    cursor: pointer;
+}
+.tab.active {
+    color: white;
+    background: linear-gradient(180deg, #90c552, #659d3e);
+    box-shadow: 0 8px 22px rgba(88,139,49,.20);
+}
+.panel {
+    display: none;
+    padding-top: 20px;
+}
+.panel.active { display: block; }
+.panel h2 {
+    margin: 0 0 5px;
+    font-size: 22px;
+}
+.panel-note {
+    margin: 0 0 18px;
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.55;
+}
+.field {
+    display: grid;
+    gap: 6px;
+    margin-bottom: 13px;
+}
+label {
+    color: #e6e8e3;
+    font-size: 11px;
+    font-weight: 850;
+}
+input {
+    width: 100%;
+    min-height: 54px;
+    padding: 0 15px;
+    border: 1px solid rgba(255,255,255,.11);
+    border-radius: 12px;
+    outline: none;
+    color: white;
+    background: #202320;
+    font: inherit;
+    font-size: 15px;
+}
+input:focus {
+    border-color: rgba(140,199,78,.72);
+    box-shadow: 0 0 0 4px rgba(129,182,76,.10);
+}
+.hint {
+    color: #828881;
+    font-size: 9px;
+    line-height: 1.45;
+}
+.submit {
+    width: 100%;
+    min-height: 56px;
+    margin-top: 4px;
+    border: 1px solid rgba(155,216,88,.48);
+    border-radius: 13px;
+    color: white;
+    background: linear-gradient(180deg, #99cf58, #629a3b);
+    box-shadow: 0 12px 28px rgba(91,145,51,.22);
+    font: inherit;
+    font-size: 16px;
+    font-weight: 950;
+    cursor: pointer;
+}
+.submit:disabled { opacity: .5; cursor: wait; }
+.status {
+    min-height: 20px;
+    margin-top: 9px;
+    font-size: 10px;
+    line-height: 1.45;
+}
+.status.error { color: #ff8a99; }
+.status.success { color: #9fe3aa; }
+.guest {
+    min-height: 44px;
+    margin-top: 13px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 11px;
+    color: #d9dcd6;
+    background: rgba(255,255,255,.025);
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 850;
+}
+.recovery-warning {
+    margin-top: 12px;
+    padding: 10px;
+    border: 1px solid rgba(255,202,98,.14);
+    border-radius: 10px;
+    color: #cfc1a0;
+    background: rgba(255,202,98,.04);
+    font-size: 9px;
+    line-height: 1.5;
+}
+.signed-card {
+    display: none;
+    padding: 18px;
+    border: 1px solid rgba(129,182,76,.20);
+    border-radius: 15px;
+    background: rgba(129,182,76,.055);
+}
+.signed-card.active,
+.signed-card.open { display: block; }
+.signed-name { font-size: 19px; font-weight: 950; }
+.signed-meta { margin-top: 5px; color: var(--muted); font-size: 11px; }
+.signed-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 14px;
+}
+.signed-actions a,
+.signed-actions button {
+    min-height: 44px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--line);
+    border-radius: 11px;
+    color: white;
+    background: #252825;
+    text-decoration: none;
+    font: inherit;
+    font-size: 11px;
+    font-weight: 900;
+}
+.signed-actions a {
+    background: linear-gradient(180deg, #91c653, #659d3e);
+}
+@media (min-width: 760px) {
+    .shell { width: min(900px, 100%); }
+    .brand-panel { padding-bottom: 24px; }
+    .form-panel { width: min(520px, 100%); margin: 0 auto; }
+}
+
+/* V9.7 compact login masthead */
+.brand-panel {
+    padding-bottom: 12px !important;
+}
+.brand-copy h1 {
+    margin-bottom: 0 !important;
+}
+
+/* V9.8 — signed-session screen fix */
+.signed-actions-v98 {
+    grid-template-columns: 1fr 1fr !important;
+}
+
+.signed-actions-v98 #signedContinue {
+    grid-column: 1 / -1;
+}
+
+.signed-actions-v98 #signedSwitchAccount {
+    color: #dbe8d2;
+    border-color: rgba(129,182,76,.24);
+    background: rgba(129,182,76,.07);
+}
+
+@media (max-width: 520px) {
+    .signed-actions-v98 {
+        grid-template-columns: 1fr !important;
+    }
+
+    .signed-actions-v98 #signedContinue {
+        grid-column: auto;
+    }
+}
+
+</style>
+</head>
+
+<body>
+<main class="shell">
+    <section class="brand-panel">
+        <div class="brand-copy">
+            <div class="mark">NQZ</div>
+            <div class="eyebrow">NqznZee Account · V9.0</div>
+            <h1>Đăng nhập NqznZee Arena.</h1>
+            
+        </div>
+
+        <div class="benefits">
+            <div class="benefit"><span class="dot"></span>Lưu hồ sơ và NQZ Rating theo tài khoản</div>
+            <div class="benefit"><span class="dot"></span>Đóng trình duyệt rồi mở lại vẫn giữ phiên</div>
+            <div class="benefit"><span class="dot"></span>Đăng nhập cùng tài khoản trên điện thoại hoặc PC</div>
+        </div>
+    </section>
+
+    <section class="form-panel">
+        <div id="signedCard" class="signed-card">
+            <div class="signed-name" id="signedName">Đã đăng nhập</div>
+            <div class="signed-meta" id="signedMeta"></div>
+
+            <div class="signed-actions signed-actions-v98">
+                <a id="signedContinue" href="./index.html">Tiếp tục</a>
+
+                <button
+                    id="signedSwitchAccount"
+                    type="button"
+                >
+                    Đăng nhập tài khoản khác
+                </button>
+
+                <button
+                    id="signedLogout"
+                    type="button"
+                >
+                    Đăng xuất
+                </button>
+            </div>
+        </div>
+
+        <div id="authForms">
+            <div class="tabs" role="tablist">
+                <button
+                    id="loginTab"
+                    class="tab active"
+                    type="button"
+                    role="tab"
+                    aria-selected="true"
+                >
+                    Đăng nhập
+                </button>
+
+                <button
+                    id="registerTab"
+                    class="tab"
+                    type="button"
+                    role="tab"
+                    aria-selected="false"
+                >
+                    Tạo tài khoản
+                </button>
+            </div>
+
+            <section id="loginPanel" class="panel active">
+                <h2>Chào mừng trở lại</h2>
+                <p class="panel-note">
+                    Nhập đúng tên đăng nhập đã tạo. Không cần nhập email nội bộ.
+                </p>
+
+                <form id="loginForm">
+                    <div class="field">
+                        <label for="loginUsername">Tên đăng nhập</label>
+                        <input
+                            id="loginUsername"
+                            name="username"
+                            autocomplete="username"
+                            autocapitalize="none"
+                            spellcheck="false"
+                            minlength="3"
+                            maxlength="20"
+                            required
+                        >
+                    </div>
+
+                    <div class="field">
+                        <label for="loginPassword">Mật khẩu</label>
+                        <input
+                            id="loginPassword"
+                            name="password"
+                            type="password"
+                            autocomplete="current-password"
+                            minlength="8"
+                            maxlength="72"
+                            required
+                        >
+                    </div>
+
+                    <button class="submit" type="submit">
+                        Đăng nhập
+                    </button>
+
+                    <div id="loginStatus" class="status" role="status"></div>
+                </form>
+            </section>
+
+            <section id="registerPanel" class="panel">
+                <h2>Tạo tài khoản NQZ</h2>
+                <p class="panel-note">
+                    Username dùng để đăng nhập. Tên hiển thị là tên người khác nhìn thấy trong game.
+                </p>
+
+                <form id="registerForm">
+                    <div class="field">
+                        <label for="registerUsername">Tên đăng nhập</label>
+                        <input
+                            id="registerUsername"
+                            name="username"
+                            autocomplete="username"
+                            autocapitalize="none"
+                            spellcheck="false"
+                            pattern="[a-z0-9_]{3,20}"
+                            minlength="3"
+                            maxlength="20"
+                            required
+                        >
+                        <div class="hint">
+                            3–20 ký tự: chữ thường, số và dấu gạch dưới.
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="registerDisplayName">Tên hiển thị</label>
+                        <input
+                            id="registerDisplayName"
+                            name="display_name"
+                            autocomplete="nickname"
+                            maxlength="30"
+                            required
+                        >
+                    </div>
+
+                    <div class="field">
+                        <label for="registerPassword">Mật khẩu</label>
+                        <input
+                            id="registerPassword"
+                            name="password"
+                            type="password"
+                            autocomplete="new-password"
+                            minlength="8"
+                            maxlength="72"
+                            required
+                        >
+                        <div class="hint">
+                            Ít nhất 8 ký tự, gồm cả chữ và số.
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="registerConfirm">Nhập lại mật khẩu</label>
+                        <input
+                            id="registerConfirm"
+                            name="confirm_password"
+                            type="password"
+                            autocomplete="new-password"
+                            minlength="8"
+                            maxlength="72"
+                            required
+                        >
+                    </div>
+
+                    <button class="submit" type="submit">
+                        Tạo tài khoản
+                    </button>
+
+                    <div id="registerStatus" class="status" role="status"></div>
+
+                    <div class="recovery-warning">
+                        Tài khoản không email chưa có cách tự khôi phục khi quên mật khẩu.
+                        Hãy lưu mật khẩu cẩn thận. Cơ chế mã khôi phục sẽ được thêm ở bản sau.
+                    </div>
+                </form>
+            </section>
+
+            <a id="guestLink" class="guest" href="./index.html">
+                Chơi với tên cục bộ, chưa đăng nhập
+            </a>
+        </div>
+    </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./supabase-config.js"></script>
+<script src="./account-v9-8.js"></script>
+<script>
+(() => {
+    "use strict";
+
+    const $ = id =>
+        document.getElementById(id);
+
+    const loginTab =
+        $("loginTab");
+
+    const registerTab =
+        $("registerTab");
+
+    const loginPanel =
+        $("loginPanel");
+
+    const registerPanel =
+        $("registerPanel");
+
+    const loginForm =
+        $("loginForm");
+
+    const registerForm =
+        $("registerForm");
+
+    const loginStatus =
+        $("loginStatus");
+
+    const registerStatus =
+        $("registerStatus");
+
+    const signedCard =
+        $("signedCard");
+
+    const authForms =
+        $("authForms");
+
+    const signedName =
+        $("signedName");
+
+    const signedMeta =
+        $("signedMeta");
+
+    const signedContinue =
+        $("signedContinue");
+
+    const returnTarget = (() => {
+        const value =
+            new URLSearchParams(
+                location.search
+            ).get("return");
+
+        if (
+            !value ||
+            value.includes("://") ||
+            value.startsWith("//")
+        ) {
+            return "./index.html";
+        }
+
+        return "./" +
+            value.replace(
+                /^\.?\//,
+                ""
+            );
+    })();
+
+    signedContinue.href =
+        returnTarget;
+
+    $("guestLink").href =
+        returnTarget;
+
+    function setMode(mode) {
+        const login =
+            mode === "login";
+
+        loginTab.classList.toggle(
+            "active",
+            login
+        );
+
+        registerTab.classList.toggle(
+            "active",
+            !login
+        );
+
+        loginTab.setAttribute(
+            "aria-selected",
+            String(login)
+        );
+
+        registerTab.setAttribute(
+            "aria-selected",
+            String(!login)
+        );
+
+        loginPanel.classList.toggle(
+            "active",
+            login
+        );
+
+        registerPanel.classList.toggle(
+            "active",
+            !login
+        );
+    }
+
+    function setStatus(
+        element,
+        message,
+        type = ""
+    ) {
+        element.textContent =
+            message;
+
+        element.className =
+            "status" +
+            (
+                type
+                    ? " " + type
+                    : ""
+            );
+    }
+
+    function lockForm(
+        form,
+        locked
+    ) {
+        form
+            .querySelectorAll(
+                "input,button"
+            )
+            .forEach(element => {
+                element.disabled =
+                    locked;
+            });
+    }
+
+    function usernameValue(
+        element
+    ) {
+        return element.value
+            .trim()
+            .toLowerCase();
+    }
+
+    async function showSession() {
+        /*
+         * Never hide both the session card and the auth forms.
+         * Forms remain available until a valid signed-in account
+         * has been loaded successfully.
+         */
+        authForms.hidden =
+            false;
+
+        signedCard.classList
+            .remove("active");
+
+        if (
+            !window.NQZ_ACCOUNT
+                ?.configReady()
+        ) {
+            authForms.hidden =
+                false;
+
+            setStatus(
+                loginStatus,
+                "Chưa cấu hình Publishable key trong supabase-config.js.",
+                "error"
+            );
+
+            return;
+        }
+
+        try {
+            const account =
+                await window
+                    .NQZ_ACCOUNT
+                    .refreshAccount();
+
+            if (!account) {
+                signedCard.classList
+                    .remove("active");
+
+                authForms.hidden =
+                    false;
+
+                return;
+            }
+
+            signedName.textContent =
+                account.display_name;
+
+            signedMeta.textContent =
+                `@${account.username} · NQZ Rating ${
+                    account.rating
+                        ?.bot_rating ??
+                    1200
+                }`;
+
+            authForms.hidden =
+                true;
+
+            signedCard.classList
+                .add("active");
+        } catch (error) {
+            console.error(error);
+
+            signedCard.classList
+                .remove("active");
+
+            authForms.hidden =
+                false;
+        }
+    }
+
+    loginTab.addEventListener(
+        "click",
+        () => setMode("login")
+    );
+
+    registerTab.addEventListener(
+        "click",
+        () => setMode("register")
+    );
+
+    loginForm.addEventListener(
+        "submit",
+        async event => {
+            event.preventDefault();
+
+            const username =
+                usernameValue(
+                    $("loginUsername")
+                );
+
+            const password =
+                $("loginPassword")
+                    .value;
+
+            lockForm(
+                loginForm,
+                true
+            );
+
+            setStatus(
+                loginStatus,
+                "Đang đăng nhập…"
+            );
+
+            try {
+                const result =
+                    await window
+                        .NQZ_ACCOUNT
+                        .signIn(
+                            username,
+                            password
+                        );
+
+                if (!result?.account) {
+                    throw new Error(
+                        "Xác thực thành công nhưng không tải được hồ sơ người chơi."
+                    );
+                }
+
+                localStorage.setItem(
+                    "nqz-player-name-v7",
+                    result.account
+                        .display_name
+                );
+
+                setStatus(
+                    loginStatus,
+                    "Đăng nhập thành công.",
+                    "success"
+                );
+
+                location.href =
+                    returnTarget;
+            } catch (error) {
+                console.error(error);
+
+                setStatus(
+                    loginStatus,
+                    error.message
+                        ?.toLowerCase()
+                        .includes(
+                            "invalid login"
+                        )
+                        ? "Tên đăng nhập hoặc mật khẩu không đúng."
+                        : (
+                            error.message ||
+                            "Không thể đăng nhập."
+                        ),
+                    "error"
+                );
+            } finally {
+                lockForm(
+                    loginForm,
+                    false
+                );
+            }
+        }
+    );
+
+    registerForm.addEventListener(
+        "submit",
+        async event => {
+            event.preventDefault();
+
+            const username =
+                usernameValue(
+                    $("registerUsername")
+                );
+
+            const displayName =
+                $("registerDisplayName")
+                    .value
+                    .trim();
+
+            const password =
+                $("registerPassword")
+                    .value;
+
+            const confirm =
+                $("registerConfirm")
+                    .value;
+
+            if (
+                !/^[a-z0-9_]{3,20}$/
+                    .test(username)
+            ) {
+                setStatus(
+                    registerStatus,
+                    "Tên đăng nhập chưa đúng định dạng.",
+                    "error"
+                );
+                return;
+            }
+
+            if (
+                password !== confirm
+            ) {
+                setStatus(
+                    registerStatus,
+                    "Hai mật khẩu không giống nhau.",
+                    "error"
+                );
+                return;
+            }
+
+            if (
+                password.length < 8 ||
+                !/[A-Za-z]/
+                    .test(password) ||
+                !/[0-9]/
+                    .test(password)
+            ) {
+                setStatus(
+                    registerStatus,
+                    "Mật khẩu phải có ít nhất 8 ký tự, gồm cả chữ và số.",
+                    "error"
+                );
+                return;
+            }
+
+            lockForm(
+                registerForm,
+                true
+            );
+
+            setStatus(
+                registerStatus,
+                "Đang tạo tài khoản…"
+            );
+
+            try {
+                await window
+                    .NQZ_ACCOUNT
+                    .register({
+                        username,
+                        displayName,
+                        password,
+                    });
+
+                const result =
+                    await window
+                        .NQZ_ACCOUNT
+                        .signIn(
+                            username,
+                            password
+                        );
+
+                if (!result?.account) {
+                    throw new Error(
+                        "Xác thực thành công nhưng không tải được hồ sơ người chơi."
+                    );
+                }
+
+                localStorage.setItem(
+                    "nqz-player-name-v7",
+                    result.account
+                        .display_name
+                );
+
+                setStatus(
+                    registerStatus,
+                    "Tạo tài khoản thành công.",
+                    "success"
+                );
+
+                location.href =
+                    returnTarget;
+            } catch (error) {
+                console.error(error);
+
+                setStatus(
+                    registerStatus,
+                    error.message ||
+                    "Không thể tạo tài khoản.",
+                    "error"
+                );
+            } finally {
+                lockForm(
+                    registerForm,
+                    false
+                );
+            }
+        }
+    );
+
+    $("signedSwitchAccount")
+        .addEventListener(
+            "click",
+            async () => {
+                try {
+                    await window
+                        .NQZ_ACCOUNT
+                        .signOut();
+                } catch (error) {
+                    console.error(error);
+                }
+
+                localStorage.removeItem(
+                    "nqz-player-name-v7"
+                );
+
+                signedCard.classList
+                    .remove("active");
+
+                authForms.hidden =
+                    false;
+
+                setMode("login");
+
+                window.setTimeout(
+                    () => {
+                        $("loginUsername")
+                            .focus();
+                    },
+                    60
+                );
+            }
+        );
+
+    $("signedLogout")
+        .addEventListener(
+            "click",
+            async () => {
+                await window
+                    .NQZ_ACCOUNT
+                    .signOut();
+
+                localStorage.removeItem(
+                    "nqz-player-name-v7"
+                );
+
+                location.reload();
+            }
+        );
+
+    $("registerUsername")
+        .addEventListener(
+            "input",
+            event => {
+                const clean =
+                    event.target.value
+                        .toLowerCase()
+                        .replace(
+                            /[^a-z0-9_]/g,
+                            ""
+                        )
+                        .slice(0, 20);
+
+                event.target.value =
+                    clean;
+            }
+        );
+
+    const initialMode =
+        new URLSearchParams(
+            location.search
+        ).get("mode") === "register"
+            ? "register"
+            : "login";
+
+    setMode(initialMode);
+
+    showSession();
+})();
+</script>
+</body>
+</html>

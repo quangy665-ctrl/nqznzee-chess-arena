@@ -1,19 +1,8 @@
 {
-  "name": "NqznZee Chess Arena",
-  "short_name": "NqznZee Chess",
-  "description": "NqznZee Chess Arena V7.10 — sửa bảng Tùy chọn trên mobile, khôi phục thay bot, phong cách, engine, review và các tab điều khiển.",
-  "start_url": "./",
-  "scope": "./",
+  "name": "NqznZee Arena",
+  "short_name": "NqznZee",
+  "start_url": "./index.html",
   "display": "standalone",
-  "orientation": "any",
-  "background_color": "#17161b",
-  "theme_color": "#25242a",
-  "icons": [
-    {
-      "src": "./nqznzee-pawn.png",
-      "sizes": "1024x1024",
-      "type": "image/png",
-      "purpose": "any maskable"
-    }
-  ]
+  "background_color": "#141517",
+  "theme_color": "#141517"
 }

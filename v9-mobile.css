@@ -1,0 +1,883 @@
+:root {
+    --v9-bg: #090b0c;
+    --v9-panel: #171918;
+    --v9-panel-2: #202220;
+    --v9-line: rgba(255,255,255,.105);
+    --v9-green: #81b64c;
+    --v9-green-bright: #9bd75a;
+    --v9-green-dark: #5f9d3d;
+    --v9-text: #f5f5f4;
+    --v9-muted: #a6a9a5;
+}
+
+html,
+body {
+    background:
+        radial-gradient(circle at 100% 0%, rgba(75, 125, 71, .10), transparent 32%),
+        radial-gradient(circle at 0% 15%, rgba(67, 86, 139, .10), transparent 30%),
+        var(--v9-bg);
+}
+
+body {
+    color: var(--v9-text);
+}
+
+.arena-topbar {
+    border: 1px solid var(--v9-line);
+    border-radius: 18px;
+    background: rgba(13, 15, 15, .94);
+    box-shadow: 0 16px 50px rgba(0,0,0,.28);
+    backdrop-filter: blur(14px);
+}
+
+.arena-brand {
+    gap: 10px;
+}
+
+.arena-brand strong {
+    font-size: 17px;
+    letter-spacing: -.02em;
+}
+
+.v9-brand-soft {
+    color: #c7cac5;
+    font-weight: 500;
+}
+
+.arena-mark {
+    color: #0c110b !important;
+    background:
+        radial-gradient(circle at 35% 25%, #b7e76e, #78b846 55%, #4d7b32) !important;
+    border-radius: 50% !important;
+    box-shadow:
+        0 0 0 3px rgba(129,182,76,.12),
+        0 6px 18px rgba(0,0,0,.28) !important;
+}
+
+.v9-menu-button,
+.v9-profile-button {
+    min-width: 38px;
+    min-height: 38px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 11px;
+    color: #eceee9;
+    background: rgba(255,255,255,.035);
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 900;
+}
+
+.v9-profile-button {
+    font-size: 18px;
+}
+
+.card,
+.board-shell,
+.coach-card,
+.controls {
+    border-color: var(--v9-line);
+    background:
+        linear-gradient(160deg, rgba(255,255,255,.025), transparent 36%),
+        var(--v9-panel);
+    box-shadow: 0 18px 55px rgba(0,0,0,.28);
+}
+
+.board-shell {
+    border-radius: 18px;
+}
+
+.player-strip {
+    border-radius: 14px;
+    background:
+        linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.015));
+    border: 1px solid rgba(255,255,255,.065);
+}
+
+.player-avatar {
+    border-radius: 50%;
+    background:
+        radial-gradient(circle at 38% 28%, #a1da5a, #537d34 58%, #1a2616);
+    color: white;
+    box-shadow:
+        0 0 0 2px rgba(129,182,76,.55),
+        0 6px 18px rgba(0,0,0,.26);
+}
+
+.player-avatar.bot {
+    color: #e3e3e3;
+    background:
+        radial-gradient(circle at 38% 28%, #5f625f, #2f3230 58%, #181a19);
+    box-shadow:
+        0 0 0 2px rgba(255,255,255,.12),
+        0 6px 18px rgba(0,0,0,.26);
+}
+
+.clock {
+    border: 1px solid rgba(255,255,255,.09);
+    border-radius: 12px;
+    background: #252725;
+    font-weight: 950;
+    letter-spacing: .02em;
+}
+
+.player-strip.active-player .clock,
+.clock.active {
+    color: #fff;
+    background:
+        linear-gradient(180deg, var(--v9-green-bright), var(--v9-green-dark));
+    border-color: rgba(152,214,82,.65);
+}
+
+.board-stage {
+    border-radius: 9px;
+    box-shadow:
+        0 0 0 1px rgba(255,255,255,.08),
+        0 12px 28px rgba(0,0,0,.38);
+}
+
+.board-footer {
+    color: #b4b8b1;
+}
+
+.nqz-tab.active,
+.action.primary {
+    color: #fff !important;
+    background:
+        linear-gradient(180deg, #93c956, #699f3e) !important;
+    border-color: rgba(151, 207, 86, .55) !important;
+}
+
+.action.cyan,
+.action.green {
+    color: #f8fff5 !important;
+    background: rgba(129,182,76,.16) !important;
+    border-color: rgba(129,182,76,.32) !important;
+}
+
+.nqz-mobile-play-actions button.active,
+.nqz-mobile-play-actions button:active {
+    color: #baf178 !important;
+    background: rgba(129,182,76,.16) !important;
+}
+
+.v9-bottom-nav {
+    display: none;
+}
+
+@media (max-width: 820px) {
+    :root {
+        --nqz-phone-topbar: 54px !important;
+    }
+
+    body {
+        padding:
+            max(7px, env(safe-area-inset-top))
+            7px
+            calc(82px + env(safe-area-inset-bottom)) !important;
+        overflow-x: hidden;
+    }
+
+    .app {
+        width: 100% !important;
+        display: block !important;
+    }
+
+    .arena-topbar {
+        height: 54px !important;
+        min-height: 54px !important;
+        margin: 0 0 8px !important;
+        padding: 7px 8px !important;
+        position: sticky !important;
+        top: max(5px, env(safe-area-inset-top)) !important;
+        z-index: 100 !important;
+    }
+
+    .arena-brand {
+        min-width: 0;
+    }
+
+    .arena-mark {
+        width: 38px !important;
+        height: 38px !important;
+        flex: 0 0 38px !important;
+        font-size: 18px !important;
+    }
+
+    .arena-brand strong {
+        font-size: 15px !important;
+        white-space: nowrap;
+    }
+
+    .arena-brand small {
+        display: none !important;
+    }
+
+    .arena-actions {
+        gap: 5px !important;
+    }
+
+    .arena-actions #nqzFocusBtn,
+    .arena-actions #nqzFullscreenBtn,
+    .nqz-build-health {
+        display: none !important;
+    }
+
+    .v9-menu-button,
+    .v9-profile-button {
+        min-width: 36px;
+        min-height: 36px;
+        border-radius: 10px;
+    }
+
+    .hero {
+        display: none !important;
+    }
+
+    .play-column {
+        width: 100%;
+    }
+
+    .board-shell {
+        padding: 8px !important;
+        border-radius: 18px !important;
+    }
+
+    .player-strip {
+        min-height: 66px !important;
+        margin: 0 0 8px !important;
+        padding: 8px 9px !important;
+        border-radius: 14px !important;
+    }
+
+    #bottomPlayerStrip {
+        margin: 8px 0 0 !important;
+    }
+
+    .player-left {
+        min-width: 0;
+        gap: 9px !important;
+    }
+
+    .player-avatar {
+        width: 44px !important;
+        height: 44px !important;
+        flex: 0 0 44px !important;
+        font-size: 20px !important;
+    }
+
+    .player-copy {
+        min-width: 0;
+    }
+
+    .player-name {
+        max-width: calc(100vw - 185px) !important;
+        font-size: 13px !important;
+        font-weight: 900 !important;
+    }
+
+    .player-meta {
+        margin-top: 3px !important;
+        font-size: 9px !important;
+        color: #9fa49b !important;
+    }
+
+    .material-bar {
+        margin-top: 4px !important;
+        min-height: 15px !important;
+    }
+
+    .material-label {
+        display: none !important;
+    }
+
+    .captured-tray {
+        font-size: 13px !important;
+    }
+
+    .clock {
+        min-width: 72px !important;
+        height: 44px !important;
+        padding: 0 8px !important;
+        display: grid !important;
+        place-items: center !important;
+        border-radius: 11px !important;
+        font-size: 18px !important;
+    }
+
+    .board-layout {
+        gap: 0 !important;
+    }
+
+    .eval-bar {
+        display: none !important;
+    }
+
+    .board-stage {
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+        border-radius: 7px !important;
+    }
+
+    .board-footer {
+        min-height: 38px !important;
+        margin-top: 8px !important;
+        padding: 8px 10px !important;
+        border: 1px solid rgba(255,255,255,.07);
+        border-radius: 11px;
+        background: rgba(255,255,255,.025);
+        font-size: 10px !important;
+    }
+
+    .nqz-mobile-play-actions {
+        position: sticky !important;
+        bottom: calc(65px + env(safe-area-inset-bottom)) !important;
+        z-index: 85 !important;
+        width: 100% !important;
+        margin: 9px 0 0 !important;
+        padding: 7px !important;
+        display: grid !important;
+        grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+        gap: 6px !important;
+        border: 1px solid var(--v9-line) !important;
+        border-radius: 15px !important;
+        background: rgba(17,19,18,.96) !important;
+        box-shadow: 0 12px 32px rgba(0,0,0,.3) !important;
+        backdrop-filter: blur(14px);
+    }
+
+    .nqz-mobile-play-actions button {
+        min-width: 0 !important;
+        min-height: 54px !important;
+        padding: 6px 3px !important;
+        display: grid !important;
+        place-items: center !important;
+        align-content: center !important;
+        gap: 3px !important;
+        border: 1px solid rgba(255,255,255,.065) !important;
+        border-radius: 11px !important;
+        background: #242624 !important;
+    }
+
+    .nqz-mobile-action-icon {
+        font-size: 20px !important;
+    }
+
+    .nqz-mobile-action-label {
+        font-size: 8px !important;
+        font-weight: 850 !important;
+    }
+
+    .coach-card {
+        margin-top: 9px !important;
+        border-radius: 15px !important;
+    }
+
+    .coach-headline {
+        padding: 10px 11px !important;
+    }
+
+    .coach-kicker {
+        color: #9ace61 !important;
+    }
+
+    .controls {
+        border-radius: 22px 22px 0 0 !important;
+        background: #171918 !important;
+        box-shadow: 0 -18px 60px rgba(0,0,0,.5) !important;
+    }
+
+    .controls::before {
+        background: #6e736c !important;
+    }
+
+    .nqz-mobile-sheet-close {
+        border-radius: 11px !important;
+        color: white !important;
+        background: #2b2e2b !important;
+    }
+
+    .nqz-tabs {
+        gap: 5px !important;
+        padding-bottom: 7px !important;
+    }
+
+    .nqz-tab {
+        min-height: 38px !important;
+        border-radius: 10px !important;
+        font-size: 8px !important;
+    }
+
+    .quick-card,
+    .suite-hero,
+    .career-profile,
+    .puzzle-stage,
+    .review-score,
+    .profile-grid > div,
+    .theme-card {
+        border-radius: 12px !important;
+        background: rgba(255,255,255,.032) !important;
+    }
+
+    .v9-bottom-nav {
+        position: fixed;
+        left: 7px;
+        right: 7px;
+        bottom: max(6px, env(safe-area-inset-bottom));
+        z-index: 110;
+        height: 60px;
+        padding: 5px;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 4px;
+        border: 1px solid rgba(255,255,255,.10);
+        border-radius: 16px;
+        background: rgba(18,20,19,.96);
+        box-shadow: 0 12px 38px rgba(0,0,0,.44);
+        backdrop-filter: blur(16px);
+    }
+
+    .v9-bottom-nav a {
+        display: grid;
+        place-items: center;
+        align-content: center;
+        gap: 1px;
+        border-radius: 11px;
+        color: #999e97;
+        text-decoration: none;
+    }
+
+    .v9-bottom-nav a span {
+        font-size: 20px;
+        line-height: 1;
+    }
+
+    .v9-bottom-nav a small {
+        font-size: 8px;
+        font-weight: 850;
+    }
+
+    .v9-bottom-nav a.active {
+        color: #a4dc63;
+        background: rgba(129,182,76,.12);
+    }
+}
+
+@media (min-width: 821px) {
+    body {
+        background:
+            radial-gradient(circle at 5% 0%, rgba(129,182,76,.07), transparent 28%),
+            #0e100f !important;
+    }
+
+    .app {
+        grid-template-columns: minmax(520px, 760px) minmax(330px, 380px) !important;
+    }
+
+    .arena-topbar {
+        width: min(100%, 1160px) !important;
+        margin-inline: auto !important;
+    }
+
+    .board-shell,
+    .controls,
+    .coach-card {
+        border-radius: 18px !important;
+    }
+}
+
+
+/* V9.1 BOARD HOTFIX */
+.nqz-board-fatal {
+    width: min(720px, calc(100% - 18px));
+    margin: 8px auto;
+    padding: 12px;
+    display: grid;
+    gap: 7px;
+    border: 1px solid rgba(255, 124, 146, .35);
+    border-radius: 12px;
+    color: #ffdce2;
+    background: rgba(90, 20, 35, .28);
+    font-size: 12px;
+}
+
+.nqz-board-fatal[hidden] {
+    display: none !important;
+}
+
+.nqz-board-fatal span {
+    color: #d9b9c0;
+    line-height: 1.5;
+}
+
+.nqz-board-fatal button,
+.nqz-board-repair-error button {
+    min-height: 40px;
+    border: 1px solid rgba(151, 207, 86, .45);
+    border-radius: 10px;
+    color: #fff;
+    background: linear-gradient(180deg, #93c956, #699f3e);
+    font: inherit;
+    font-weight: 900;
+}
+
+.nqz-board-repair-error {
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    padding: 18px;
+    display: grid;
+    place-items: center;
+    align-content: center;
+    gap: 9px;
+    color: #f4f5f1;
+    background: #171918;
+    text-align: center;
+}
+
+.nqz-board-repair-error span {
+    color: #a7aca5;
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+.board-stage {
+    position: relative;
+}
+
+wc-chess-board,
+#board {
+    width: 100% !important;
+    height: 100% !important;
+    min-width: 0;
+    min-height: 0;
+}
+
+#board.board {
+    display: grid !important;
+    grid-template-columns: repeat(8, minmax(0, 1fr)) !important;
+    grid-template-rows: repeat(8, minmax(0, 1fr)) !important;
+}
+
+@media (max-width: 820px) {
+    .board-stage {
+        aspect-ratio: 1 / 1 !important;
+        height: auto !important;
+        min-height: calc(100vw - 30px) !important;
+        max-height: calc(100vw - 30px) !important;
+    }
+
+    wc-chess-board,
+    #board {
+        min-height: calc(100vw - 30px) !important;
+        max-height: calc(100vw - 30px) !important;
+    }
+}
+
+@media (max-width: 390px) {
+    .board-stage,
+    wc-chess-board,
+    #board {
+        min-height: calc(100vw - 26px) !important;
+        max-height: calc(100vw - 26px) !important;
+    }
+}
+
+
+/* V9.2 MOBILE BOARD WIDTH FIX
+   When the eval bar is hidden, the board must occupy the full grid width. */
+@media (max-width: 820px) {
+    .board-layout {
+        display: grid !important;
+        grid-template-columns: minmax(0, 1fr) !important;
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    .board-layout > .eval-bar {
+        display: none !important;
+    }
+
+    .board-layout > .board-stage {
+        grid-column: 1 / -1 !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+        justify-self: stretch !important;
+    }
+
+    .board-stage > wc-chess-board,
+    wc-chess-board#labBoard,
+    #board.board {
+        display: block !important;
+        width: 100% !important;
+        min-width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    #board.board {
+        display: grid !important;
+        grid-template-columns: repeat(8, minmax(0, 1fr)) !important;
+        grid-template-rows: repeat(8, minmax(0, 1fr)) !important;
+    }
+}
+
+
+/* ================================================================
+   V9.3 MOBILE UI POLISH
+   - seamless board
+   - compact Chess.com-style login button
+   - no duplicate profile/name chip in mobile top bar
+   ================================================================ */
+
+@media (max-width: 820px) {
+    /* ----- Seamless chessboard ----- */
+    .board-layout,
+    .board-stage,
+    wc-chess-board#labBoard,
+    #board.board {
+        padding: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        gap: 0 !important;
+        border-spacing: 0 !important;
+    }
+
+    .board-stage {
+        overflow: hidden !important;
+        background: #78925d !important;
+        border-radius: 10px !important;
+    }
+
+    wc-chess-board#labBoard {
+        overflow: hidden !important;
+        background: transparent !important;
+    }
+
+    #board.board {
+        display: grid !important;
+        grid-template-columns: repeat(8, 12.5%) !important;
+        grid-template-rows: repeat(8, 12.5%) !important;
+        gap: 0 !important;
+        column-gap: 0 !important;
+        row-gap: 0 !important;
+        overflow: hidden !important;
+        background: #78925d !important;
+        contain: layout paint !important;
+    }
+
+    #board.board > .square {
+        width: 100.25% !important;
+        height: 100.25% !important;
+        min-width: 0 !important;
+        min-height: 0 !important;
+        margin: -0.125% !important;
+        padding: 0 !important;
+        border: 0 !important;
+        outline: 0 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        appearance: none !important;
+        -webkit-appearance: none !important;
+        background-clip: border-box !important;
+        transform: translateZ(0);
+    }
+
+    /* Remove decorative texture on mobile: flat colors join perfectly. */
+    body[data-nqz-theme="standard"] #board .square.light {
+        background: #ebe3cf !important;
+        background-image: none !important;
+    }
+
+    body[data-nqz-theme="standard"] #board .square.dark {
+        background: #78925d !important;
+        background-image: none !important;
+    }
+
+    /* ----- Mobile header ----- */
+    .arena-topbar {
+        position: sticky !important;
+        top: max(4px, env(safe-area-inset-top)) !important;
+        height: 68px !important;
+        min-height: 68px !important;
+        padding: 16px 82px 7px 8px !important;
+        overflow: visible !important;
+    }
+
+    .arena-brand {
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+        gap: 8px !important;
+        transform: translateY(3px);
+    }
+
+    .arena-brand > div:last-child {
+        min-width: 0 !important;
+        overflow: hidden !important;
+    }
+
+    .arena-brand strong {
+        max-width: calc(100vw - 190px) !important;
+        display: block !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
+        font-size: 15px !important;
+    }
+
+    .arena-mark {
+        width: 36px !important;
+        height: 36px !important;
+        flex: 0 0 36px !important;
+    }
+
+    .v9-menu-button {
+        min-width: 34px !important;
+        min-height: 34px !important;
+        width: 34px !important;
+        height: 34px !important;
+        font-size: 19px !important;
+    }
+
+    .arena-actions {
+        position: absolute !important;
+        z-index: 120 !important;
+        top: 6px !important;
+        right: 7px !important;
+        width: auto !important;
+        max-width: 76px !important;
+        display: block !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* Account widget is the only item visible in the top-right corner. */
+    .arena-actions > :not(.nqz-account-widget) {
+        display: none !important;
+    }
+
+    .nqz-account-widget {
+        position: relative !important;
+        z-index: 125 !important;
+        width: auto !important;
+        max-width: 76px !important;
+    }
+
+    .nqz-account-button {
+        width: auto !important;
+        min-width: 66px !important;
+        max-width: 76px !important;
+        height: 34px !important;
+        min-height: 34px !important;
+        padding: 0 9px !important;
+        display: flex !important;
+        justify-content: center !important;
+        gap: 0 !important;
+        border: 1px solid rgba(255,255,255,.12) !important;
+        border-radius: 8px !important;
+        color: #f3f4f1 !important;
+        background:
+            linear-gradient(
+                180deg,
+                rgba(65,67,64,.96),
+                rgba(39,41,39,.96)
+            ) !important;
+        box-shadow:
+            0 5px 14px rgba(0,0,0,.24),
+            inset 0 1px rgba(255,255,255,.04) !important;
+    }
+
+    .nqz-account-avatar,
+    .nqz-account-rating {
+        display: none !important;
+    }
+
+    .nqz-account-label {
+        max-width: 58px !important;
+        overflow: hidden !important;
+        color: #f5f5f2 !important;
+        font-size: 11px !important;
+        font-weight: 900 !important;
+        line-height: 1 !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
+    }
+
+    .nqz-account-menu {
+        top: 40px !important;
+        right: 0 !important;
+    }
+
+    /* Old V7 name chip duplicates the account name in this header. */
+    #nqzPlayerNameChipV7,
+    .nqz-v7-name-chip,
+    .v9-profile-button {
+        display: none !important;
+    }
+}
+
+
+/* V9.4 — guest Login + Register at top-right */
+.nqz-account-register-button {
+    min-height: 34px;
+    display: inline-grid;
+    place-items: center;
+    padding: 0 8px;
+    border: 1px solid rgba(157,216,90,.44);
+    border-radius: 8px;
+    color: #172012;
+    background: linear-gradient(180deg, #a0d85f, #75aa47);
+    text-decoration: none;
+    font-size: 10px;
+    font-weight: 950;
+    white-space: nowrap;
+}
+
+@media (max-width: 820px) {
+    .arena-topbar {
+        padding-right: 150px !important;
+    }
+
+    .arena-actions {
+        top: 6px !important;
+        right: 7px !important;
+        max-width: 142px !important;
+    }
+
+    .nqz-account-widget {
+        width: auto !important;
+        max-width: 142px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: flex-end !important;
+        gap: 4px !important;
+    }
+
+    .nqz-account-button {
+        min-width: 63px !important;
+        max-width: 68px !important;
+        height: 32px !important;
+        min-height: 32px !important;
+        padding: 0 7px !important;
+    }
+
+    .nqz-account-register-button {
+        min-width: 57px !important;
+        height: 32px !important;
+        min-height: 32px !important;
+        padding: 0 7px !important;
+        font-size: 9px !important;
+    }
+
+    .nqz-account-label {
+        max-width: 55px !important;
+        font-size: 9px !important;
+    }
+
+    .arena-brand strong {
+        max-width: calc(100vw - 250px) !important;
+    }
+}

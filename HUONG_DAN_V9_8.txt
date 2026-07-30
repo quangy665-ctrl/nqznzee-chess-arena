@@ -1,0 +1,46 @@
+NQZNZEE V9.8 — LOGIN SESSION FIX
+================================
+
+LỖI
+Bấm Đăng nhập nhưng trang chỉ còn tiêu đề và một thanh trống,
+không thao tác được Đăng nhập / Đăng ký.
+
+NGUYÊN NHÂN
+Supabase tìm thấy session cũ nên login.html ẩn authForms.
+
+Sau đó JavaScript bật signed card bằng:
+class "open"
+
+nhưng CSS chỉ hiển thị:
+class "active"
+
+Kết quả:
+- Form bị ẩn.
+- Thẻ "Đã đăng nhập" cũng bị ẩn.
+- Chỉ còn khung trống.
+
+V9.8
+- signed card dùng đúng class active.
+- CSS hỗ trợ active và open.
+- showSession mặc định không được phép để cả form và card cùng ẩn.
+- Session hợp lệ sẽ hiện:
+  Tiếp tục
+  Đăng nhập tài khoản khác
+  Đăng xuất
+- "Đăng nhập tài khoản khác" tự sign out và hiện lại form.
+- Auth JS đổi tên thành account-v9-8.js để phá cache Chrome.
+
+UPLOAD
+Upload toàn bộ V9.8 ghi đè V9.7.
+
+Repo phải có:
+account-v9-8.js
+
+Không cần giữ:
+account-v9-7.js
+
+Commit:
+Fix V9.8 blank login session screen
+
+TEST
+https://quangy665-ctrl.github.io/nqznzee-chess-arena/login.html?v=9.8

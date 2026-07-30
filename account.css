@@ -1,0 +1,224 @@
+:root {
+    --nqz-account-violet: #7c5cff;
+    --nqz-account-cyan: #22d3ee;
+    --nqz-account-bg: rgba(8, 10, 16, .96);
+    --nqz-account-line: rgba(255, 255, 255, .12);
+    --nqz-account-text: #f6f7fb;
+    --nqz-account-muted: #9da4b6;
+}
+
+.nqz-account-widget {
+    position: relative;
+    z-index: 60;
+}
+
+.nqz-account-button {
+    min-height: 38px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    border: 1px solid rgba(124, 92, 255, .35);
+    border-radius: 12px;
+    color: var(--nqz-account-text);
+    background:
+        linear-gradient(
+            135deg,
+            rgba(124, 92, 255, .16),
+            rgba(34, 211, 238, .08)
+        );
+    cursor: pointer;
+    font: inherit;
+    white-space: nowrap;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.nqz-account-button:hover {
+    border-color: rgba(124, 92, 255, .7);
+}
+
+.nqz-account-avatar {
+    width: 26px;
+    height: 26px;
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    border-radius: 999px;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 900;
+    background:
+        linear-gradient(
+            135deg,
+            var(--nqz-account-violet),
+            var(--nqz-account-cyan)
+        );
+    box-shadow:
+        0 0 18px rgba(124, 92, 255, .26);
+}
+
+.nqz-account-label {
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 800;
+}
+
+.nqz-account-rating {
+    color: var(--nqz-account-cyan);
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.nqz-account-menu {
+    position: absolute;
+    top: calc(100% + 9px);
+    right: 0;
+    width: min(310px, calc(100vw - 24px));
+    padding: 14px;
+    border: 1px solid var(--nqz-account-line);
+    border-radius: 16px;
+    color: var(--nqz-account-text);
+    background: var(--nqz-account-bg);
+    box-shadow:
+        0 24px 80px rgba(0, 0, 0, .48),
+        0 0 28px rgba(124, 92, 255, .12);
+    backdrop-filter: blur(18px);
+}
+
+.nqz-account-menu[hidden] {
+    display: none !important;
+}
+
+.nqz-account-menu-name {
+    font-size: 16px;
+    font-weight: 900;
+    overflow-wrap: anywhere;
+}
+
+.nqz-account-menu-user {
+    margin-top: 3px;
+    color: var(--nqz-account-muted);
+    font-size: 12px;
+}
+
+.nqz-account-menu-stat {
+    display: flex;
+    justify-content: space-between;
+    gap: 14px;
+    margin-top: 12px;
+    padding: 10px 0;
+    border-top: 1px solid var(--nqz-account-line);
+    border-bottom: 1px solid var(--nqz-account-line);
+    color: var(--nqz-account-muted);
+    font-size: 13px;
+}
+
+.nqz-account-menu-stat strong {
+    color: var(--nqz-account-cyan);
+}
+
+.nqz-account-menu-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.nqz-account-menu-actions a,
+.nqz-account-menu-actions button {
+    min-height: 40px;
+    display: grid;
+    place-items: center;
+    padding: 8px 10px;
+    border: 1px solid var(--nqz-account-line);
+    border-radius: 11px;
+    color: var(--nqz-account-text);
+    background: rgba(255, 255, 255, .055);
+    text-decoration: none;
+    font: inherit;
+    font-size: 13px;
+    font-weight: 800;
+    cursor: pointer;
+    touch-action: manipulation;
+}
+
+.nqz-account-menu-actions .primary {
+    border-color: rgba(124, 92, 255, .48);
+    background: rgba(124, 92, 255, .16);
+}
+
+.nqz-account-config-warning {
+    position: fixed;
+    z-index: 999999;
+    left: 50%;
+    bottom: 18px;
+    transform: translateX(-50%);
+    width: min(620px, calc(100vw - 28px));
+    padding: 12px 15px;
+    border: 1px solid rgba(255, 193, 91, .38);
+    border-radius: 14px;
+    color: #ffe7b8;
+    background: rgba(29, 21, 9, .96);
+    box-shadow: 0 18px 50px rgba(0, 0, 0, .38);
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+@media (max-width: 767px) {
+    .nqz-account-label {
+        max-width: 92px;
+    }
+
+    .nqz-account-rating {
+        display: none;
+    }
+
+    .nqz-account-button {
+        min-width: 42px;
+        padding-inline: 7px;
+    }
+
+    .nqz-account-menu {
+        position: fixed;
+        top: 62px;
+        right: 10px;
+    }
+}
+
+
+/* V8.0 Titles & Elo */
+.nqz-account-title-badge {
+    display: inline-grid;
+    place-items: center;
+    min-width: 28px;
+    padding: 2px 5px;
+    border: 1px solid rgba(255, 255, 255, .16);
+    border-radius: 4px;
+    color: #ffffff;
+    background:
+        linear-gradient(
+            180deg,
+            color-mix(
+                in srgb,
+                var(--nqz-title-color, #a63d4d) 90%,
+                white 10%
+            ),
+            var(--nqz-title-color, #a63d4d)
+        );
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, .14),
+        0 2px 7px rgba(0, 0, 0, .25);
+    font-size: 10px;
+    font-weight: 950;
+    line-height: 1.1;
+    letter-spacing: .02em;
+    vertical-align: .08em;
+}
+
+.nqz-account-menu-inline-rating {
+    color: var(--nqz-account-muted);
+    font-size: .86em;
+    font-weight: 800;
+}

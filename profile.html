@@ -1,0 +1,775 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#080a10">
+<title>NqznZee Account — Hồ sơ</title>
+<link rel="icon" type="image/png" href="./nqznzee-pawn.png">
+<link rel="stylesheet" href="./account.css">
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        min-height: 100vh;
+        margin: 0;
+        padding:
+            max(20px, env(safe-area-inset-top))
+            16px
+            max(22px, env(safe-area-inset-bottom));
+        color: #f6f7fb;
+        background:
+            radial-gradient(
+                circle at 20% 0%,
+                rgba(124, 92, 255, .17),
+                transparent 34%
+            ),
+            #070910;
+        font-family:
+            Inter,
+            ui-sans-serif,
+            system-ui,
+            sans-serif;
+    }
+
+    .page {
+        width: min(860px, 100%);
+        margin: 0 auto;
+    }
+
+    .top {
+        display: flex;
+        justify-content: space-between;
+        gap: 14px;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .brand {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+    }
+
+    .mark {
+        width: 46px;
+        height: 46px;
+        display: grid;
+        place-items: center;
+        border-radius: 14px;
+        font-weight: 950;
+        background:
+            linear-gradient(
+                135deg,
+                #7c5cff,
+                #22d3ee
+            );
+    }
+
+    h1 {
+        margin: 0;
+        font-size: 23px;
+    }
+
+    .sub {
+        margin-top: 3px;
+        color: #9299aa;
+        font-size: 12px;
+    }
+
+    .back {
+        min-height: 42px;
+        display: grid;
+        place-items: center;
+        padding: 0 14px;
+        border: 1px solid rgba(255, 255, 255, .11);
+        border-radius: 11px;
+        color: #ffffff;
+        background: rgba(255, 255, 255, .045);
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: 850;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns:
+            minmax(0, 1.2fr)
+            minmax(260px, .8fr);
+        gap: 16px;
+    }
+
+    .card {
+        padding: 20px;
+        border: 1px solid rgba(255, 255, 255, .1);
+        border-radius: 18px;
+        background: rgba(12, 14, 22, .88);
+        box-shadow: 0 18px 60px rgba(0, 0, 0, .28);
+    }
+
+    .profile-head {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+    }
+
+    .avatar {
+        width: 70px;
+        height: 70px;
+        display: grid;
+        place-items: center;
+        border-radius: 21px;
+        font-size: 22px;
+        font-weight: 950;
+        background:
+            linear-gradient(
+                135deg,
+                #7c5cff,
+                #22d3ee
+            );
+    }
+
+    .name {
+        min-width: 0;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 7px;
+        font-size: 24px;
+        font-weight: 950;
+    }
+
+    .profile-title-badge {
+        min-width: 34px;
+        display: inline-grid;
+        place-items: center;
+        padding: 3px 6px;
+        border: 1px solid rgba(255, 255, 255, .16);
+        border-radius: 5px;
+        color: #ffffff;
+        background: var(--profile-title-color, #a63d4d);
+        box-shadow:
+            inset 0 1px 0 rgba(255,255,255,.14),
+            0 3px 9px rgba(0,0,0,.24);
+        font-size: 12px;
+        line-height: 1.1;
+    }
+
+    .profile-inline-rating {
+        color: #9da4b6;
+        font-size: .65em;
+        font-weight: 850;
+    }
+
+    .username {
+        margin-top: 3px;
+        color: #969daf;
+    }
+
+    .stats {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .stat {
+        padding: 14px;
+        border: 1px solid rgba(255, 255, 255, .08);
+        border-radius: 13px;
+        background: rgba(255, 255, 255, .035);
+    }
+
+    .stat span {
+        color: #9299aa;
+        font-size: 11px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: .08em;
+    }
+
+    .stat strong {
+        display: block;
+        margin-top: 5px;
+        color: #61deef;
+        font-size: 22px;
+    }
+
+    .section-title {
+        margin: 0 0 14px;
+        font-size: 16px;
+    }
+
+    .field {
+        display: grid;
+        gap: 7px;
+    }
+
+    label {
+        color: #dfe3ec;
+        font-size: 13px;
+        font-weight: 800;
+    }
+
+    input {
+        width: 100%;
+        min-height: 48px;
+        padding: 0 13px;
+        border: 1px solid rgba(255, 255, 255, .11);
+        border-radius: 11px;
+        outline: none;
+        color: #ffffff;
+        background: rgba(255, 255, 255, .045);
+        font: inherit;
+    }
+
+    input:focus {
+        border-color: rgba(124, 92, 255, .75);
+        box-shadow: 0 0 0 4px rgba(124, 92, 255, .12);
+    }
+
+    .button {
+        width: 100%;
+        min-height: 46px;
+        margin-top: 12px;
+        border: 0;
+        border-radius: 11px;
+        color: #ffffff;
+        background:
+            linear-gradient(
+                135deg,
+                #7c5cff,
+                #5f4fd2
+            );
+        font: inherit;
+        font-weight: 900;
+        cursor: pointer;
+    }
+
+    .button.secondary {
+        border: 1px solid rgba(255, 255, 255, .11);
+        background: rgba(255, 255, 255, .045);
+    }
+
+    .status {
+        min-height: 20px;
+        margin-top: 10px;
+        color: #9da4b6;
+        font-size: 12px;
+    }
+
+    .status.success {
+        color: #76e39c;
+    }
+
+    .status.error {
+        color: #ff8ca0;
+    }
+
+    .badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .badge {
+        padding: 7px 10px;
+        border: 1px solid currentColor;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 900;
+        background: rgba(255, 255, 255, .035);
+    }
+
+    .empty {
+        color: #8d94a5;
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    @media (max-width: 700px) {
+        .grid {
+            grid-template-columns: 1fr;
+        }
+
+        .top {
+            align-items: flex-start;
+        }
+
+        .back {
+            min-height: 38px;
+            padding-inline: 10px;
+        }
+    }
+</style>
+<style>
+html, body { background:#090b0c !important; }
+body {
+    padding-bottom: calc(82px + env(safe-area-inset-bottom)) !important;
+    background:
+        radial-gradient(circle at 90% 0%, rgba(75,125,71,.10), transparent 28%),
+        #090b0c !important;
+}
+.shell, .card, .profile-card {
+    border-color: rgba(255,255,255,.10) !important;
+}
+.card, .profile-card {
+    background:#171918 !important;
+    border-radius:18px !important;
+}
+.back, button.primary {
+    background:linear-gradient(180deg,#91c653,#659d3e) !important;
+    border-color:rgba(145,198,83,.42) !important;
+}
+.v9-profile-nav {
+    position:fixed;
+    left:10px;
+    right:10px;
+    bottom:max(7px, env(safe-area-inset-bottom));
+    z-index:50;
+    height:62px;
+    padding:5px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:4px;
+    border:1px solid rgba(255,255,255,.10);
+    border-radius:17px;
+    background:rgba(18,20,19,.96);
+    box-shadow:0 15px 45px rgba(0,0,0,.42);
+    backdrop-filter:blur(16px);
+}
+.v9-profile-nav a {
+    display:grid;
+    place-items:center;
+    align-content:center;
+    gap:2px;
+    border-radius:11px;
+    color:#929790;
+    text-decoration:none;
+}
+.v9-profile-nav a span { font-size:21px; }
+.v9-profile-nav a small { font-size:8px; font-weight:850; }
+.v9-profile-nav a.active {
+    color:#a3dc61;
+    background:rgba(129,182,76,.12);
+}
+@media (min-width:760px) {
+    .v9-profile-nav { display:none; }
+}
+</style>
+</head>
+
+<body>
+<main class="page">
+    <header class="top">
+        <div class="brand">
+            <div class="mark">NQZ</div>
+            <div>
+                <h1>Hồ sơ tài khoản</h1>
+                <div class="sub">Account Cloud V8.0</div>
+            </div>
+        </div>
+
+        <a class="back" href="./index.html">Vào game</a>
+    </header>
+
+    <div class="grid">
+        <section class="card">
+            <div class="profile-head">
+                <div id="avatar" class="avatar">NQ</div>
+                <div>
+                    <div id="displayName" class="name">Đang tải…</div>
+                    <div id="username" class="username"></div>
+                </div>
+            </div>
+
+            <div class="stats">
+                <div class="stat">
+                    <span>NQZ Bot Rating</span>
+                    <strong id="rating">—</strong>
+                </div>
+
+                <div class="stat">
+                    <span>Rating cao nhất</span>
+                    <strong id="peakRating">—</strong>
+                </div>
+
+                <div class="stat">
+                    <span>Số ván</span>
+                    <strong id="games">—</strong>
+                </div>
+
+                <div class="stat">
+                    <span>Thắng / Hòa / Thua</span>
+                    <strong id="record">—</strong>
+                </div>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2 class="section-title">Chỉnh tên hiển thị</h2>
+
+            <form id="profileForm">
+                <div class="field">
+                    <label for="displayNameInput">Tên hiển thị</label>
+                    <input
+                        id="displayNameInput"
+                        maxlength="30"
+                        autocomplete="nickname"
+                        required
+                    >
+                </div>
+
+                <button class="button" type="submit">Lưu thay đổi</button>
+                <div id="status" class="status" role="status"></div>
+            </form>
+
+            <button id="logout" class="button secondary" type="button">
+                Đăng xuất
+            </button>
+        </section>
+
+        <section class="card" style="grid-column: 1 / -1;">
+            <h2 class="section-title">Huy hiệu</h2>
+            <div id="badges" class="badges"></div>
+        </section>
+    </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./supabase-config.js"></script>
+<script src="./account-v9-8.js"></script>
+<script>
+(() => {
+    "use strict";
+
+    const $ = id =>
+        document.getElementById(id);
+
+    let account = null;
+
+    function initials(value) {
+        return String(value || "NQ")
+            .trim()
+            .split(/\s+/)
+            .slice(0, 2)
+            .map(part =>
+                part[0]?.toUpperCase() ||
+                ""
+            )
+            .join("") || "NQ";
+    }
+
+    function setStatus(
+        message,
+        type = ""
+    ) {
+        $("status").textContent =
+            message;
+
+        $("status").className =
+            "status" +
+            (
+                type
+                    ? " " + type
+                    : ""
+            );
+    }
+
+    function render(value) {
+        account = value;
+
+        const displayName =
+            value.display_name ||
+            value.username;
+
+        $("avatar").textContent =
+            initials(displayName);
+
+        const identity =
+            window.NQZ_ACCOUNT
+                .getAccountIdentity(
+                    value
+                );
+
+        const displayNameHost =
+            $("displayName");
+
+        displayNameHost
+            .replaceChildren();
+
+        if (identity.title) {
+            const titleBadge =
+                document.createElement(
+                    "span"
+                );
+
+            titleBadge.className =
+                "profile-title-badge";
+
+            titleBadge.style
+                .setProperty(
+                    "--profile-title-color",
+                    identity.title.color ||
+                        "#a63d4d"
+                );
+
+            titleBadge.textContent =
+                identity.title.label;
+
+            displayNameHost
+                .appendChild(
+                    titleBadge
+                );
+        }
+
+        const nameText =
+            document.createElement(
+                "span"
+            );
+
+        nameText.textContent =
+            displayName;
+
+        displayNameHost
+            .appendChild(
+                nameText
+            );
+
+        const inlineRating =
+            document.createElement(
+                "span"
+            );
+
+        inlineRating.className =
+            "profile-inline-rating";
+
+        inlineRating.textContent =
+            `(${identity.rating})`;
+
+        displayNameHost
+            .appendChild(
+                inlineRating
+            );
+
+        displayNameHost.title =
+            identity.label;
+
+        $("username").textContent =
+            "@" + value.username;
+
+        $("displayNameInput").value =
+            displayName;
+
+        $("rating").textContent =
+            value.rating
+                ?.bot_rating ??
+            1200;
+
+        $("peakRating").textContent =
+            value.rating
+                ?.peak_bot_rating ??
+            1200;
+
+        $("games").textContent =
+            value.rating
+                ?.games_played ??
+            0;
+
+        $("record").textContent =
+            [
+                value.rating?.wins ?? 0,
+                value.rating?.draws ?? 0,
+                value.rating?.losses ?? 0,
+            ].join(" / ");
+
+        const badgeHost =
+            $("badges");
+
+        badgeHost.innerHTML = "";
+
+        if (!value.badges?.length) {
+            badgeHost.innerHTML =
+                '<div class="empty">Tài khoản chưa có huy hiệu. Huy hiệu sẽ do quản trị viên trao trong bản quản trị sau.</div>';
+
+            return;
+        }
+
+        for (
+            const entry
+            of value.badges
+        ) {
+            const badge =
+                entry.badges;
+
+            if (!badge) continue;
+
+            const element =
+                document.createElement(
+                    "span"
+                );
+
+            element.className =
+                "badge";
+
+            element.style.color =
+                badge.color ||
+                "#22d3ee";
+
+            element.textContent =
+                `${badge.icon || "◆"} ${
+                    badge.display_name
+                }`;
+
+            badgeHost.appendChild(
+                element
+            );
+        }
+    }
+
+    async function boot() {
+        if (
+            !window.NQZ_ACCOUNT
+                ?.configReady()
+        ) {
+            setStatus(
+                "Chưa cấu hình Publishable key.",
+                "error"
+            );
+            return;
+        }
+
+        try {
+            const value =
+                await window
+                    .NQZ_ACCOUNT
+                    .refreshAccount();
+
+            if (!value) {
+                location.href =
+                    "./login.html?return=profile.html";
+                return;
+            }
+
+            render(value);
+        } catch (error) {
+            console.error(error);
+
+            setStatus(
+                error.message ||
+                "Không thể tải hồ sơ.",
+                "error"
+            );
+        }
+    }
+
+    $("profileForm")
+        .addEventListener(
+            "submit",
+            async event => {
+                event.preventDefault();
+
+                if (!account) return;
+
+                const displayName =
+                    $("displayNameInput")
+                        .value
+                        .trim();
+
+                if (
+                    displayName.length < 1 ||
+                    displayName.length > 30
+                ) {
+                    setStatus(
+                        "Tên hiển thị phải có từ 1 đến 30 ký tự.",
+                        "error"
+                    );
+                    return;
+                }
+
+                setStatus(
+                    "Đang lưu…"
+                );
+
+                try {
+                    const sb =
+                        window.NQZ_ACCOUNT
+                            .getClient();
+
+                    const {
+                        error,
+                    } =
+                        await sb
+                            .from("profiles")
+                            .update({
+                                display_name:
+                                    displayName,
+                            })
+                            .eq(
+                                "id",
+                                account.id
+                            );
+
+                    if (error) {
+                        throw error;
+                    }
+
+                    const refreshed =
+                        await window
+                            .NQZ_ACCOUNT
+                            .refreshAccount();
+
+                    localStorage.setItem(
+                        "nqz-player-name-v7",
+                        refreshed
+                            .display_name
+                    );
+
+                    render(refreshed);
+
+                    setStatus(
+                        "Đã lưu tên hiển thị.",
+                        "success"
+                    );
+                } catch (error) {
+                    console.error(error);
+
+                    setStatus(
+                        error.message ||
+                        "Không thể lưu thay đổi.",
+                        "error"
+                    );
+                }
+            }
+        );
+
+    $("logout")
+        .addEventListener(
+            "click",
+            async () => {
+                await window
+                    .NQZ_ACCOUNT
+                    .signOut();
+
+                localStorage.removeItem(
+                    "nqz-player-name-v7"
+                );
+
+                location.href =
+                    "./login.html";
+            }
+        );
+
+    boot();
+})();
+</script>
+<nav class="v9-profile-nav" aria-label="Điều hướng NqznZee">
+    <a href="./index.html"><span>⌂</span><small>Trang chủ</small></a>
+    <a href="./play.html?v=9.10"><span>♞</span><small>Chơi</small></a>
+    <a href="./play.html?v=9.10&panel=puzzle"><span>✦</span><small>Câu đố</small></a>
+    <a class="active" href="./profile.html"><span>♙</span><small>Hồ sơ</small></a>
+</nav>
+</body>
+</html>
