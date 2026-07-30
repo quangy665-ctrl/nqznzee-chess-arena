@@ -9,7 +9,8 @@
     easy:    { name: 'Dễ', label: 'Tập sự', thinkMs: 220, elo: 700 },
     normal:  { name: 'Thường', label: 'Chiến thuật', thinkMs: 340, elo: 1000 },
     hard:    { name: 'Khó', label: 'Thợ săn điểm', thinkMs: 430, elo: 1400 },
-    extreme: { name: 'Cực khó', label: 'NguyenEngine Caro', thinkMs: 520, elo: 2200 }
+    extreme: { name: 'Cực khó', label: 'NguyenEngine Caro', thinkMs: 520, elo: 2200 },
+    max:     { name: 'NGUYENENGINE MAX', label: 'Deep Threat Search', thinkMs: 90, elo: null, noElo: true }
   });
   const CHUNK_SIZE = 16;
   const BASE_CELL = 46;
@@ -246,6 +247,9 @@
     }
     if (session.mode === 'bot') {
       const level = BOT_LEVELS[session.botLevel] || BOT_LEVELS.normal;
+      if (level.noElo) {
+        return { displayName: level.name, meta: level.label };
+      }
       return {
         displayName: level.label || `Bot ${level.name}`,
         meta: `${level.name} · Caro Elo ${level.elo || DEFAULT_CARO_ELO}`
@@ -1188,6 +1192,13 @@
     if (level === 'easy') return chooseEasyMove(bot, human);
     if (level === 'hard') return chooseHardMove(bot, human);
     if (level === 'extreme') return chooseExtremeMove(bot, human);
+    if (level === 'max') {
+      if (!window.NQZCaroMax?.chooseMove) {
+        console.warn('NGUYENENGINE MAX chưa tải, fallback NguyenEngine Caro.');
+        return chooseExtremeMove(bot, human);
+      }
+      return window.NQZCaroMax.chooseMove(game, bot, human, { timeMs: 1350 });
+    }
     return chooseNormalMove(bot, human);
   }
 
@@ -1562,7 +1573,13 @@
   function openMatchSetup(mode, botLevel = 'normal') {
     pendingSetup = { mode: mode === 'bot' ? 'bot' : 'local', botLevel: BOT_LEVELS[botLevel] ? botLevel : 'normal' };
     const level = BOT_LEVELS[pendingSetup.botLevel] || BOT_LEVELS.normal;
-    if (ui.matchSetupMode) ui.matchSetupMode.textContent = pendingSetup.mode === 'bot' ? `Đấu ${level.label} · ${playerIdentity.displayName} X / Bot O · Elo ${level.elo}` : `${playerIdentity.displayName} X / Người chơi O · mỗi người Elo 1000`;
+    if (ui.matchSetupMode) {
+      ui.matchSetupMode.textContent = pendingSetup.mode === 'bot'
+        ? (level.noElo
+          ? `Đấu ${level.name} · ${level.label} · ${playerIdentity.displayName} X / Bot O`
+          : `Đấu ${level.label} · ${playerIdentity.displayName} X / Bot O · Elo ${level.elo}`)
+        : `${playerIdentity.displayName} X / Người chơi O · mỗi người Elo 1000`;
+    }
     if (ui.targetPointsInput) ui.targetPointsInput.value = String(session.targetPoints || 5);
     if (ui.groupSizeInput) ui.groupSizeInput.value = String(session.groupSize || 5);
     if (ui.setupError) ui.setupError.textContent = '';

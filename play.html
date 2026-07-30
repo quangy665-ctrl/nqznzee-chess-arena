@@ -13246,6 +13246,427 @@ window.addEventListener("DOMContentLoaded", () => {
 </script>
 <!-- NQZ INSTANT TAP V7.9 END -->
 
+<!-- NQZ DESKTOP DRAG V1.0 START -->
+<style id="nqz-desktop-drag-v1-css">
+@media (hover: hover) and (pointer: fine) {
+    #board .square[data-piece-symbol]:not([data-piece-symbol=""]) {
+        cursor: grab;
+    }
+
+    #board.nqz-desktop-dragging,
+    #board.nqz-desktop-dragging .square {
+        cursor: grabbing !important;
+    }
+
+    #board.nqz-desktop-dragging .square,
+    #board.nqz-desktop-dragging .piece-image {
+        transition: none !important;
+        animation: none !important;
+    }
+
+    #board .square.nqz-desktop-drag-source .piece-image {
+        opacity: .16;
+        transform: scale(.96) !important;
+        filter: none !important;
+    }
+
+    #board .square.nqz-desktop-drag-source::before {
+        content: "";
+        position: absolute;
+        z-index: 12;
+        inset: 5%;
+        border: 3px solid rgba(255,255,255,.72);
+        border-radius: 10px;
+        background: rgba(255,255,255,.055);
+        pointer-events: none;
+    }
+
+    #board .square.nqz-desktop-drag-move::after {
+        content: "";
+        position: absolute;
+        z-index: 13;
+        width: 24%;
+        aspect-ratio: 1;
+        border-radius: 999px;
+        background: rgba(18,22,19,.42);
+        box-shadow: 0 0 0 5px rgba(255,255,255,.055);
+        pointer-events: none;
+    }
+
+    #board .square.nqz-desktop-drag-capture::after {
+        content: "";
+        position: absolute;
+        z-index: 13;
+        inset: 5%;
+        border: 5px solid rgba(18,22,19,.38);
+        border-radius: 999px;
+        pointer-events: none;
+    }
+
+    #board .square.nqz-desktop-drop-valid {
+        box-shadow: inset 0 0 0 5px rgba(111,224,148,.82) !important;
+    }
+
+    #board .square.nqz-desktop-drop-invalid {
+        box-shadow: inset 0 0 0 4px rgba(255,106,128,.62) !important;
+    }
+}
+
+.nqz-desktop-drag-ghost {
+    position: fixed;
+    z-index: 1000000;
+    left: 0;
+    top: 0;
+    width: var(--nqz-desktop-ghost-size, 72px);
+    height: var(--nqz-desktop-ghost-size, 72px);
+    pointer-events: none;
+    opacity: .98;
+    transform:
+        translate3d(
+            var(--nqz-desktop-x, 0px),
+            var(--nqz-desktop-y, 0px),
+            0
+        )
+        translate(-50%, -50%)
+        scale(1.08);
+    transform-origin: center;
+    will-change: transform;
+    contain: layout paint style;
+    backface-visibility: hidden;
+}
+
+.nqz-desktop-drag-ghost .piece-image {
+    width: 100%;
+    height: 100%;
+    transform: none !important;
+    filter: none !important;
+}
+</style>
+
+<script id="nqz-desktop-drag-v1">
+(() => {
+    "use strict";
+
+    const BUILD = "WEB V9.10 DESKTOP DRAG V1.0";
+    const DESKTOP_QUERY = "(hover: hover) and (pointer: fine)";
+    const desktopMedia = window.matchMedia(DESKTOP_QUERY);
+    const board = document.getElementById("board");
+    const api = () => window.NQZ_API || null;
+
+    if (!board) return;
+
+    const drag = {
+        active: false,
+        dragging: false,
+        pointerId: null,
+        from: "",
+        legal: [],
+        legalSet: new Set(),
+        ghost: null,
+        startX: 0,
+        startY: 0,
+        latestX: 0,
+        latestY: 0,
+        frame: 0,
+        hoverSquare: "",
+        suppressClickUntil: 0,
+        selectedBefore: null,
+    };
+
+    function enabledForEvent(event) {
+        return Boolean(
+            desktopMedia.matches &&
+            event.pointerType === "mouse" &&
+            event.button === 0
+        );
+    }
+
+    function humanColor() {
+        const currentApi = api();
+        if (!currentApi) return null;
+        return window.NQZ_PLAY_MODE === "human-human"
+            ? currentApi.game.turn()
+            : currentApi.state.playerColor;
+    }
+
+    function canInteract() {
+        const currentApi = api();
+        if (!currentApi) return false;
+        if (
+            currentApi.state.engineBusy ||
+            currentApi.state.opponentThinking ||
+            currentApi.game.game_over()
+        ) {
+            return false;
+        }
+        if (
+            window.NQZ_PLAY_MODE !== "human-human" &&
+            currentApi.game.turn() !== currentApi.state.playerColor
+        ) {
+            return false;
+        }
+        return true;
+    }
+
+    function canPick(square) {
+        const currentApi = api();
+        if (!currentApi || !canInteract()) return false;
+        try {
+            const piece = currentApi.game.get(square);
+            return Boolean(piece && piece.color === humanColor());
+        } catch (_) {
+            return false;
+        }
+    }
+
+    function legalMoves(square) {
+        const currentApi = api();
+        if (!currentApi) return [];
+        try {
+            return currentApi.game.moves({square, verbose: true}) || [];
+        } catch (_) {
+            return [];
+        }
+    }
+
+    function squareElement(square) {
+        return board.querySelector(`[data-square="${square}"]`);
+    }
+
+    function squareAtPoint(x, y) {
+        const element = document.elementFromPoint(x, y);
+        return element?.closest?.("#board .square")?.dataset.square || "";
+    }
+
+    function clearHover() {
+        if (!drag.hoverSquare) return;
+        squareElement(drag.hoverSquare)?.classList.remove(
+            "nqz-desktop-drop-valid",
+            "nqz-desktop-drop-invalid"
+        );
+        drag.hoverSquare = "";
+    }
+
+    function clearHints() {
+        clearHover();
+        board.querySelectorAll(
+            ".nqz-desktop-drag-source, " +
+            ".nqz-desktop-drag-move, " +
+            ".nqz-desktop-drag-capture"
+        ).forEach(element => {
+            element.classList.remove(
+                "nqz-desktop-drag-source",
+                "nqz-desktop-drag-move",
+                "nqz-desktop-drag-capture"
+            );
+        });
+    }
+
+    function paintHints() {
+        clearHints();
+        squareElement(drag.from)?.classList.add("nqz-desktop-drag-source");
+        for (const move of drag.legal) {
+            squareElement(move.to)?.classList.add(
+                move.captured
+                    ? "nqz-desktop-drag-capture"
+                    : "nqz-desktop-drag-move"
+            );
+        }
+    }
+
+    function removeGhost() {
+        drag.ghost?.remove();
+        drag.ghost = null;
+    }
+
+    function updateGhost(x, y) {
+        if (!drag.ghost) return;
+        drag.ghost.style.setProperty("--nqz-desktop-x", `${x}px`);
+        drag.ghost.style.setProperty("--nqz-desktop-y", `${y}px`);
+    }
+
+    function createGhost(sourcePiece, x, y) {
+        removeGhost();
+        const sourceSquare = sourcePiece.closest(".square");
+        const rect = sourceSquare?.getBoundingClientRect();
+        const size = Math.max(54, Math.min(96, rect?.width || 72));
+        const ghost = document.createElement("div");
+        ghost.className = "nqz-desktop-drag-ghost";
+        ghost.style.setProperty("--nqz-desktop-ghost-size", `${size}px`);
+        ghost.appendChild(sourcePiece.cloneNode(true));
+        document.body.appendChild(ghost);
+        drag.ghost = ghost;
+        updateGhost(x, y);
+    }
+
+    function updateHover(x, y) {
+        const square = squareAtPoint(x, y);
+        if (square === drag.hoverSquare) return;
+        clearHover();
+        if (!square) return;
+        squareElement(square)?.classList.add(
+            drag.legalSet.has(square)
+                ? "nqz-desktop-drop-valid"
+                : "nqz-desktop-drop-invalid"
+        );
+        drag.hoverSquare = square;
+    }
+
+    function scheduleFrame(x, y) {
+        drag.latestX = x;
+        drag.latestY = y;
+        if (drag.frame) return;
+        drag.frame = requestAnimationFrame(() => {
+            drag.frame = 0;
+            updateGhost(drag.latestX, drag.latestY);
+            updateHover(drag.latestX, drag.latestY);
+        });
+    }
+
+    function reset({keepSelection = true} = {}) {
+        if (drag.frame) cancelAnimationFrame(drag.frame);
+        drag.frame = 0;
+        removeGhost();
+        clearHints();
+        board.classList.remove("nqz-desktop-dragging");
+        if (!keepSelection && api()) {
+            api().state.selected = drag.selectedBefore;
+            api().render();
+        }
+        drag.active = false;
+        drag.dragging = false;
+        drag.pointerId = null;
+        drag.from = "";
+        drag.legal = [];
+        drag.legalSet.clear();
+        drag.selectedBefore = null;
+    }
+
+    function startDrag(event) {
+        if (!canPick(drag.from)) return false;
+        drag.legal = legalMoves(drag.from);
+        drag.legalSet = new Set(drag.legal.map(move => move.to));
+        const piece = squareElement(drag.from)?.querySelector(".piece-image");
+        if (!piece) return false;
+        drag.dragging = true;
+        board.classList.add("nqz-desktop-dragging");
+        paintHints();
+        createGhost(piece, event.clientX, event.clientY);
+        try { board.setPointerCapture?.(event.pointerId); } catch (_) {}
+        return true;
+    }
+
+    function performMove(from, to) {
+        const currentApi = api();
+        if (!currentApi || !drag.legalSet.has(to)) return false;
+        currentApi.state.selected = from;
+        currentApi.state.suggestion = null;
+        currentApi.selectSquare(to);
+        return true;
+    }
+
+    function onPointerDown(event) {
+        if (!enabledForEvent(event) || drag.active) return;
+        const square = event.target.closest?.("#board .square")?.dataset.square || "";
+        if (!square || !canPick(square)) return;
+        drag.active = true;
+        drag.dragging = false;
+        drag.pointerId = event.pointerId;
+        drag.from = square;
+        drag.startX = event.clientX;
+        drag.startY = event.clientY;
+        drag.latestX = event.clientX;
+        drag.latestY = event.clientY;
+        drag.selectedBefore = api()?.state.selected ?? null;
+    }
+
+    function onPointerMove(event) {
+        if (!drag.active || event.pointerId !== drag.pointerId) return;
+        if ((event.buttons & 1) !== 1) {
+            reset();
+            return;
+        }
+        const dx = event.clientX - drag.startX;
+        const dy = event.clientY - drag.startY;
+        if (!drag.dragging && dx * dx + dy * dy >= 36) {
+            if (!startDrag(event)) {
+                reset();
+                return;
+            }
+        }
+        if (drag.dragging) {
+            event.preventDefault();
+            scheduleFrame(event.clientX, event.clientY);
+        }
+    }
+
+    function onPointerUp(event) {
+        if (!drag.active || event.pointerId !== drag.pointerId) return;
+        if (!drag.dragging) {
+            // Let the existing desktop click-to-move handler run unchanged.
+            reset();
+            return;
+        }
+        event.preventDefault();
+        drag.suppressClickUntil = performance.now() + 420;
+        const from = drag.from;
+        const to = squareAtPoint(event.clientX, event.clientY);
+        const valid = Boolean(to && drag.legalSet.has(to));
+        if (valid) {
+            performMove(from, to);
+            reset();
+        } else {
+            // Snap back, but leave the dragged piece selected like a normal desktop chess UI.
+            const currentApi = api();
+            reset();
+            if (currentApi) {
+                currentApi.state.selected = from;
+                currentApi.state.suggestion = null;
+                currentApi.render();
+            }
+        }
+    }
+
+    function onPointerCancel() {
+        if (drag.active) reset();
+    }
+
+    board.addEventListener("pointerdown", onPointerDown, {passive: true});
+    board.addEventListener("pointermove", onPointerMove, {passive: false});
+    board.addEventListener("pointerup", onPointerUp, {passive: false});
+    board.addEventListener("pointercancel", onPointerCancel, {passive: true});
+    board.addEventListener("lostpointercapture", () => {
+        if (drag.active && drag.dragging) reset();
+    });
+
+    board.addEventListener("click", event => {
+        if (performance.now() < drag.suppressClickUntil) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+        }
+    }, true);
+
+    board.addEventListener("dragstart", event => {
+        if (desktopMedia.matches) event.preventDefault();
+    });
+
+    window.addEventListener("blur", () => {
+        if (drag.active) reset();
+    });
+
+    window.addEventListener("resize", () => {
+        if (drag.active) reset();
+    }, {passive: true});
+
+    window.NQZ_DESKTOP_DRAG_V1 = {
+        build: BUILD,
+        enabled: () => desktopMedia.matches,
+    };
+})();
+</script>
+<!-- NQZ DESKTOP DRAG V1.0 END -->
+
+
 
 <!-- NQZ MOBILE CONTROLS V7.10 START -->
 <button

@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
   <meta name="theme-color" content="#1c1b20">
   <title>NqznZee Arena — Caro Điểm</title>
-  <link rel="stylesheet" href="styles.css?v=0.6.5-online-1.3">
+  <link rel="stylesheet" href="styles.css?v=0.6.5-online-1.3-max-1.0">
 </head>
 <body>
   <header class="topbar">
@@ -124,7 +124,7 @@
         </div>
         <div class="theme-gallery lobby-theme-gallery" id="lobbyThemeGallery"></div>
       </section>
-      <div class="lobby-foot">Ván đang chơi được tự động lưu trên thiết bị này. · build ONLINE V1.3</div>
+      <div class="lobby-foot">Ván đang chơi được tự động lưu trên thiết bị này. · build ONLINE V1.3 · NGUYENENGINE MAX 1.0</div>
     </div>
   </section>
 
@@ -159,6 +159,11 @@
           <span class="bot-level-badge">CỰC KHÓ · 2200 ELO</span>
           <strong>NguyenEngine Caro</strong>
           <small>Tìm kiếm nhiều lớp trong nhóm nước ứng viên, đánh giá phản đòn và fork chiến thuật.</small>
+        </button>
+        <button class="bot-level-card max" type="button" data-bot-level="max">
+          <span class="bot-level-badge">NGUYENENGINE MAX</span>
+          <strong>Deep Threat Search</strong>
+          <small>Ưu tiên bất bại: tìm forced win/forced defense, đọc phản công tối ưu và hiểu chuỗi ghi điểm → bonus turn.</small>
         </button>
       </div>
       <div class="bot-picker-note">LAB: ưu tiên độ ổn định gameplay trước khi tích hợp vào NqznZee Arena.</div>
@@ -271,6 +276,7 @@
   <script src="../supabase-config.js"></script>
   <script src="../account-v9-8.js"></script>
   <script src="cycle-engine.js?v=0.6.5-online-1.3"></script>
-  <script src="caro.js?v=0.6.5-online-1.3"></script>
+  <script src="caro-max-engine.js?v=max-1.0"></script>
+  <script src="caro.js?v=0.6.5-online-1.3-max-1.0"></script>
 </body>
 </html>
